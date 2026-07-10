@@ -1,0 +1,190 @@
+Logging to /Users/emurasak/workspace/harness/tasks/upstream-images/build-and-push-20260605-180619.log
+Fetching all branches for each repo...
+  Fetching console-dashboards-plugin...
+  Fetching distributed-tracing-console-plugin...
+  Fetching logging-view-plugin...
+  Fetching monitoring-plugin...
+  Fetching troubleshooting-panel-console-plugin...
+Fetch complete.
+==========================================
+Building console-dashboards-plugin @ release-coo-ocp-4.12 with VERSION=v0.4.3 ORG=rh-ee-emurasak
+==========================================
+Already on 'release-coo-ocp-4.12'
+Your branch is up to date with 'origin/release-coo-ocp-4.12'.
+From https://github.com/openshift/console-dashboards-plugin
+ * branch            release-coo-ocp-4.12 -> FETCH_HEAD
+Already up to date.
+--- Attempt 1/3 ---
+podman manifest rm quay.io/rh-ee-emurasak/console-dashboards-plugin:v0.4.3 || true
+Error: quay.io/rh-ee-emurasak/console-dashboards-plugin:v0.4.3: image not known
+podman manifest create quay.io/rh-ee-emurasak/console-dashboards-plugin:v0.4.3
+9b3ae7085f5a9da807465f55faeb5a1b97f55f4be49f45388fe1a9d16f9a9990
+podman build --platform=linux/arm64,linux/amd64 --manifest quay.io/rh-ee-emurasak/console-dashboards-plugin:v0.4.3 -f Dockerfile
+[linux/amd64] [1/3] STEP 1/8: FROM registry.redhat.io/ubi8/nodejs-18:latest AS web-builder
+Trying to pull registry.redhat.io/ubi8/nodejs-18:latest...
+Getting image source signatures
+Checking if image destination supports signatures
+Copying blob sha256:046eb6416170db2ab33e464d04c6f7c0c8c6cc8563597aca8e9fb7736dff00f9
+Copying blob sha256:b610fd6091ba2163b8943d2214e20665977bc8064dc769d47be9ae868e48a301
+Copying blob sha256:43ddc3bd12b8691687c9f6c273331ca07e3a89b50a619e0db9b040a8a629386d
+Copying config sha256:ab55058334c5c32969b838cea2db23ee8c69c1b742006a75c031ed4f1b286bc5
+Writing manifest to image destination
+Storing signatures
+[linux/amd64] [1/3] STEP 2/8: WORKDIR /opt/app-root
+--> 9b4f1fcc7524
+[linux/amd64] [1/3] STEP 3/8: USER 0
+--> b11fc1a58c53
+[linux/amd64] [1/3] STEP 4/8: COPY web/package*.json web/
+--> 9a892a45c0ad
+[linux/amd64] [1/3] STEP 5/8: COPY Makefile Makefile
+--> b12889b9b0d3
+[linux/amd64] [1/3] STEP 6/8: RUN make install-frontend-ci-clean
+cd web && npm ci --ignore-scripts
+
+added 703 packages, and audited 704 packages in 2m
+
+145 packages are looking for funding
+  run `npm fund` for details
+
+32 vulnerabilities (20 moderate, 12 high)
+
+To address issues that do not require attention, run:
+  npm audit fix
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+cd web && npm cache clean --force
+npm warn using --force Recommended protections disabled.
+--> aa23237b5ec9
+[linux/amd64] [1/3] STEP 7/8: COPY web/ web/
+--> aa4fa72ab1c0
+[linux/amd64] [1/3] STEP 8/8: RUN make build-frontend
+cd web && npm run build
+
+> console-dashboards-plugin@0.1.0 build
+> npm run clean && NODE_ENV=production npm run ts-node node_modules/.bin/webpack
+
+
+> console-dashboards-plugin@0.1.0 clean
+> rm -rf dist
+
+
+> console-dashboards-plugin@0.1.0 ts-node
+> ts-node -O '{"module":"commonjs"}' node_modules/.bin/webpack
+
+assets by info 19.5 KiB [immutable]
+  asset 763-chunk-85263579519beb4f771c.min.js 16.6 KiB [emitted] [immutable] [minimized] (id hint: vendors)
+  asset exposed-ProxyTestPage-chunk-2f9082ef890be2ba1e5e.min.js 2.35 KiB [emitted] [immutable] [minimized] (name: exposed-ProxyTestPage)
+  asset exposed-GetDatasource-chunk-71e85ff48850c9bbb80c.min.js 559 bytes [emitted] [immutable] [minimized] (name: exposed-GetDatasource)
+asset plugin-entry.js 5.64 KiB [emitted] [minimized] (name: console-dashboards-plugin)
+asset plugin-manifest.json 733 bytes [emitted]
+runtime modules 15.6 KiB 11 modules
+built modules 37.8 KiB (javascript) 42 bytes (consume-shared) [built]
+  cacheable modules 37.7 KiB
+    ./components/ProxyTestPage.tsx 3.73 KiB [built] [code generated]
+    ./getDatasource.tsx 878 bytes [built] [code generated]
+    ../node_modules/lru-cache/index.mjs 33.1 KiB [built] [code generated]
+  container entry 42 bytes [built] [code generated]
+  consume shared module (default) react@^17.0.1 (singleton) 42 bytes [built] [code generated]
+webpack 5.105.3 compiled successfully in 5418 ms
+--> e40936717603
+[linux/arm64] [1/3] STEP 1/8: FROM registry.redhat.io/ubi8/nodejs-18:latest AS web-builder
+Trying to pull registry.redhat.io/ubi8/nodejs-18:latest...
+Getting image source signatures
+Checking if image destination supports signatures
+Copying blob sha256:c4fff77bc060c02d4f09680032367cb302e83402fc25b7c7ac001cb00238876f
+Copying blob sha256:8fd64178c906794da03bc9b7d2d5e3b70073b47f8aa659230381d7fd897dc11b
+Copying blob sha256:6ad04be99c8f2547888de53fad691136f65cf5a11c7a2567ef29477c3413f587
+Copying config sha256:62a277f6499a7c210a1022190779f4387fc1294a28ea7696fc264248bf328a9b
+Writing manifest to image destination
+Storing signatures
+[linux/arm64] [1/3] STEP 2/8: WORKDIR /opt/app-root
+--> 4d043cdc15e2
+[linux/arm64] [1/3] STEP 3/8: USER 0
+--> 37dd0e0203ec
+[linux/arm64] [1/3] STEP 4/8: COPY web/package*.json web/
+--> 7c00dc291738
+[linux/arm64] [1/3] STEP 5/8: COPY Makefile Makefile
+--> 663425c63d9e
+[linux/arm64] [1/3] STEP 6/8: RUN make install-frontend-ci-clean
+cd web && npm ci --ignore-scripts
+
+added 703 packages, and audited 704 packages in 46s
+
+145 packages are looking for funding
+  run `npm fund` for details
+
+32 vulnerabilities (20 moderate, 12 high)
+
+To address issues that do not require attention, run:
+  npm audit fix
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+cd web && npm cache clean --force
+npm warn using --force Recommended protections disabled.
+--> 0dd0f4e3baf1
+[linux/arm64] [1/3] STEP 7/8: COPY web/ web/
+--> b7b1b43e8910
+[linux/arm64] [1/3] STEP 8/8: RUN make build-frontend
+cd web && npm run build
+
+> console-dashboards-plugin@0.1.0 build
+> npm run clean && NODE_ENV=production npm run ts-node node_modules/.bin/webpack
+
+
+> console-dashboards-plugin@0.1.0 clean
+> rm -rf dist
+
+
+> console-dashboards-plugin@0.1.0 ts-node
+> ts-node -O '{"module":"commonjs"}' node_modules/.bin/webpack
+
+assets by info 19.5 KiB [immutable]
+  asset 763-chunk-85263579519beb4f771c.min.js 16.6 KiB [emitted] [immutable] [minimized] (id hint: vendors)
+  asset exposed-ProxyTestPage-chunk-2f9082ef890be2ba1e5e.min.js 2.35 KiB [emitted] [immutable] [minimized] (name: exposed-ProxyTestPage)
+  asset exposed-GetDatasource-chunk-71e85ff48850c9bbb80c.min.js 559 bytes [emitted] [immutable] [minimized] (name: exposed-GetDatasource)
+asset plugin-entry.js 5.64 KiB [emitted] [minimized] (name: console-dashboards-plugin)
+asset plugin-manifest.json 733 bytes [emitted]
+runtime modules 15.6 KiB 11 modules
+built modules 37.8 KiB (javascript) 42 bytes (consume-shared) [built]
+  cacheable modules 37.7 KiB
+    ./components/ProxyTestPage.tsx 3.73 KiB [built] [code generated]
+    ./getDatasource.tsx 878 bytes [built] [code generated]
+    ../node_modules/lru-cache/index.mjs 33.1 KiB [built] [code generated]
+  container entry 42 bytes [built] [code generated]
+  consume shared module (default) react@^17.0.1 (singleton) 42 bytes [built] [code generated]
+webpack 5.105.3 compiled successfully in 2293 ms
+--> 8ce85da582d7
+[linux/amd64] [2/3] STEP 1/11: FROM registry.ci.openshift.org/ocp/builder:rhel-8-golang-1.24-openshift-4.20 AS go-builder
+Trying to pull registry.ci.openshift.org/ocp/builder:rhel-8-golang-1.24-openshift-4.20...
+Getting image source signatures
+Copying blob sha256:ad150792efc16fbb7886da9d9457d93092929426e6a9f11c6e04a563f284eacd
+Copying blob sha256:c7965aa7086045a59bdb113a1fb8a19d7ccf7af4133e59af8ecefd39cda8e0b1
+Copying blob sha256:32a0db6672d42bc2f63fa6c620bf354f141c2478d6ea69c2363fc3ae82cf9448
+Copying config sha256:afb0ed974e4e076b1e05e106cf07c0ea3bffe26a331f278142661a821986210b
+Writing manifest to image destination
+[linux/amd64] [2/3] STEP 2/11: WORKDIR /opt/app-root
+--> 66de324c2577
+[linux/amd64] [2/3] STEP 3/11: COPY Makefile Makefile
+--> a614844b899f
+[linux/amd64] [2/3] STEP 4/11: COPY go.mod go.mod
+--> db8c20a88896
+[linux/amd64] [2/3] STEP 5/11: COPY go.sum go.sum
+--> eba59057e0d4
+[linux/amd64] [2/3] STEP 6/11: RUN go mod download
+--> 71671198884f
+[linux/amd64] [2/3] STEP 7/11: COPY cmd/ cmd/
+--> 62927f128290
+[linux/amd64] [2/3] STEP 8/11: COPY pkg/ pkg/
+--> 6fd0a8f4938c
+[linux/amd64] [2/3] STEP 9/11: ENV GOEXPERIMENT=strictfipsruntime
+--> cdf591350a2f
+[linux/amd64] [2/3] STEP 10/11: ENV CGO_ENABLED=1
+--> 4a778d908af4
+[linux/amd64] [2/3] STEP 11/11: RUN make build-backend BUILD_OPTS="-tags strictfipsruntime"
+go build -tags strictfipsruntime -o plugin-backend -mod=readonly cmd/plugin-backend.go

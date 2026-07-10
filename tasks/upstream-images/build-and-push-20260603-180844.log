@@ -1,0 +1,1425 @@
+Logging to /Users/emurasak/workspace/harness/tasks/upstream-images/build-and-push-20260603-180844.log
+Fetching all branches for each repo...
+  Fetching console-dashboards-plugin...
+  Fetching distributed-tracing-console-plugin...
+  Fetching logging-view-plugin...
+  Fetching monitoring-plugin...
+  Fetching troubleshooting-panel-console-plugin...
+Fetch complete.
+==========================================
+Building console-dashboards-plugin @ release-coo-ocp-4.12 with VERSION=v0.4.3 ORG=rh-ee-emurasak
+==========================================
+Already on 'release-coo-ocp-4.12'
+M	Makefile
+Your branch is up to date with 'origin/release-coo-ocp-4.12'.
+From https://github.com/openshift/console-dashboards-plugin
+ * branch            release-coo-ocp-4.12 -> FETCH_HEAD
+Already up to date.
+podman manifest rm quay.io/rh-ee-emurasak/console-dashboards-plugin:v0.4.3 || true
+Untagged: quay.io/rh-ee-emurasak/console-dashboards-plugin:v0.4.3
+Deleted: 28bc607dbe45f6f373fa02a430517173a476de269966491b38bee48e63c483f2
+podman manifest create quay.io/rh-ee-emurasak/console-dashboards-plugin:v0.4.3
+baa734ed645afa7d31b64eb34c5dcaa62c5a4d0c02dba2bae72c70230a0ba2c5
+podman build --platform=linux/arm64,linux/amd64 --manifest quay.io/rh-ee-emurasak/console-dashboards-plugin:v0.4.3 -f Dockerfile
+[linux/arm64] [1/3] STEP 1/8: FROM registry.redhat.io/ubi8/nodejs-18:latest AS web-builder
+Trying to pull registry.redhat.io/ubi8/nodejs-18:latest...
+Getting image source signatures
+Checking if image destination supports signatures
+Copying blob sha256:8fd64178c906794da03bc9b7d2d5e3b70073b47f8aa659230381d7fd897dc11b
+Copying blob sha256:c4fff77bc060c02d4f09680032367cb302e83402fc25b7c7ac001cb00238876f
+Copying blob sha256:6ad04be99c8f2547888de53fad691136f65cf5a11c7a2567ef29477c3413f587
+Copying config sha256:62a277f6499a7c210a1022190779f4387fc1294a28ea7696fc264248bf328a9b
+Writing manifest to image destination
+Storing signatures
+[linux/arm64] [1/3] STEP 2/8: WORKDIR /opt/app-root
+--> Using cache 87c07f8e7903c0333e290487c7fa5cdc27c444159ab4f0569e2985922b349f2d
+--> 87c07f8e7903
+[linux/arm64] [1/3] STEP 3/8: USER 0
+--> Using cache 508717e77868bc0fddf7ad6c537cadaf6405a85bddb5fd01e8bdbb8652870ac7
+--> 508717e77868
+[linux/arm64] [1/3] STEP 4/8: COPY web/package*.json web/
+--> Using cache 951b70a190bd2a156ec3acac59c01ee0e789b6495f6c048efd1b4caac98a5f37
+--> 951b70a190bd
+[linux/arm64] [1/3] STEP 5/8: COPY Makefile Makefile
+--> Using cache 96d09c82c54bf513b7b8184e85b30726dafd77052001b5fad540d8cde6b01513
+--> 96d09c82c54b
+[linux/arm64] [1/3] STEP 6/8: RUN make install-frontend-ci-clean
+--> Using cache dc080db5c3d52a7378f0738dec97f1186b0b44af8d6b10ebf40dd8c3ce06206c
+--> dc080db5c3d5
+[linux/arm64] [1/3] STEP 7/8: COPY web/ web/
+--> Using cache 7d1cabab83ee6ca940f06905c0c414872df927789b575d2ad30363cb6a4be8ef
+--> 7d1cabab83ee
+[linux/arm64] [1/3] STEP 8/8: RUN make build-frontend
+--> Using cache 0d25f3879f037411eadfae630716ca4c0c0cd535f6fd74c5ebf8c1835ed0906d
+--> 0d25f3879f03
+[linux/arm64] [2/3] STEP 1/11: FROM registry.ci.openshift.org/ocp/builder:rhel-8-golang-1.24-openshift-4.20 AS go-builder
+Trying to pull registry.ci.openshift.org/ocp/builder:rhel-8-golang-1.24-openshift-4.20...
+Getting image source signatures
+Copying blob sha256:1601f0002240e476166ae25539061c09fadc016385d68cfd04c419472708f270
+Copying blob sha256:abb828c6dd68e53a22f7a11904b72f9d5a7802fb5e7c380b3a22b18a02e9a463
+Copying blob sha256:211523f3608ae0538e139764b42d3db023cbe3af165af43f3b35bd1008edbe2a
+Copying config sha256:891a16a4d5dbbfb7e4204e6b986be2dacd9665316bcdabcec319512369b631f8
+Writing manifest to image destination
+[linux/arm64] [2/3] STEP 2/11: WORKDIR /opt/app-root
+--> Using cache 90931a5e8cbd10e70724f79b68551ce684e76e9b00a70e1b702f01c5b2505e5c
+--> 90931a5e8cbd
+[linux/arm64] [2/3] STEP 3/11: COPY Makefile Makefile
+--> Using cache 2c53cc3a3033b376438cc2e9eeee7da0ea29c63a131fddef9f392bca7a1f02d2
+--> 2c53cc3a3033
+[linux/arm64] [2/3] STEP 4/11: COPY go.mod go.mod
+--> Using cache 47078adb2b1bf93642b24f2e1683083b9bd65b6e4b39d352b28410cb87f5b134
+--> 47078adb2b1b
+[linux/arm64] [2/3] STEP 5/11: COPY go.sum go.sum
+--> Using cache 62791d00e08a8269267d00013c086e4e5930a7496e6d362ee35e44663d8f4d02
+--> 62791d00e08a
+[linux/arm64] [2/3] STEP 6/11: RUN go mod download
+--> Using cache 0732e5970ede7e0d2f72fc605eef70bd75e9586659ef2f11fdc7f8216e2319f9
+--> 0732e5970ede
+[linux/arm64] [2/3] STEP 7/11: COPY cmd/ cmd/
+--> Using cache 103f0f39e49524146d519accf7243c111bf0d7e1955b515f0f4b179061046c90
+--> 103f0f39e495
+[linux/arm64] [2/3] STEP 8/11: COPY pkg/ pkg/
+--> Using cache b4632fdefedecef63835f91e5b125abfe9363e69ae0b14c4e377e9d02efab995
+--> b4632fdefede
+[linux/arm64] [2/3] STEP 9/11: ENV GOEXPERIMENT=strictfipsruntime
+--> Using cache f6009013e51722ee1a0860708e7481af5cc0f9f7e9ff785d9d286bca8d7b961e
+--> f6009013e517
+[linux/arm64] [2/3] STEP 10/11: ENV CGO_ENABLED=1
+--> Using cache 1766c43f712dc93f2ecd0eda43dbc510069e65cf2dcc9d649b47c3e13d70312b
+--> 1766c43f712d
+[linux/arm64] [2/3] STEP 11/11: RUN make build-backend BUILD_OPTS="-tags strictfipsruntime"
+--> Using cache 9a8a410255ed6ffb17ce110b8566e8892b06f1da154dd167bc3214476b7aaac0
+--> 9a8a410255ed
+[linux/amd64] [1/3] STEP 1/8: FROM registry.redhat.io/ubi8/nodejs-18:latest AS web-builder
+Trying to pull registry.redhat.io/ubi8/nodejs-18:latest...
+Getting image source signatures
+Checking if image destination supports signatures
+Copying blob sha256:046eb6416170db2ab33e464d04c6f7c0c8c6cc8563597aca8e9fb7736dff00f9
+Copying blob sha256:43ddc3bd12b8691687c9f6c273331ca07e3a89b50a619e0db9b040a8a629386d
+Copying blob sha256:b610fd6091ba2163b8943d2214e20665977bc8064dc769d47be9ae868e48a301
+Copying config sha256:ab55058334c5c32969b838cea2db23ee8c69c1b742006a75c031ed4f1b286bc5
+Writing manifest to image destination
+Storing signatures
+[linux/amd64] [1/3] STEP 2/8: WORKDIR /opt/app-root
+--> Using cache 6caa91e2258d30a6b1f94eacfd661399e8883eb554e2a8a96b33196354d8d47d
+--> 6caa91e2258d
+[linux/amd64] [1/3] STEP 3/8: USER 0
+--> Using cache f824ba1cbb5f0090a8c1cc1313ee1b884891306773b6f084bdbf1ced69e6679c
+--> f824ba1cbb5f
+[linux/amd64] [1/3] STEP 4/8: COPY web/package*.json web/
+--> Using cache 97697c32d8d67563fcc17702db08ed58947e5b59f027bd9665c68fbde6e53b25
+--> 97697c32d8d6
+[linux/amd64] [1/3] STEP 5/8: COPY Makefile Makefile
+--> Using cache 3b46d22aff358b214e27006f4d9862f43aea1e9759f113795461efba7b73a5f6
+--> 3b46d22aff35
+[linux/amd64] [1/3] STEP 6/8: RUN make install-frontend-ci-clean
+--> Using cache 995630479883f028d8a8be5091922e0c61ab5584590f774c8322f67632443316
+--> 995630479883
+[linux/amd64] [1/3] STEP 7/8: COPY web/ web/
+--> Using cache 37837227d290700d5cbb7cecb3952ad5e10709aeeb90da375540be1296e777a3
+--> 37837227d290
+[linux/amd64] [1/3] STEP 8/8: RUN make build-frontend
+--> Using cache ad6b19a0ba852a6225d409262134f91f1e25f6ccb51ae6196c784bcc9bc91961
+--> ad6b19a0ba85
+[linux/arm64] [3/3] STEP 1/4: FROM registry.access.redhat.com/ubi8/ubi
+[linux/arm64] [3/3] STEP 2/4: COPY --from=web-builder /opt/app-root/web/dist /opt/app-root/web/dist
+--> Using cache 656c7330b13fd5bcd2efc343bf74b862efd33bad77d5f96beac8cb22554855c3
+--> 656c7330b13f
+[linux/arm64] [3/3] STEP 3/4: COPY --from=go-builder /opt/app-root/plugin-backend /opt/app-root
+--> Using cache 35648daf890c00fc94bfe0d22b54d83caf7d513253229a16b6c99441aa862f22
+--> 35648daf890c
+[linux/arm64] [3/3] STEP 4/4: ENTRYPOINT ["/opt/app-root/plugin-backend", "-static-path", "/opt/app-root/web/dist"]
+--> Using cache 678243c2f7b436df05b5e5fb33d397d5847263b0fd03d2972c4b9a9d9bc0bceb
+--> 678243c2f7b4
+[linux/amd64] [2/3] STEP 1/11: FROM registry.ci.openshift.org/ocp/builder:rhel-8-golang-1.24-openshift-4.20 AS go-builder
+Trying to pull registry.ci.openshift.org/ocp/builder:rhel-8-golang-1.24-openshift-4.20...
+678243c2f7b436df05b5e5fb33d397d5847263b0fd03d2972c4b9a9d9bc0bceb
+Getting image source signatures
+Copying blob sha256:ad150792efc16fbb7886da9d9457d93092929426e6a9f11c6e04a563f284eacd
+Copying blob sha256:c7965aa7086045a59bdb113a1fb8a19d7ccf7af4133e59af8ecefd39cda8e0b1
+Copying blob sha256:32a0db6672d42bc2f63fa6c620bf354f141c2478d6ea69c2363fc3ae82cf9448
+Copying config sha256:afb0ed974e4e076b1e05e106cf07c0ea3bffe26a331f278142661a821986210b
+Writing manifest to image destination
+[linux/amd64] [2/3] STEP 2/11: WORKDIR /opt/app-root
+--> Using cache 4c3d609c7a8eb4a13e773c450dbf709646876ab4aad230568d43accdfcbde575
+--> 4c3d609c7a8e
+[linux/amd64] [2/3] STEP 3/11: COPY Makefile Makefile
+--> Using cache 32a7b9175aa6ca33931caab8a08ffda9b490fff02ed0ccadcd0c8f5e597afede
+--> 32a7b9175aa6
+[linux/amd64] [2/3] STEP 4/11: COPY go.mod go.mod
+--> Using cache 81ca16991f68be27367f47f20b709963d21796514a6573c0a90bf55b6aa104c8
+--> 81ca16991f68
+[linux/amd64] [2/3] STEP 5/11: COPY go.sum go.sum
+--> Using cache 5db069493b6a4640225b0b1d1969ac343d75603979966c2a7df9039966174c98
+--> 5db069493b6a
+[linux/amd64] [2/3] STEP 6/11: RUN go mod download
+SIGSEGV: segmentation violation
+PC=0x44424e m=8 sigcode=1 addr=0xffffffffb430ee50
+
+goroutine 0 gp=0xc0003021c0 m=8 mp=0xc000300008 [idle]:
+runtime.netpoll(0xc00003c000?)
+	runtime/netpoll_epoll.go:169 +0x24e fp=0xffff5e7fbc58 sp=0xffff5e7fb5d0 pc=0x44424e
+runtime.findRunnable()
+	runtime/proc.go:3657 +0x8c5 fp=0xffff5e7fbdd0 sp=0xffff5e7fbc58 pc=0x451265
+runtime.schedule()
+	runtime/proc.go:4072 +0xb1 fp=0xffff5e7fbe08 sp=0xffff5e7fbdd0 pc=0x452831
+runtime.park_m(0xc000183880)
+	runtime/proc.go:4201 +0x285 fp=0xffff5e7fbe68 sp=0xffff5e7fbe08 pc=0x452ca5
+runtime.mcall()
+	runtime/asm_amd64.s:459 +0x4e fp=0xffff5e7fbe80 sp=0xffff5e7fbe68 pc=0x48582e
+
+goroutine 1 gp=0xc000004380 m=nil [chan receive]:
+runtime.gopark(0xb288c0?, 0x0?, 0x0?, 0x0?, 0xc0001980e0?)
+	runtime/proc.go:435 +0xce fp=0xc000034f68 sp=0xc000034f48 pc=0x47fa2e
+runtime.chanrecv(0xc0001980e0, 0x0, 0x1)
+	runtime/chan.go:664 +0x445 fp=0xc000034fe0 sp=0xc000034f68 pc=0x41b1a5
+runtime.chanrecv1(0xc000193310?, 0xc0001d44e0?)
+	runtime/chan.go:506 +0x12 fp=0xc000035008 sp=0xc000034fe0 pc=0x41ad32
+cmd/go/internal/modload.readModGraph({0xffffffffffffff9c?, 0x2?}, 0x0, {0xc000181008?, 0xba321b?, 0x38}, 0x0)
+	cmd/go/internal/modload/buildlist.go:435 +0x439 fp=0xc000035580 sp=0xc000035008 pc=0x86d6f9
+cmd/go/internal/modload.(*Requirements).Graph.func1()
+	cmd/go/internal/modload/buildlist.go:284 +0x3a fp=0xc0000355e8 sp=0xc000035580 pc=0x86d23a
+sync.(*Once).doSlow(0x0?, 0xba3219?)
+	sync/once.go:78 +0xab fp=0xc000035640 sp=0xc0000355e8 pc=0x491d0b
+sync.(*Once).Do(...)
+	sync/once.go:69
+cmd/go/internal/modload.(*Requirements).Graph(0xc0002840f0, {0xcd0940?, 0x1339ea0?})
+	cmd/go/internal/modload/buildlist.go:283 +0x4f fp=0xc000035680 sp=0xc000035640 pc=0x86d1af
+cmd/go/internal/modload.expandGraph({0xcd0940, 0x1339ea0}, 0xc0002840f0)
+	cmd/go/internal/modload/buildlist.go:608 +0x3e fp=0xc000035708 sp=0xc000035680 pc=0x86eb7e
+cmd/go/internal/modload.LoadModGraph({0xcd0940, 0x1339ea0}, {0x0, 0x0})
+	cmd/go/internal/modload/buildlist.go:588 +0x8f fp=0xc000035788 sp=0xc000035708 pc=0x86e8af
+cmd/go/internal/modcmd.runDownload({0xcd0940, 0x1339ea0}, 0xc0001de2a0?, {0xc0001a2260, 0x0, 0x0})
+	cmd/go/internal/modcmd/download.go:156 +0x245 fp=0xc0000359c8 sp=0xc000035788 pc=0x9be985
+main.invoke(0x12c0140, {0xc0001a2260, 0x1, 0x1})
+	cmd/go/main.go:341 +0x845 fp=0xc000035cd0 sp=0xc0000359c8 pc=0xa05b05
+main.main()
+	cmd/go/main.go:220 +0xe8b fp=0xc000035f50 sp=0xc000035cd0 pc=0xa04c2b
+runtime.main()
+	runtime/proc.go:283 +0x28b fp=0xc000035fe0 sp=0xc000035f50 pc=0x44ad2b
+runtime.goexit({})
+	runtime/asm_amd64.s:1700 +0x1 fp=0xc000035fe8 sp=0xc000035fe0 pc=0x487861
+
+goroutine 2 gp=0xc000004e00 m=nil [force gc (idle)]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)
+	runtime/proc.go:435 +0xce fp=0xc00005efa8 sp=0xc00005ef88 pc=0x47fa2e
+runtime.goparkunlock(...)
+	runtime/proc.go:441
+runtime.forcegchelper()
+	runtime/proc.go:348 +0xb3 fp=0xc00005efe0 sp=0xc00005efa8 pc=0x44b073
+runtime.goexit({})
+	runtime/asm_amd64.s:1700 +0x1 fp=0xc00005efe8 sp=0xc00005efe0 pc=0x487861
+created by runtime.init.7 in goroutine 1
+	runtime/proc.go:336 +0x1a
+
+goroutine 18 gp=0xc000182380 m=nil [GC sweep wait]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)
+	runtime/proc.go:435 +0xce fp=0xc00005a780 sp=0xc00005a760 pc=0x47fa2e
+runtime.goparkunlock(...)
+	runtime/proc.go:441
+runtime.bgsweep(0xc000190000)
+	runtime/mgcsweep.go:276 +0x94 fp=0xc00005a7c8 sp=0xc00005a780 pc=0x4357b4
+runtime.gcenable.gowrap1()
+	runtime/mgc.go:204 +0x25 fp=0xc00005a7e0 sp=0xc00005a7c8 pc=0x429c85
+runtime.goexit({})
+	runtime/asm_amd64.s:1700 +0x1 fp=0xc00005a7e8 sp=0xc00005a7e0 pc=0x487861
+created by runtime.gcenable in goroutine 1
+	runtime/mgc.go:204 +0x66
+
+goroutine 19 gp=0xc000182540 m=nil [GC scavenge wait]:
+runtime.gopark(0xc000190000?, 0xcc3e10?, 0x1?, 0x0?, 0xc000182540?)
+	runtime/proc.go:435 +0xce fp=0xc00005af78 sp=0xc00005af58 pc=0x47fa2e
+runtime.goparkunlock(...)
+	runtime/proc.go:441
+runtime.(*scavengerState).park(0x1317420)
+	runtime/mgcscavenge.go:425 +0x49 fp=0xc00005afa8 sp=0xc00005af78 pc=0x433269
+runtime.bgscavenge(0xc000190000)
+	runtime/mgcscavenge.go:653 +0x3c fp=0xc00005afc8 sp=0xc00005afa8 pc=0x4337dc
+runtime.gcenable.gowrap2()
+	runtime/mgc.go:205 +0x25 fp=0xc00005afe0 sp=0xc00005afc8 pc=0x429c25
+runtime.goexit({})
+	runtime/asm_amd64.s:1700 +0x1 fp=0xc00005afe8 sp=0xc00005afe0 pc=0x487861
+created by runtime.gcenable in goroutine 1
+	runtime/mgc.go:205 +0xa5
+
+goroutine 20 gp=0xc000182a80 m=nil [finalizer wait]:
+runtime.gopark(0x1b8?, 0xc000004380?, 0x1?, 0x43?, 0xc00005e688?)
+	runtime/proc.go:435 +0xce fp=0xc00005e630 sp=0xc00005e610 pc=0x47fa2e
+runtime.runfinq()
+	runtime/mfinal.go:196 +0x107 fp=0xc00005e7e0 sp=0xc00005e630 pc=0x428bc7
+runtime.goexit({})
+	runtime/asm_amd64.s:1700 +0x1 fp=0xc00005e7e8 sp=0xc00005e7e0 pc=0x487861
+created by runtime.createfing in goroutine 1
+	runtime/mfinal.go:166 +0x3d
+
+goroutine 34 gp=0xc00024e000 m=nil [chan receive]:
+runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)
+	runtime/proc.go:435 +0xce fp=0xc000254718 sp=0xc0002546f8 pc=0x47fa2e
+runtime.chanrecv(0xc00023e070, 0x0, 0x1)
+	runtime/chan.go:664 +0x445 fp=0xc000254790 sp=0xc000254718 pc=0x41b1a5
+runtime.chanrecv1(0x0?, 0x0?)
+	runtime/chan.go:506 +0x12 fp=0xc0002547b8 sp=0xc000254790 pc=0x41ad32
+runtime.unique_runtime_registerUniqueMapCleanup.func2(...)
+	runtime/mgc.go:1797
+runtime.unique_runtime_registerUniqueMapCleanup.gowrap1()
+	runtime/mgc.go:1800 +0x2f fp=0xc0002547e0 sp=0xc0002547b8 pc=0x42cdcf
+runtime.goexit({})
+	runtime/asm_amd64.s:1700 +0x1 fp=0xc0002547e8 sp=0xc0002547e0 pc=0x487861
+created by unique.runtime_registerUniqueMapCleanup in goroutine 1
+	runtime/mgc.go:1795 +0x79
+
+goroutine 21 gp=0xc000182c40 m=nil [select]:
+runtime.gopark(0xc0001444b0?, 0x2?, 0x0?, 0x14?, 0xc0001443e4?)
+	runtime/proc.go:435 +0xce fp=0xc000144270 sp=0xc000144250 pc=0x47fa2e
+runtime.selectgo(0xc0001444b0, 0xc0001443e0, 0x14?, 0x0, 0x47d000?, 0x1)
+	runtime/select.go:351 +0x837 fp=0xc0001443a8 sp=0xc000144270 pc=0x45d597
+net/http.(*Transport).getConn(0x12c2960, 0xc0001380a0, {{}, 0x0, {0xc000198230, 0x5}, {0xc000146018, 0x14}, 0x0})
+	net/http/transport.go:1523 +0x4ae fp=0xc000144580 sp=0xc0001443a8 pc=0x7b0b4e
+net/http.(*Transport).roundTrip(0x12c2960, 0xc000286500)
+	net/http/transport.go:685 +0xb57 fp=0xc000144778 sp=0xc000144580 pc=0x7ac877
+net/http.(*Transport).RoundTrip(0xc000180008?, 0xccade0?)
+	net/http/roundtrip.go:30 +0x13 fp=0xc000144798 sp=0xc000144778 pc=0x7bb013
+net/http.send(0xc000286500, {0xccade0, 0x12c2960}, {0x60ac01?, 0x47c46c?, 0x0?})
+	net/http/client.go:259 +0x5e2 fp=0xc000144988 sp=0xc000144798 pc=0x777882
+net/http.(*Client).send(0xc0000246f0, 0xc000286500, {0x47c318?, 0x6400000000000001?, 0x0?})
+	net/http/client.go:180 +0x91 fp=0xc000144a00 sp=0xc000144988 pc=0x777131
+net/http.(*Client).do(0xc0000246f0, 0xc000286500)
+	net/http/client.go:728 +0x989 fp=0xc000144bf0 sp=0xc000144a00 pc=0x779669
+net/http.(*Client).Do(...)
+	net/http/client.go:587
+cmd/go/internal/web.get.func1(0xc000144f88)
+	cmd/go/internal/web/http.go:159 +0x3cb fp=0xc000144d68 sp=0xc000144bf0 pc=0x7ce02b
+cmd/go/internal/web.get(0x1, 0xc000145050)
+	cmd/go/internal/web/http.go:206 +0x482 fp=0xc000145028 sp=0xc000144d68 pc=0x7cd102
+cmd/go/internal/web.Get(...)
+	cmd/go/internal/web/api.go:186
+cmd/go/internal/modfetch.(*proxyRepo).getBody(0xc000285270, {0xba3421?, 0x29?}, {0xc0001d4960, 0x29})
+	cmd/go/internal/modfetch/proxy.go:282 +0x13f fp=0xc000145118 sp=0xc000145028 pc=0x84257f
+cmd/go/internal/modfetch.(*proxyRepo).getBytes(0xc0001d4540?, {0xcd0a58?, 0x1339ea0?}, {0xc0001d4960?, 0x82d4b4?})
+	cmd/go/internal/modfetch/proxy.go:260 +0x5b fp=0xc0001451e0 sp=0xc000145118 pc=0x84213b
+cmd/go/internal/modfetch.(*proxyRepo).GoMod(0xc000285270, {0xcd0a58, 0x1339ea0}, {0xc0001d4540, 0x22})
+	cmd/go/internal/modfetch/proxy.go:412 +0x10d fp=0xc000145248 sp=0xc0001451e0 pc=0x84386d
+cmd/go/internal/modfetch.(*cachingRepo).GoMod.func1()
+	cmd/go/internal/modfetch/cache.go:318 +0xa5 fp=0xc000145300 sp=0xc000145248 pc=0x82e1e5
+cmd/internal/par.(*ErrCache[...]).Do.func1()
+	cmd/internal/par/work.go:119 +0x28 fp=0xc000145338 sp=0xc000145300 pc=0x848a88
+cmd/internal/par.(*Cache[...]).Do(0xcd54c0, {0xc0001d4540, 0x22}, 0xc00039b468)
+	cmd/internal/par/work.go:160 +0x156 fp=0xc000145418 sp=0xc000145338 pc=0x848d76
+cmd/internal/par.(*ErrCache[...]).Do(0x843fac?, {0xc0001d4540?, 0xcd53c0?}, 0xc000226120?)
+	cmd/internal/par/work.go:118 +0x47 fp=0xc0001454b8 sp=0xc000145418 pc=0x8489a7
+cmd/go/internal/modfetch.(*cachingRepo).GoMod(0xcd0a58?, {0xcd0a58?, 0x1339ea0?}, {0xc0001d4540, 0x22})
+	cmd/go/internal/modfetch/cache.go:311 +0xfa fp=0xc000145548 sp=0xc0001454b8 pc=0x82e05a
+cmd/go/internal/modfetch.GoMod.func2({0xc000226120?, 0x0?})
+	cmd/go/internal/modfetch/cache.go:411 +0x73 fp=0xc0001455a8 sp=0xc000145548 pc=0x82ecf3
+cmd/go/internal/modfetch.TryProxies(0xc000145680)
+	cmd/go/internal/modfetch/proxy.go:164 +0xaf fp=0xc000145628 sp=0xc0001455a8 pc=0x8417cf
+cmd/go/internal/modfetch.GoMod({0xcd0a58, 0x1339ea0}, {0xc0001d4510, 0x21}, {0xc0001d4540, 0x22})
+	cmd/go/internal/modfetch/cache.go:410 +0x258 fp=0xc0001456f8 sp=0xc000145628 pc=0x82ebb8
+cmd/go/internal/modload.rawGoModData({{0xc0001d4510?, 0x47d499?}, {0xc0001d4540?, 0xb58360?}})
+	cmd/go/internal/modload/modfile.go:786 +0x15f fp=0xc000145858 sp=0xc0001456f8 pc=0x8a3e3f
+cmd/go/internal/modload.rawGoModSummary.func1()
+	cmd/go/internal/modload/modfile.go:695 +0x59 fp=0xc0001459c0 sp=0xc000145858 pc=0x8a33b9
+cmd/internal/par.(*ErrCache[...]).Do.func1()
+	cmd/internal/par/work.go:119 +0x13 fp=0xc0001459d0 sp=0xc0001459c0 pc=0x8b3b33
+cmd/internal/par.(*Cache[...]).Do(0xcd5240, {{0xc0001d4510, 0x21}, {0xc0001d4540, 0x22}}, 0xc000258a80)
+	cmd/internal/par/work.go:160 +0x13c fp=0xc000145a48 sp=0xc0001459d0 pc=0x8b3d7c
+cmd/internal/par.(*ErrCache[...]).Do(0x0?, {{0xc0001d4510?, 0xc0001d44e0?}, {0xc0001d4540?, 0x0?}}, 0xba3f93?)
+	cmd/internal/par/work.go:118 +0x45 fp=0xc000145aa8 sp=0xc000145a48 pc=0x8b3ac5
+cmd/go/internal/modload.rawGoModSummary({{0xc0001d4510?, 0x8?}, {0xc0001d4540?, 0x426405?}})
+	cmd/go/internal/modload/modfile.go:693 +0x385 fp=0xc000145b58 sp=0xc000145aa8 pc=0x8a3265
+cmd/go/internal/modload.goModSummary({{0xc0001d4510?, 0x3c?}, {0xc0001d4540?, 0xffffb42801c8?}})
+	cmd/go/internal/modload/modfile.go:602 +0x3ae fp=0xc000145ca8 sp=0xc000145b58 pc=0x8a27ee
+cmd/go/internal/modload.readModGraph.func2.1()
+	cmd/go/internal/modload/buildlist.go:380 +0x65 fp=0xc000145d48 sp=0xc000145ca8 pc=0x86e345
+cmd/internal/par.(*ErrCache[...]).Do.func1()
+	cmd/internal/par/work.go:119 +0x13 fp=0xc000145d58 sp=0xc000145d48 pc=0x8b3b33
+cmd/internal/par.(*Cache[...]).Do(0xcd5240, {{0xc0001d4510, 0x21}, {0xc0001d4540, 0x22}}, 0xc000258e08)
+	cmd/internal/par/work.go:160 +0x13c fp=0xc000145dd0 sp=0xc000145d58 pc=0x8b3d7c
+cmd/internal/par.(*ErrCache[...]).Do(0x0?, {{0xc0001d4510?, 0x0?}, {0xc0001d4540?, 0x0?}}, 0x0?)
+	cmd/internal/par/work.go:118 +0x45 fp=0xc000145e30 sp=0xc000145dd0 pc=0x8b3ac5
+cmd/go/internal/modload.readModGraph.func2({{0xc0001d4510?, 0x0?}, {0xc0001d4540?, 0x0?}})
+	cmd/go/internal/modload/buildlist.go:379 +0x9b fp=0xc000145eb8 sp=0xc000145e30 pc=0x86e29b
+cmd/go/internal/modload.readModGraph.func3.1()
+	cmd/go/internal/modload/buildlist.go:408 +0x56 fp=0xc000145f60 sp=0xc000145eb8 pc=0x86e0d6
+cmd/internal/par.(*Queue).Add.func1()
+	cmd/internal/par/queue.go:58 +0x5c fp=0xc000145fe0 sp=0xc000145f60 pc=0x5edd3c
+runtime.goexit({})
+	runtime/asm_amd64.s:1700 +0x1 fp=0xc000145fe8 sp=0xc000145fe0 pc=0x487861
+created by cmd/internal/par.(*Queue).Add in goroutine 1
+	cmd/internal/par/queue.go:56 +0x1d3
+
+goroutine 22 gp=0xc000182e00 m=nil [select]:
+runtime.gopark(0xc0003424b0?, 0x2?, 0x0?, 0x14?, 0xc0003423e4?)
+	runtime/proc.go:435 +0xce fp=0xc000342270 sp=0xc000342250 pc=0x47fa2e
+runtime.selectgo(0xc0003424b0, 0xc0003423e0, 0x7?, 0x0, 0x45e910?, 0x1)
+	runtime/select.go:351 +0x837 fp=0xc0003423a8 sp=0xc000342270 pc=0x45d597
+net/http.(*Transport).getConn(0x12c2960, 0xc0004160a0, {{}, 0x0, {0xc0001340e0, 0x5}, {0xc000420018, 0x14}, 0x0})
+	net/http/transport.go:1523 +0x4ae fp=0xc000342580 sp=0xc0003423a8 pc=0x7b0b4e
+net/http.(*Transport).roundTrip(0x12c2960, 0xc00013c000)
+	net/http/transport.go:685 +0xb57 fp=0xc000342778 sp=0xc000342580 pc=0x7ac877
+net/http.(*Transport).RoundTrip(0xc000180008?, 0xccade0?)
+	net/http/roundtrip.go:30 +0x13 fp=0xc000342798 sp=0xc000342778 pc=0x7bb013
+net/http.send(0xc00013c000, {0xccade0, 0x12c2960}, {0x133b301?, 0x47c46c?, 0x0?})
+	net/http/client.go:259 +0x5e2 fp=0xc000342988 sp=0xc000342798 pc=0x777882
+net/http.(*Client).send(0xc0000246f0, 0xc00013c000, {0x47c318?, 0x640000000042a016?, 0x0?})
+	net/http/client.go:180 +0x91 fp=0xc000342a00 sp=0xc000342988 pc=0x777131
+net/http.(*Client).do(0xc0000246f0, 0xc00013c000)
+	net/http/client.go:728 +0x989 fp=0xc000342bf0 sp=0xc000342a00 pc=0x779669
+net/http.(*Client).Do(...)
+	net/http/client.go:587
+cmd/go/internal/web.get.func1(0xc000342f88)
+	cmd/go/internal/web/http.go:159 +0x3cb fp=0xc000342d68 sp=0xc000342bf0 pc=0x7ce02b
+cmd/go/internal/web.get(0x1, 0xc000343050)
+	cmd/go/internal/web/http.go:206 +0x482 fp=0xc000343028 sp=0xc000342d68 pc=0x7cd102
+cmd/go/internal/web.Get(...)
+	cmd/go/internal/web/api.go:186
+cmd/go/internal/modfetch.(*proxyRepo).getBody(0xc000138000, {0xba3421?, 0x2b?}, {0xc000132060, 0x2b})
+	cmd/go/internal/modfetch/proxy.go:282 +0x13f fp=0xc000343118 sp=0xc000343028 pc=0x84257f
+cmd/go/internal/modfetch.(*proxyRepo).getBytes(0xc0001d45a0?, {0xcd0a58?, 0x1339ea0?}, {0xc000132060?, 0x82d4b4?})
+	cmd/go/internal/modfetch/proxy.go:260 +0x5b fp=0xc0003431e0 sp=0xc000343118 pc=0x84213b
+cmd/go/internal/modfetch.(*proxyRepo).GoMod(0xc000138000, {0xcd0a58, 0x1339ea0}, {0xc0001d45a0, 0x24})
+	cmd/go/internal/modfetch/proxy.go:412 +0x10d fp=0xc000343248 sp=0xc0003431e0 pc=0x84386d
+cmd/go/internal/modfetch.(*cachingRepo).GoMod.func1()
+	cmd/go/internal/modfetch/cache.go:318 +0xa5 fp=0xc000343300 sp=0xc000343248 pc=0x82e1e5
+cmd/internal/par.(*ErrCache[...]).Do.func1()
+	cmd/internal/par/work.go:119 +0x28 fp=0xc000343338 sp=0xc000343300 pc=0x848a88
+cmd/internal/par.(*Cache[...]).Do(0xcd54c0, {0xc0001d45a0, 0x24}, 0xc000123468)
+	cmd/internal/par/work.go:160 +0x156 fp=0xc000343418 sp=0xc000343338 pc=0x848d76
+cmd/internal/par.(*ErrCache[...]).Do(0x843fac?, {0xc0001d45a0?, 0xcd53c0?}, 0xc000226120?)
+	cmd/internal/par/work.go:118 +0x47 fp=0xc0003434b8 sp=0xc000343418 pc=0x8489a7
+cmd/go/internal/modfetch.(*cachingRepo).GoMod(0xcd0a58?, {0xcd0a58?, 0x1339ea0?}, {0xc0001d45a0, 0x24})
+	cmd/go/internal/modfetch/cache.go:311 +0xfa fp=0xc000343548 sp=0xc0003434b8 pc=0x82e05a
+cmd/go/internal/modfetch.GoMod.func2({0xc000226120?, 0x0?})
+	cmd/go/internal/modfetch/cache.go:411 +0x73 fp=0xc0003435a8 sp=0xc000343548 pc=0x82ecf3
+cmd/go/internal/modfetch.TryProxies(0xc000343680)
+	cmd/go/internal/modfetch/proxy.go:164 +0xaf fp=0xc000343628 sp=0xc0003435a8 pc=0x8417cf
+cmd/go/internal/modfetch.GoMod({0xcd0a58, 0x1339ea0}, {0xc0001d2340, 0x1a}, {0xc0001d45a0, 0x24})
+	cmd/go/internal/modfetch/cache.go:410 +0x258 fp=0xc0003436f8 sp=0xc000343628 pc=0x82ebb8
+cmd/go/internal/modload.rawGoModData({{0xc0001d2340?, 0x47d499?}, {0xc0001d45a0?, 0xb58360?}})
+	cmd/go/internal/modload/modfile.go:786 +0x15f fp=0xc000343858 sp=0xc0003436f8 pc=0x8a3e3f
+cmd/go/internal/modload.rawGoModSummary.func1()
+	cmd/go/internal/modload/modfile.go:695 +0x59 fp=0xc0003439c0 sp=0xc000343858 pc=0x8a33b9
+cmd/internal/par.(*ErrCache[...]).Do.func1()
+	cmd/internal/par/work.go:119 +0x13 fp=0xc0003439d0 sp=0xc0003439c0 pc=0x8b3b33
+cmd/internal/par.(*Cache[...]).Do(0xcd5240, {{0xc0001d2340, 0x1a}, {0xc0001d45a0, 0x24}}, 0xc000114a80)
+	cmd/internal/par/work.go:160 +0x13c fp=0xc000343a48 sp=0xc0003439d0 pc=0x8b3d7c
+cmd/internal/par.(*ErrCache[...]).Do(0x0?, {{0xc0001d2340?, 0xc0001d44e0?}, {0xc0001d45a0?, 0x0?}}, 0xba3f93?)
+	cmd/internal/par/work.go:118 +0x45 fp=0xc000343aa8 sp=0xc000343a48 pc=0x8b3ac5
+cmd/go/internal/modload.rawGoModSummary({{0xc0001d2340?, 0x8?}, {0xc0001d45a0?, 0x426405?}})
+	cmd/go/internal/modload/modfile.go:693 +0x385 fp=0xc000343b58 sp=0xc000343aa8 pc=0x8a3265
+cmd/go/internal/modload.goModSummary({{0xc0001d2340?, 0x3c?}, {0xc0001d45a0?, 0xffffbda11868?}})
+	cmd/go/internal/modload/modfile.go:602 +0x3ae fp=0xc000343ca8 sp=0xc000343b58 pc=0x8a27ee
+cmd/go/internal/modload.readModGraph.func2.1()
+	cmd/go/internal/modload/buildlist.go:380 +0x65 fp=0xc000343d48 sp=0xc000343ca8 pc=0x86e345
+cmd/internal/par.(*ErrCache[...]).Do.func1()
+	cmd/internal/par/work.go:119 +0x13 fp=0xc000343d58 sp=0xc000343d48 pc=0x8b3b33
+cmd/internal/par.(*Cache[...]).Do(0xcd5240, {{0xc0001d2340, 0x1a}, {0xc0001d45a0, 0x24}}, 0xc000114e08)
+	cmd/internal/par/work.go:160 +0x13c fp=0xc000343dd0 sp=0xc000343d58 pc=0x8b3d7c
+cmd/internal/par.(*ErrCache[...]).Do(0x0?, {{0xc0001d2340?, 0x0?}, {0xc0001d45a0?, 0x0?}}, 0x0?)
+	cmd/internal/par/work.go:118 +0x45 fp=0xc000343e30 sp=0xc000343dd0 pc=0x8b3ac5
+cmd/go/internal/modload.readModGraph.func2({{0xc0001d2340?, 0x0?}, {0xc0001d45a0?, 0x0?}})
+	cmd/go/internal/modload/buildlist.go:379 +0x9b fp=0xc000343eb8 sp=0xc000343e30 pc=0x86e29b
+cmd/go/internal/modload.readModGraph.func3.1()
+	cmd/go/internal/modload/buildlist.go:408 +0x56 fp=0xc000343f60 sp=0xc000343eb8 pc=0x86e0d6
+cmd/internal/par.(*Queue).Add.func1()
+	cmd/internal/par/queue.go:58 +0x5c fp=0xc000343fe0 sp=0xc000343f60 pc=0x5edd3c
+runtime.goexit({})
+	runtime/asm_amd64.s:1700 +0x1 fp=0xc000343fe8 sp=0xc000343fe0 pc=0x487861
+created by cmd/internal/par.(*Queue).Add in goroutine 1
+	cmd/internal/par/queue.go:56 +0x1d3
+
+goroutine 23 gp=0xc000182fc0 m=nil [select]:
+runtime.gopark(0xc00048c4b0?, 0x2?, 0x52?, 0x14?, 0xc00048c3e4?)
+	runtime/proc.go:435 +0xce fp=0xc00048c270 sp=0xc00048c250 pc=0x47fa2e
+runtime.selectgo(0xc00048c4b0, 0xc00048c3e0, 0x14?, 0x0, 0x133b300?, 0x1)
+	runtime/select.go:351 +0x837 fp=0xc00048c3a8 sp=0xc00048c270 pc=0x45d597
+net/http.(*Transport).getConn(0x12c2960, 0xc0003b00a0, {{}, 0x0, {0xc000418000, 0x5}, {0xc0003b6018, 0x14}, 0x0})
+	net/http/transport.go:1523 +0x4ae fp=0xc00048c580 sp=0xc00048c3a8 pc=0x7b0b4e
+net/http.(*Transport).roundTrip(0x12c2960, 0xc00041a000)
+	net/http/transport.go:685 +0xb57 fp=0xc00048c778 sp=0xc00048c580 pc=0x7ac877
+net/http.(*Transport).RoundTrip(0xc00041ff80?, 0xccade0?)
+	net/http/roundtrip.go:30 +0x13 fp=0xc00048c798 sp=0xc00048c778 pc=0x7bb013
+net/http.send(0xc00041a000, {0xccade0, 0x12c2960}, {0x60ac01?, 0xffff6c16d508?, 0x0?})
+	net/http/client.go:259 +0x5e2 fp=0xc00048c988 sp=0xc00048c798 pc=0x777882
+net/http.(*Client).send(0xc0000246f0, 0xc00041a000, {0x47c318?, 0x640000000042a016?, 0x0?})
+	net/http/client.go:180 +0x91 fp=0xc00048ca00 sp=0xc00048c988 pc=0x777131
+net/http.(*Client).do(0xc0000246f0, 0xc00041a000)
+	net/http/client.go:728 +0x989 fp=0xc00048cbf0 sp=0xc00048ca00 pc=0x779669
+net/http.(*Client).Do(...)
+	net/http/client.go:587
+cmd/go/internal/web.get.func1(0xc00048cf88)
+	cmd/go/internal/web/http.go:159 +0x3cb fp=0xc00048cd68 sp=0xc00048cbf0 pc=0x7ce02b
+cmd/go/internal/web.get(0x1, 0xc00048d050)
+	cmd/go/internal/web/http.go:206 +0x482 fp=0xc00048d028 sp=0xc00048cd68 pc=0x7cd102
+cmd/go/internal/web.Get(...)
+	cmd/go/internal/web/api.go:186
+cmd/go/internal/modfetch.(*proxyRepo).getBody(0xc000416000, {0xba3421?, 0xe?}, {0xc0000b7218, 0xe})
+	cmd/go/internal/modfetch/proxy.go:282 +0x13f fp=0xc00048d118 sp=0xc00048d028 pc=0x84257f
+cmd/go/internal/modfetch.(*proxyRepo).getBytes(0xc0001ae730?, {0xcd0a58?, 0x1339ea0?}, {0xc0000b7218?, 0x82d4b4?})
+	cmd/go/internal/modfetch/proxy.go:260 +0x5b fp=0xc00048d1e0 sp=0xc00048d118 pc=0x84213b
+cmd/go/internal/modfetch.(*proxyRepo).GoMod(0xc000416000, {0xcd0a58, 0x1339ea0}, {0xc0001ae730, 0x7})
+	cmd/go/internal/modfetch/proxy.go:412 +0x10d fp=0xc00048d248 sp=0xc00048d1e0 pc=0x84386d
+cmd/go/internal/modfetch.(*cachingRepo).GoMod.func1()
+	cmd/go/internal/modfetch/cache.go:318 +0xa5 fp=0xc00048d300 sp=0xc00048d248 pc=0x82e1e5
+cmd/internal/par.(*ErrCache[...]).Do.func1()
+	cmd/internal/par/work.go:119 +0x28 fp=0xc00048d338 sp=0xc00048d300 pc=0x848a88
+cmd/internal/par.(*Cache[...]).Do(0xcd54c0, {0xc0001ae730, 0x7}, 0xc0000b7468)
+	cmd/internal/par/work.go:160 +0x156 fp=0xc00048d418 sp=0xc00048d338 pc=0x848d76
+cmd/internal/par.(*ErrCache[...]).Do(0x843fac?, {0xc0001ae730?, 0xcd53c0?}, 0xc000226120?)
+	cmd/internal/par/work.go:118 +0x47 fp=0xc00048d4b8 sp=0xc00048d418 pc=0x8489a7
+cmd/go/internal/modfetch.(*cachingRepo).GoMod(0xcd0a58?, {0xcd0a58?, 0x1339ea0?}, {0xc0001ae730, 0x7})
+	cmd/go/internal/modfetch/cache.go:311 +0xfa fp=0xc00048d548 sp=0xc00048d4b8 pc=0x82e05a
+cmd/go/internal/modfetch.GoMod.func2({0xc000226120?, 0x0?})
+	cmd/go/internal/modfetch/cache.go:411 +0x73 fp=0xc00048d5a8 sp=0xc00048d548 pc=0x82ecf3
+cmd/go/internal/modfetch.TryProxies(0xc00048d680)
+	cmd/go/internal/modfetch/proxy.go:164 +0xaf fp=0xc00048d628 sp=0xc00048d5a8 pc=0x8417cf
+cmd/go/internal/modfetch.GoMod({0xcd0a58, 0x1339ea0}, {0xc0001d45d0, 0x21}, {0xc0001ae730, 0x7})
+	cmd/go/internal/modfetch/cache.go:410 +0x258 fp=0xc00048d6f8 sp=0xc00048d628 pc=0x82ebb8
+cmd/go/internal/modload.rawGoModData({{0xc0001d45d0?, 0xc0000738b0?}, {0xc0001ae730?, 0xb58360?}})
+	cmd/go/internal/modload/modfile.go:786 +0x15f fp=0xc00048d858 sp=0xc00048d6f8 pc=0x8a3e3f
+cmd/go/internal/modload.rawGoModSummary.func1()
+	cmd/go/internal/modload/modfile.go:695 +0x59 fp=0xc00048d9c0 sp=0xc00048d858 pc=0x8a33b9
+cmd/internal/par.(*ErrCache[...]).Do.func1()
+	cmd/internal/par/work.go:119 +0x13 fp=0xc00048d9d0 sp=0xc00048d9c0 pc=0x8b3b33
+cmd/internal/par.(*Cache[...]).Do(0xcd5240, {{0xc0001d45d0, 0x21}, {0xc0001ae730, 0x7}}, 0xc000073a80)
+	cmd/internal/par/work.go:160 +0x13c fp=0xc00048da48 sp=0xc00048d9d0 pc=0x8b3d7c
+cmd/internal/par.(*ErrCache[...]).Do(0x0?, {{0xc0001d45d0?, 0xc0001d44e0?}, {0xc0001ae730?, 0x0?}}, 0xba3f93?)
+	cmd/internal/par/work.go:118 +0x45 fp=0xc00048daa8 sp=0xc00048da48 pc=0x8b3ac5
+cmd/go/internal/modload.rawGoModSummary({{0xc0001d45d0?, 0xc0000000007e3f0?}, {0xc0001ae730?, 0xffffbe962108?}})
+	cmd/go/internal/modload/modfile.go:693 +0x385 fp=0xc00048db58 sp=0xc00048daa8 pc=0x8a3265
+cmd/go/internal/modload.goModSummary({{0xc0001d45d0?, 0x3c?}, {0xc0001ae730?, 0xc0000a2118?}})
+	cmd/go/internal/modload/modfile.go:602 +0x3ae fp=0xc00048dca8 sp=0xc00048db58 pc=0x8a27ee
+cmd/go/internal/modload.readModGraph.func2.1()
+	cmd/go/internal/modload/buildlist.go:380 +0x65 fp=0xc00048dd48 sp=0xc00048dca8 pc=0x86e345
+cmd/internal/par.(*ErrCache[...]).Do.func1()
+	cmd/internal/par/work.go:119 +0x13 fp=0xc00048dd58 sp=0xc00048dd48 pc=0x8b3b33
+cmd/internal/par.(*Cache[...]).Do(0xcd5240, {{0xc0001d45d0, 0x21}, {0xc0001ae730, 0x7}}, 0xc000073e08)
+	cmd/internal/par/work.go:160 +0x13c fp=0xc00048ddd0 sp=0xc00048dd58 pc=0x8b3d7c
+cmd/internal/par.(*ErrCache[...]).Do(0x0?, {{0xc0001d45d0?, 0x0?}, {0xc0001ae730?, 0x0?}}, 0x0?)
+	cmd/internal/par/work.go:118 +0x45 fp=0xc00048de30 sp=0xc00048ddd0 pc=0x8b3ac5
+cmd/go/internal/modload.readModGraph.func2({{0xc0001d45d0?, 0x0?}, {0xc0001ae730?, 0x0?}})
+	cmd/go/internal/modload/buildlist.go:379 +0x9b fp=0xc00048deb8 sp=0xc00048de30 pc=0x86e29b
+cmd/go/internal/modload.readModGraph.func3.1()
+	cmd/go/internal/modload/buildlist.go:408 +0x56 fp=0xc00048df60 sp=0xc00048deb8 pc=0x86e0d6
+cmd/internal/par.(*Queue).Add.func1()
+	cmd/internal/par/queue.go:58 +0x5c fp=0xc00048dfe0 sp=0xc00048df60 pc=0x5edd3c
+runtime.goexit({})
+	runtime/asm_amd64.s:1700 +0x1 fp=0xc00048dfe8 sp=0xc00048dfe0 pc=0x487861
+created by cmd/internal/par.(*Queue).Add in goroutine 1
+	cmd/internal/par/queue.go:56 +0x1d3
+
+goroutine 24 gp=0xc000183180 m=nil [select]:
+runtime.gopark(0xc0001404b0?, 0x2?, 0x0?, 0x14?, 0xc0001403e4?)
+	runtime/proc.go:435 +0xce fp=0xc000140270 sp=0xc000140250 pc=0x47fa2e
+runtime.selectgo(0xc0001404b0, 0xc0001403e0, 0x7?, 0x0, 0x45e910?, 0x1)
+	runtime/select.go:351 +0x837 fp=0xc0001403a8 sp=0xc000140270 pc=0x45d597
+net/http.(*Transport).getConn(0x12c2960, 0xc0000be0a0, {{}, 0x0, {0xc0000b81e0, 0x5}, {0xc000000228, 0x14}, 0x0})
+	net/http/transport.go:1523 +0x4ae fp=0xc000140580 sp=0xc0001403a8 pc=0x7b0b4e
+net/http.(*Transport).roundTrip(0x12c2960, 0xc0000c0000)
+	net/http/transport.go:685 +0xb57 fp=0xc000140778 sp=0xc000140580 pc=0x7ac877
+net/http.(*Transport).RoundTrip(0xc000489f80?, 0xccade0?)
+	net/http/roundtrip.go:30 +0x13 fp=0xc000140798 sp=0xc000140778 pc=0x7bb013
+net/http.send(0xc0000c0000, {0xccade0, 0x12c2960}, {0x133b301?, 0xffff6c170528?, 0x0?})
+	net/http/client.go:259 +0x5e2 fp=0xc000140988 sp=0xc000140798 pc=0x777882
+net/http.(*Client).send(0xc0000246f0, 0xc0000c0000, {0x47c318?, 0x640000000042a016?, 0x0?})
+	net/http/client.go:180 +0x91 fp=0xc000140a00 sp=0xc000140988 pc=0x777131
+net/http.(*Client).do(0xc0000246f0, 0xc0000c0000)
+	net/http/client.go:728 +0x989 fp=0xc000140bf0 sp=0xc000140a00 pc=0x779669
+net/http.(*Client).Do(...)
+	net/http/client.go:587
+cmd/go/internal/web.get.func1(0xc000140f88)
+	cmd/go/internal/web/http.go:159 +0x3cb fp=0xc000140d68 sp=0xc000140bf0 pc=0x7ce02b
+cmd/go/internal/web.get(0x1, 0xc000141050)
+	cmd/go/internal/web/http.go:206 +0x482 fp=0xc000141028 sp=0xc000140d68 pc=0x7cd102
+cmd/go/internal/web.Get(...)
+	cmd/go/internal/web/api.go:186
+cmd/go/internal/modfetch.(*proxyRepo).getBody(0xc0000be000, {0xba3421?, 0xd?}, {0xc000291218, 0xd})
+	cmd/go/internal/modfetch/proxy.go:282 +0x13f fp=0xc000141118 sp=0xc000141028 pc=0x84257f
+cmd/go/internal/modfetch.(*proxyRepo).getBytes(0xc0001ae738?, {0xcd0a58?, 0x1339ea0?}, {0xc000291218?, 0x82d4b4?})
+	cmd/go/internal/modfetch/proxy.go:260 +0x5b fp=0xc0001411e0 sp=0xc000141118 pc=0x84213b
+cmd/go/internal/modfetch.(*proxyRepo).GoMod(0xc0000be000, {0xcd0a58, 0x1339ea0}, {0xc0001ae738, 0x6})
+	cmd/go/internal/modfetch/proxy.go:412 +0x10d fp=0xc000141248 sp=0xc0001411e0 pc=0x84386d
+cmd/go/internal/modfetch.(*cachingRepo).GoMod.func1()
+	cmd/go/internal/modfetch/cache.go:318 +0xa5 fp=0xc000141300 sp=0xc000141248 pc=0x82e1e5
+cmd/internal/par.(*ErrCache[...]).Do.func1()
+	cmd/internal/par/work.go:119 +0x28 fp=0xc000141338 sp=0xc000141300 pc=0x848a88
+cmd/internal/par.(*Cache[...]).Do(0xcd54c0, {0xc0001ae738, 0x6}, 0xc000291468)
+	cmd/internal/par/work.go:160 +0x156 fp=0xc000141418 sp=0xc000141338 pc=0x848d76
+cmd/internal/par.(*ErrCache[...]).Do(0x843fac?, {0xc0001ae738?, 0xcd53c0?}, 0xc000226120?)
+	cmd/internal/par/work.go:118 +0x47 fp=0xc0001414b8 sp=0xc000141418 pc=0x8489a7
+cmd/go/internal/modfetch.(*cachingRepo).GoMod(0xcd0a58?, {0xcd0a58?, 0x1339ea0?}, {0xc0001ae738, 0x6})
+	cmd/go/internal/modfetch/cache.go:311 +0xfa fp=0xc000141548 sp=0xc0001414b8 pc=0x82e05a
+cmd/go/internal/modfetch.GoMod.func2({0xc000226120?, 0x0?})
+	cmd/go/internal/modfetch/cache.go:411 +0x73 fp=0xc0001415a8 sp=0xc000141548 pc=0x82ecf3
+cmd/go/internal/modfetch.TryProxies(0xc000141680)
+	cmd/go/internal/modfetch/proxy.go:164 +0xaf fp=0xc000141628 sp=0xc0001415a8 pc=0x8417cf
+cmd/go/internal/modfetch.GoMod({0xcd0a58, 0x1339ea0}, {0xc0001d2360, 0x1c}, {0xc0001ae738, 0x6})
+	cmd/go/internal/modfetch/cache.go:410 +0x258 fp=0xc0001416f8 sp=0xc000141628 pc=0x82ebb8
+cmd/go/internal/modload.rawGoModData({{0xc0001d2360?, 0x47d499?}, {0xc0001ae738?, 0xb58360?}})
+	cmd/go/internal/modload/modfile.go:786 +0x15f fp=0xc000141858 sp=0xc0001416f8 pc=0x8a3e3f
+cmd/go/internal/modload.rawGoModSummary.func1()
+	cmd/go/internal/modload/modfile.go:695 +0x59 fp=0xc0001419c0 sp=0xc000141858 pc=0x8a33b9
+cmd/internal/par.(*ErrCache[...]).Do.func1()
+	cmd/internal/par/work.go:119 +0x13 fp=0xc0001419d0 sp=0xc0001419c0 pc=0x8b3b33
+cmd/internal/par.(*Cache[...]).Do(0xcd5240, {{0xc0001d2360, 0x1c}, {0xc0001ae738, 0x6}}, 0xc00025ca80)
+	cmd/internal/par/work.go:160 +0x13c fp=0xc000141a48 sp=0xc0001419d0 pc=0x8b3d7c
+cmd/internal/par.(*ErrCache[...]).Do(0x0?, {{0xc0001d2360?, 0xc0001d44e0?}, {0xc0001ae738?, 0x0?}}, 0xba3f93?)
+	cmd/internal/par/work.go:118 +0x45 fp=0xc000141aa8 sp=0xc000141a48 pc=0x8b3ac5
+cmd/go/internal/modload.rawGoModSummary({{0xc0001d2360?, 0x0?}, {0xc0001ae738?, 0x0?}})
+	cmd/go/internal/modload/modfile.go:693 +0x385 fp=0xc000141b58 sp=0xc000141aa8 pc=0x8a3265
+cmd/go/internal/modload.goModSummary({{0xc0001d2360?, 0x3c?}, {0xc0001ae738?, 0xffffb5071bc8?}})
+	cmd/go/internal/modload/modfile.go:602 +0x3ae fp=0xc000141ca8 sp=0xc000141b58 pc=0x8a27ee
+cmd/go/internal/modload.readModGraph.func2.1()
+	cmd/go/internal/modload/buildlist.go:380 +0x65 fp=0xc000141d48 sp=0xc000141ca8 pc=0x86e345
+cmd/internal/par.(*ErrCache[...]).Do.func1()
+	cmd/internal/par/work.go:119 +0x13 fp=0xc000141d58 sp=0xc000141d48 pc=0x8b3b33
+cmd/internal/par.(*Cache[...]).Do(0xcd5240, {{0xc0001d2360, 0x1c}, {0xc0001ae738, 0x6}}, 0xc00025ce08)
+	cmd/internal/par/work.go:160 +0x13c fp=0xc000141dd0 sp=0xc000141d58 pc=0x8b3d7c
+cmd/internal/par.(*ErrCache[...]).Do(0x0?, {{0xc0001d2360?, 0x0?}, {0xc0001ae738?, 0x0?}}, 0x0?)
+	cmd/internal/par/work.go:118 +0x45 fp=0xc000141e30 sp=0xc000141dd0 pc=0x8b3ac5
+cmd/go/internal/modload.readModGraph.func2({{0xc0001d2360?, 0x0?}, {0xc0001ae738?, 0x0?}})
+	cmd/go/internal/modload/buildlist.go:379 +0x9b fp=0xc000141eb8 sp=0xc000141e30 pc=0x86e29b
+cmd/go/internal/modload.readModGraph.func3.1()
+	cmd/go/internal/modload/buildlist.go:408 +0x56 fp=0xc000141f60 sp=0xc000141eb8 pc=0x86e0d6
+cmd/internal/par.(*Queue).Add.func1()
+	cmd/internal/par/queue.go:58 +0x5c fp=0xc000141fe0 sp=0xc000141f60 pc=0x5edd3c
+runtime.goexit({})
+	runtime/asm_amd64.s:1700 +0x1 fp=0xc000141fe8 sp=0xc000141fe0 pc=0x487861
+created by cmd/internal/par.(*Queue).Add in goroutine 1
+	cmd/internal/par/queue.go:56 +0x1d3
+
+goroutine 25 gp=0xc000183340 m=nil [select]:
+runtime.gopark(0xc0003344b0?, 0x2?, 0x52?, 0x14?, 0xc0003343e4?)
+	runtime/proc.go:435 +0xce fp=0xc000334270 sp=0xc000334250 pc=0x47fa2e
+runtime.selectgo(0xc0003344b0, 0xc0003343e0, 0x7?, 0x0, 0x45e910?, 0x1)
+	runtime/select.go:351 +0x837 fp=0xc0003343a8 sp=0xc000334270 pc=0x45d597
+net/http.(*Transport).getConn(0x12c2960, 0xc000285360, {{}, 0x0, {0xc0001d8320, 0x5}, {0xc0001de5b8, 0x14}, 0x0})
+	net/http/transport.go:1523 +0x4ae fp=0xc000334580 sp=0xc0003343a8 pc=0x7b0b4e
+net/http.(*Transport).roundTrip(0x12c2960, 0xc000286640)
+	net/http/transport.go:685 +0xb57 fp=0xc000334778 sp=0xc000334580 pc=0x7ac877
+net/http.(*Transport).RoundTrip(0x1319900?, 0xccade0?)
+	net/http/roundtrip.go:30 +0x13 fp=0xc000334798 sp=0xc000334778 pc=0x7bb013
+net/http.send(0xc000286640, {0xccade0, 0x12c2960}, {0xbaa001?, 0xd?, 0x0?})
+	net/http/client.go:259 +0x5e2 fp=0xc000334988 sp=0xc000334798 pc=0x777882
+net/http.(*Client).send(0xc0000246f0, 0xc000286640, {0x12b8214?, 0xc00011ea08?, 0x0?})
+	net/http/client.go:180 +0x91 fp=0xc000334a00 sp=0xc000334988 pc=0x777131
+net/http.(*Client).do(0xc0000246f0, 0xc000286640)
+	net/http/client.go:728 +0x989 fp=0xc000334bf0 sp=0xc000334a00 pc=0x779669
+net/http.(*Client).Do(...)
+	net/http/client.go:587
+cmd/go/internal/web.get.func1(0xc000334f88)
+	cmd/go/internal/web/http.go:159 +0x3cb fp=0xc000334d68 sp=0xc000334bf0 pc=0x7ce02b
+cmd/go/internal/web.get(0x1, 0xc000335050)
+	cmd/go/internal/web/http.go:206 +0x482 fp=0xc000335028 sp=0xc000334d68 pc=0x7cd102
+cmd/go/internal/web.Get(...)
+	cmd/go/internal/web/api.go:186
+cmd/go/internal/modfetch.(*proxyRepo).getBody(0xc0002852c0, {0xba3421?, 0xd?}, {0xc00011f218, 0xd})
+	cmd/go/internal/modfetch/proxy.go:282 +0x13f fp=0xc000335118 sp=0xc000335028 pc=0x84257f
+cmd/go/internal/modfetch.(*proxyRepo).getBytes(0xc0001ae760?, {0xcd0a58?, 0x1339ea0?}, {0xc00011f218?, 0x82d4b4?})
+	cmd/go/internal/modfetch/proxy.go:260 +0x5b fp=0xc0003351e0 sp=0xc000335118 pc=0x84213b
+cmd/go/internal/modfetch.(*proxyRepo).GoMod(0xc0002852c0, {0xcd0a58, 0x1339ea0}, {0xc0001ae760, 0x6})
+	cmd/go/internal/modfetch/proxy.go:412 +0x10d fp=0xc000335248 sp=0xc0003351e0 pc=0x84386d
+cmd/go/internal/modfetch.(*cachingRepo).GoMod.func1()
+	cmd/go/internal/modfetch/cache.go:318 +0xa5 fp=0xc000335300 sp=0xc000335248 pc=0x82e1e5
+cmd/internal/par.(*ErrCache[...]).Do.func1()
+	cmd/internal/par/work.go:119 +0x28 fp=0xc000335338 sp=0xc000335300 pc=0x848a88
+cmd/internal/par.(*Cache[...]).Do(0xcd54c0, {0xc0001ae760, 0x6}, 0xc00011f468)
+	cmd/internal/par/work.go:160 +0x156 fp=0xc000335418 sp=0xc000335338 pc=0x848d76
+cmd/internal/par.(*ErrCache[...]).Do(0x843fac?, {0xc0001ae760?, 0xcd53c0?}, 0xc000226120?)
+	cmd/internal/par/work.go:118 +0x47 fp=0xc0003354b8 sp=0xc000335418 pc=0x8489a7
+cmd/go/internal/modfetch.(*cachingRepo).GoMod(0xcd0a58?, {0xcd0a58?, 0x1339ea0?}, {0xc0001ae760, 0x6})
+	cmd/go/internal/modfetch/cache.go:311 +0xfa fp=0xc000335548 sp=0xc0003354b8 pc=0x82e05a
+cmd/go/internal/modfetch.GoMod.func2({0xc000226120?, 0x0?})
+	cmd/go/internal/modfetch/cache.go:411 +0x73 fp=0xc0003355a8 sp=0xc000335548 pc=0x82ecf3
+cmd/go/internal/modfetch.TryProxies(0xc000335680)
+	cmd/go/internal/modfetch/proxy.go:164 +0xaf fp=0xc000335628 sp=0xc0003355a8 pc=0x8417cf
+cmd/go/internal/modfetch.GoMod({0xcd0a58, 0x1339ea0}, {0xc0001d2380, 0x1c}, {0xc0001ae760, 0x6})
+	cmd/go/internal/modfetch/cache.go:410 +0x258 fp=0xc0003356f8 sp=0xc000335628 pc=0x82ebb8
+cmd/go/internal/modload.rawGoModData({{0xc0001d2380?, 0x47d499?}, {0xc0001ae760?, 0xb58360?}})
+	cmd/go/internal/modload/modfile.go:786 +0x15f fp=0xc000335858 sp=0xc0003356f8 pc=0x8a3e3f
+cmd/go/internal/modload.rawGoModSummary.func1()
+	cmd/go/internal/modload/modfile.go:695 +0x59 fp=0xc0003359c0 sp=0xc000335858 pc=0x8a33b9
+cmd/internal/par.(*ErrCache[...]).Do.func1()
+	cmd/internal/par/work.go:119 +0x13 fp=0xc0003359d0 sp=0xc0003359c0 pc=0x8b3b33
+cmd/internal/par.(*Cache[...]).Do(0xcd5240, {{0xc0001d2380, 0x1c}, {0xc0001ae760, 0x6}}, 0xc000110a80)
+	cmd/internal/par/work.go:160 +0x13c fp=0xc000335a48 sp=0xc0003359d0 pc=0x8b3d7c
+cmd/internal/par.(*ErrCache[...]).Do(0x0?, {{0xc0001d2380?, 0xc0001d44e0?}, {0xc0001ae760?, 0x0?}}, 0xba3f93?)
+	cmd/internal/par/work.go:118 +0x45 fp=0xc000335aa8 sp=0xc000335a48 pc=0x8b3ac5
+cmd/go/internal/modload.rawGoModSummary({{0xc0001d2380?, 0x8?}, {0xc0001ae760?, 0x426405?}})
+	cmd/go/internal/modload/modfile.go:693 +0x385 fp=0xc000335b58 sp=0xc000335aa8 pc=0x8a3265
+cmd/go/internal/modload.goModSummary({{0xc0001d2380?, 0x3c?}, {0xc0001ae760?, 0xffffb507c158?}})
+	cmd/go/internal/modload/modfile.go:602 +0x3ae fp=0xc000335ca8 sp=0xc000335b58 pc=0x8a27ee
+cmd/go/internal/modload.readModGraph.func2.1()
+	cmd/go/internal/modload/buildlist.go:380 +0x65 fp=0xc000335d48 sp=0xc000335ca8 pc=0x86e345
+cmd/internal/par.(*ErrCache[...]).Do.func1()
+	cmd/internal/par/work.go:119 +0x13 fp=0xc000335d58 sp=0xc000335d48 pc=0x8b3b33
+cmd/internal/par.(*Cache[...]).Do(0xcd5240, {{0xc0001d2380, 0x1c}, {0xc0001ae760, 0x6}}, 0xc000110e08)
+	cmd/internal/par/work.go:160 +0x13c fp=0xc000335dd0 sp=0xc000335d58 pc=0x8b3d7c
+cmd/internal/par.(*ErrCache[...]).Do(0x0?, {{0xc0001d2380?, 0x0?}, {0xc0001ae760?, 0x0?}}, 0x0?)
+	cmd/internal/par/work.go:118 +0x45 fp=0xc000335e30 sp=0xc000335dd0 pc=0x8b3ac5
+cmd/go/internal/modload.readModGraph.func2({{0xc0001d2380?, 0x0?}, {0xc0001ae760?, 0x0?}})
+	cmd/go/internal/modload/buildlist.go:379 +0x9b fp=0xc000335eb8 sp=0xc000335e30 pc=0x86e29b
+cmd/go/internal/modload.readModGraph.func3.1()
+	cmd/go/internal/modload/buildlist.go:408 +0x56 fp=0xc000335f60 sp=0xc000335eb8 pc=0x86e0d6
+cmd/internal/par.(*Queue).Add.func1()
+	cmd/internal/par/queue.go:58 +0x5c fp=0xc000335fe0 sp=0xc000335f60 pc=0x5edd3c
+runtime.goexit({})
+	runtime/asm_amd64.s:1700 +0x1 fp=0xc000335fe8 sp=0xc000335fe0 pc=0x487861
+created by cmd/internal/par.(*Queue).Add in goroutine 1
+	cmd/internal/par/queue.go:56 +0x1d3
+
+goroutine 26 gp=0xc000183500 m=nil [select]:
+runtime.gopark(0xc0003464b0?, 0x2?, 0x52?, 0x14?, 0xc0003463e4?)
+	runtime/proc.go:435 +0xce fp=0xc000346270 sp=0xc000346250 pc=0x47fa2e
+runtime.selectgo(0xc0003464b0, 0xc0003463e0, 0x7?, 0x0, 0x45e910?, 0x1)
+	runtime/select.go:351 +0x837 fp=0xc0003463a8 sp=0xc000346270 pc=0x45d597
+net/http.(*Transport).getConn(0x12c2960, 0xc0003220f0, {{}, 0x0, {0xc000260140, 0x5}, {0xc0003200c0, 0x14}, 0x0})
+	net/http/transport.go:1523 +0x4ae fp=0xc000346580 sp=0xc0003463a8 pc=0x7b0b4e
+net/http.(*Transport).roundTrip(0x12c2960, 0xc000262000)
+	net/http/transport.go:685 +0xb57 fp=0xc000346778 sp=0xc000346580 pc=0x7ac877
+net/http.(*Transport).RoundTrip(0xc000180008?, 0xccade0?)
+	net/http/roundtrip.go:30 +0x13 fp=0xc000346798 sp=0xc000346778 pc=0x7bb013
+net/http.send(0xc000262000, {0xccade0, 0x12c2960}, {0x60ac01?, 0x47c46c?, 0x0?})
+	net/http/client.go:259 +0x5e2 fp=0xc000346988 sp=0xc000346798 pc=0x777882
+net/http.(*Client).send(0xc0000246f0, 0xc000262000, {0x47c318?, 0x640000000042a016?, 0x0?})
+	net/http/client.go:180 +0x91 fp=0xc000346a00 sp=0xc000346988 pc=0x777131
+net/http.(*Client).do(0xc0000246f0, 0xc000262000)
+	net/http/client.go:728 +0x989 fp=0xc000346bf0 sp=0xc000346a00 pc=0x779669
+net/http.(*Client).Do(...)
+	net/http/client.go:587
+cmd/go/internal/web.get.func1(0xc000346f88)
+	cmd/go/internal/web/http.go:159 +0x3cb fp=0xc000346d68 sp=0xc000346bf0 pc=0x7ce02b
+cmd/go/internal/web.get(0x1, 0xc000347050)
+	cmd/go/internal/web/http.go:206 +0x482 fp=0xc000347028 sp=0xc000346d68 pc=0x7cd102
+cmd/go/internal/web.Get(...)
+	cmd/go/internal/web/api.go:186
+cmd/go/internal/modfetch.(*proxyRepo).getBody(0xc0002120a0, {0xba3421?, 0xd?}, {0xc0000b5218, 0xd})
+	cmd/go/internal/modfetch/proxy.go:282 +0x13f fp=0xc000347118 sp=0xc000347028 pc=0x84257f
+cmd/go/internal/modfetch.(*proxyRepo).getBytes(0xc0001ae766?, {0xcd0a58?, 0x1339ea0?}, {0xc0000b5218?, 0x82d4b4?})
+	cmd/go/internal/modfetch/proxy.go:260 +0x5b fp=0xc0003471e0 sp=0xc000347118 pc=0x84213b
+cmd/go/internal/modfetch.(*proxyRepo).GoMod(0xc0002120a0, {0xcd0a58, 0x1339ea0}, {0xc0001ae766, 0x6})
+	cmd/go/internal/modfetch/proxy.go:412 +0x10d fp=0xc000347248 sp=0xc0003471e0 pc=0x84386d
+cmd/go/internal/modfetch.(*cachingRepo).GoMod.func1()
+	cmd/go/internal/modfetch/cache.go:318 +0xa5 fp=0xc000347300 sp=0xc000347248 pc=0x82e1e5
+cmd/internal/par.(*ErrCache[...]).Do.func1()
+	cmd/internal/par/work.go:119 +0x28 fp=0xc000347338 sp=0xc000347300 pc=0x848a88
+cmd/internal/par.(*Cache[...]).Do(0xcd54c0, {0xc0001ae766, 0x6}, 0xc0000b5468)
+	cmd/internal/par/work.go:160 +0x156 fp=0xc000347418 sp=0xc000347338 pc=0x848d76
+cmd/internal/par.(*ErrCache[...]).Do(0x843fac?, {0xc0001ae766?, 0xcd53c0?}, 0xc000226120?)
+	cmd/internal/par/work.go:118 +0x47 fp=0xc0003474b8 sp=0xc000347418 pc=0x8489a7
+cmd/go/internal/modfetch.(*cachingRepo).GoMod(0xcd0a58?, {0xcd0a58?, 0x1339ea0?}, {0xc0001ae766, 0x6})
+	cmd/go/internal/modfetch/cache.go:311 +0xfa fp=0xc000347548 sp=0xc0003474b8 pc=0x82e05a
+cmd/go/internal/modfetch.GoMod.func2({0xc000226120?, 0x0?})
+	cmd/go/internal/modfetch/cache.go:411 +0x73 fp=0xc0003475a8 sp=0xc000347548 pc=0x82ecf3
+cmd/go/internal/modfetch.TryProxies(0xc000347680)
+	cmd/go/internal/modfetch/proxy.go:164 +0xaf fp=0xc000347628 sp=0xc0003475a8 pc=0x8417cf
+cmd/go/internal/modfetch.GoMod({0xcd0a58, 0x1339ea0}, {0xc0001d23a0, 0x1c}, {0xc0001ae766, 0x6})
+	cmd/go/internal/modfetch/cache.go:410 +0x258 fp=0xc0003476f8 sp=0xc000347628 pc=0x82ebb8
+cmd/go/internal/modload.rawGoModData({{0xc0001d23a0?, 0x47d499?}, {0xc0001ae766?, 0xb58360?}})
+	cmd/go/internal/modload/modfile.go:786 +0x15f fp=0xc000347858 sp=0xc0003476f8 pc=0x8a3e3f
+cmd/go/internal/modload.rawGoModSummary.func1()
+	cmd/go/internal/modload/modfile.go:695 +0x59 fp=0xc0003479c0 sp=0xc000347858 pc=0x8a33b9
+cmd/internal/par.(*ErrCache[...]).Do.func1()
+	cmd/internal/par/work.go:119 +0x13 fp=0xc0003479d0 sp=0xc0003479c0 pc=0x8b3b33
+cmd/internal/par.(*Cache[...]).Do(0xcd5240, {{0xc0001d23a0, 0x1c}, {0xc0001ae766, 0x6}}, 0xc000073a80)
+	cmd/internal/par/work.go:160 +0x13c fp=0xc000347a48 sp=0xc0003479d0 pc=0x8b3d7c
+cmd/internal/par.(*ErrCache[...]).Do(0x0?, {{0xc0001d23a0?, 0xc0001d44e0?}, {0xc0001ae766?, 0x0?}}, 0xba3f93?)
+	cmd/internal/par/work.go:118 +0x45 fp=0xc000347aa8 sp=0xc000347a48 pc=0x8b3ac5
+cmd/go/internal/modload.rawGoModSummary({{0xc0001d23a0?, 0x0?}, {0xc0001ae766?, 0x0?}})
+	cmd/go/internal/modload/modfile.go:693 +0x385 fp=0xc000347b58 sp=0xc000347aa8 pc=0x8a3265
+cmd/go/internal/modload.goModSummary({{0xc0001d23a0?, 0x3c?}, {0xc0001ae766?, 0xffffbe96df10?}})
+	cmd/go/internal/modload/modfile.go:602 +0x3ae fp=0xc000347ca8 sp=0xc000347b58 pc=0x8a27ee
+cmd/go/internal/modload.readModGraph.func2.1()
+	cmd/go/internal/modload/buildlist.go:380 +0x65 fp=0xc000347d48 sp=0xc000347ca8 pc=0x86e345
+cmd/internal/par.(*ErrCache[...]).Do.func1()
+	cmd/internal/par/work.go:119 +0x13 fp=0xc000347d58 sp=0xc000347d48 pc=0x8b3b33
+cmd/internal/par.(*Cache[...]).Do(0xcd5240, {{0xc0001d23a0, 0x1c}, {0xc0001ae766, 0x6}}, 0xc000073e08)
+	cmd/internal/par/work.go:160 +0x13c fp=0xc000347dd0 sp=0xc000347d58 pc=0x8b3d7c
+cmd/internal/par.(*ErrCache[...]).Do(0x0?, {{0xc0001d23a0?, 0x0?}, {0xc0001ae766?, 0x0?}}, 0x0?)
+	cmd/internal/par/work.go:118 +0x45 fp=0xc000347e30 sp=0xc000347dd0 pc=0x8b3ac5
+cmd/go/internal/modload.readModGraph.func2({{0xc0001d23a0?, 0x0?}, {0xc0001ae766?, 0x0?}})
+	cmd/go/internal/modload/buildlist.go:379 +0x9b fp=0xc000347eb8 sp=0xc000347e30 pc=0x86e29b
+cmd/go/internal/modload.readModGraph.func3.1()
+	cmd/go/internal/modload/buildlist.go:408 +0x56 fp=0xc000347f60 sp=0xc000347eb8 pc=0x86e0d6
+cmd/internal/par.(*Queue).Add.func1()
+	cmd/internal/par/queue.go:58 +0x5c fp=0xc000347fe0 sp=0xc000347f60 pc=0x5edd3c
+runtime.goexit({})
+	runtime/asm_amd64.s:1700 +0x1 fp=0xc000347fe8 sp=0xc000347fe0 pc=0x487861
+created by cmd/internal/par.(*Queue).Add in goroutine 1
+	cmd/internal/par/queue.go:56 +0x1d3
+
+goroutine 27 gp=0xc0001836c0 m=nil [select]:
+runtime.gopark(0xc0003384b0?, 0x2?, 0x0?, 0x14?, 0xc0003383e4?)
+	runtime/proc.go:435 +0xce fp=0xc000338270 sp=0xc000338250 pc=0x47fa2e
+runtime.selectgo(0xc0003384b0, 0xc0003383e0, 0x7?, 0x0, 0x45e910?, 0x1)
+	runtime/select.go:351 +0x837 fp=0xc0003383a8 sp=0xc000338270 pc=0x45d597
+net/http.(*Transport).getConn(0x12c2960, 0xc000212140, {{}, 0x0, {0xc00031c0a0, 0x5}, {0xc000220378, 0x14}, 0x0})
+	net/http/transport.go:1523 +0x4ae fp=0xc000338580 sp=0xc0003383a8 pc=0x7b0b4e
+net/http.(*Transport).roundTrip(0x12c2960, 0xc000330000)
+	net/http/transport.go:685 +0xb57 fp=0xc000338778 sp=0xc000338580 pc=0x7ac877
+net/http.(*Transport).RoundTrip(0xc00033bf80?, 0xccade0?)
+	net/http/roundtrip.go:30 +0x13 fp=0xc000338798 sp=0xc000338778 pc=0x7bb013
+net/http.send(0xc000330000, {0xccade0, 0x12c2960}, {0x60ac01?, 0x47c46c?, 0x0?})
+	net/http/client.go:259 +0x5e2 fp=0xc000338988 sp=0xc000338798 pc=0x777882
+net/http.(*Client).send(0xc0000246f0, 0xc000330000, {0x47c318?, 0x640000000042a016?, 0x0?})
+	net/http/client.go:180 +0x91 fp=0xc000338a00 sp=0xc000338988 pc=0x777131
+net/http.(*Client).do(0xc0000246f0, 0xc000330000)
+	net/http/client.go:728 +0x989 fp=0xc000338bf0 sp=0xc000338a00 pc=0x779669
+net/http.(*Client).Do(...)
+	net/http/client.go:587
+cmd/go/internal/web.get.func1(0xc000338f88)
+	cmd/go/internal/web/http.go:159 +0x3cb fp=0xc000338d68 sp=0xc000338bf0 pc=0x7ce02b
+cmd/go/internal/web.get(0x1, 0xc000339050)
+	cmd/go/internal/web/http.go:206 +0x482 fp=0xc000339028 sp=0xc000338d68 pc=0x7cd102
+cmd/go/internal/web.Get(...)
+	cmd/go/internal/web/api.go:186
+cmd/go/internal/modfetch.(*proxyRepo).getBody(0xc000322050, {0xba3421?, 0xd?}, {0xc0000b1218, 0xd})
+	cmd/go/internal/modfetch/proxy.go:282 +0x13f fp=0xc000339118 sp=0xc000339028 pc=0x84257f
+cmd/go/internal/modfetch.(*proxyRepo).getBytes(0xc0001ae790?, {0xcd0a58?, 0x1339ea0?}, {0xc0000b1218?, 0x82d4b4?})
+	cmd/go/internal/modfetch/proxy.go:260 +0x5b fp=0xc0003391e0 sp=0xc000339118 pc=0x84213b
+cmd/go/internal/modfetch.(*proxyRepo).GoMod(0xc000322050, {0xcd0a58, 0x1339ea0}, {0xc0001ae790, 0x6})
+	cmd/go/internal/modfetch/proxy.go:412 +0x10d fp=0xc000339248 sp=0xc0003391e0 pc=0x84386d
+cmd/go/internal/modfetch.(*cachingRepo).GoMod.func1()
+	cmd/go/internal/modfetch/cache.go:318 +0xa5 fp=0xc000339300 sp=0xc000339248 pc=0x82e1e5
+cmd/internal/par.(*ErrCache[...]).Do.func1()
+	cmd/internal/par/work.go:119 +0x28 fp=0xc000339338 sp=0xc000339300 pc=0x848a88
+cmd/internal/par.(*Cache[...]).Do(0xcd54c0, {0xc0001ae790, 0x6}, 0xc0000b1468)
+	cmd/internal/par/work.go:160 +0x156 fp=0xc000339418 sp=0xc000339338 pc=0x848d76
+cmd/internal/par.(*ErrCache[...]).Do(0x843fac?, {0xc0001ae790?, 0xcd53c0?}, 0xc000226120?)
+	cmd/internal/par/work.go:118 +0x47 fp=0xc0003394b8 sp=0xc000339418 pc=0x8489a7
+cmd/go/internal/modfetch.(*cachingRepo).GoMod(0xcd0a58?, {0xcd0a58?, 0x1339ea0?}, {0xc0001ae790, 0x6})
+	cmd/go/internal/modfetch/cache.go:311 +0xfa fp=0xc000339548 sp=0xc0003394b8 pc=0x82e05a
+cmd/go/internal/modfetch.GoMod.func2({0xc000226120?, 0x0?})
+	cmd/go/internal/modfetch/cache.go:411 +0x73 fp=0xc0003395a8 sp=0xc000339548 pc=0x82ecf3
+cmd/go/internal/modfetch.TryProxies(0xc000339680)
+	cmd/go/internal/modfetch/proxy.go:164 +0xaf fp=0xc000339628 sp=0xc0003395a8 pc=0x8417cf
+cmd/go/internal/modfetch.GoMod({0xcd0a58, 0x1339ea0}, {0xc0001de408, 0x17}, {0xc0001ae790, 0x6})
+	cmd/go/internal/modfetch/cache.go:410 +0x258 fp=0xc0003396f8 sp=0xc000339628 pc=0x82ebb8
+cmd/go/internal/modload.rawGoModData({{0xc0001de408?, 0xc0000738b0?}, {0xc0001ae790?, 0xb58360?}})
+	cmd/go/internal/modload/modfile.go:786 +0x15f fp=0xc000339858 sp=0xc0003396f8 pc=0x8a3e3f
+cmd/go/internal/modload.rawGoModSummary.func1()
+	cmd/go/internal/modload/modfile.go:695 +0x59 fp=0xc0003399c0 sp=0xc000339858 pc=0x8a33b9
+cmd/internal/par.(*ErrCache[...]).Do.func1()
+	cmd/internal/par/work.go:119 +0x13 fp=0xc0003399d0 sp=0xc0003399c0 pc=0x8b3b33
+cmd/internal/par.(*Cache[...]).Do(0xcd5240, {{0xc0001de408, 0x17}, {0xc0001ae790, 0x6}}, 0xc000073a80)
+	cmd/internal/par/work.go:160 +0x13c fp=0xc000339a48 sp=0xc0003399d0 pc=0x8b3d7c
+cmd/internal/par.(*ErrCache[...]).Do(0x0?, {{0xc0001de408?, 0xc0001d44e0?}, {0xc0001ae790?, 0x0?}}, 0xba3f93?)
+	cmd/internal/par/work.go:118 +0x45 fp=0xc000339aa8 sp=0xc000339a48 pc=0x8b3ac5
+cmd/go/internal/modload.rawGoModSummary({{0xc0001de408?, 0xc0000000007e3f0?}, {0xc0001ae790?, 0xffffbe962108?}})
+	cmd/go/internal/modload/modfile.go:693 +0x385 fp=0xc000339b58 sp=0xc000339aa8 pc=0x8a3265
+cmd/go/internal/modload.goModSummary({{0xc0001de408?, 0x3c?}, {0xc0001ae790?, 0xffffbe96df10?}})
+	cmd/go/internal/modload/modfile.go:602 +0x3ae fp=0xc000339ca8 sp=0xc000339b58 pc=0x8a27ee
+cmd/go/internal/modload.readModGraph.func2.1()
+	cmd/go/internal/modload/buildlist.go:380 +0x65 fp=0xc000339d48 sp=0xc000339ca8 pc=0x86e345
+cmd/internal/par.(*ErrCache[...]).Do.func1()
+	cmd/internal/par/work.go:119 +0x13 fp=0xc000339d58 sp=0xc000339d48 pc=0x8b3b33
+cmd/internal/par.(*Cache[...]).Do(0xcd5240, {{0xc0001de408, 0x17}, {0xc0001ae790, 0x6}}, 0xc000073e08)
+	cmd/internal/par/work.go:160 +0x13c fp=0xc000339dd0 sp=0xc000339d58 pc=0x8b3d7c
+cmd/internal/par.(*ErrCache[...]).Do(0x0?, {{0xc0001de408?, 0x0?}, {0xc0001ae790?, 0x0?}}, 0x0?)
+	cmd/internal/par/work.go:118 +0x45 fp=0xc000339e30 sp=0xc000339dd0 pc=0x8b3ac5
+cmd/go/internal/modload.readModGraph.func2({{0xc0001de408?, 0x0?}, {0xc0001ae790?, 0x0?}})
+	cmd/go/internal/modload/buildlist.go:379 +0x9b fp=0xc000339eb8 sp=0xc000339e30 pc=0x86e29b
+cmd/go/internal/modload.readModGraph.func3.1()
+	cmd/go/internal/modload/buildlist.go:408 +0x56 fp=0xc000339f60 sp=0xc000339eb8 pc=0x86e0d6
+cmd/internal/par.(*Queue).Add.func1()
+	cmd/internal/par/queue.go:58 +0x5c fp=0xc000339fe0 sp=0xc000339f60 pc=0x5edd3c
+runtime.goexit({})
+	runtime/asm_amd64.s:1700 +0x1 fp=0xc000339fe8 sp=0xc000339fe0 pc=0x487861
+created by cmd/internal/par.(*Queue).Add in goroutine 1
+	cmd/internal/par/queue.go:56 +0x1d3
+
+goroutine 28 gp=0xc000183880 m=nil [select]:
+runtime.gopark(0xc0004904b0?, 0x2?, 0x52?, 0x14?, 0xc0004903e4?)
+	runtime/proc.go:435 +0xce fp=0xc000490270 sp=0xc000490250 pc=0x47fa2e
+runtime.selectgo(0xc0004904b0, 0xc0004903e0, 0x7?, 0x0, 0x45e910?, 0x1)
+	runtime/select.go:351 +0x837 fp=0xc0004903a8 sp=0xc000490270 pc=0x45d597
+net/http.(*Transport).getConn(0x12c2960, 0xc000496050, {{}, 0x0, {0xc0003b2000, 0x5}, {0xc000492018, 0x14}, 0x0})
+	net/http/transport.go:1523 +0x4ae fp=0xc000490580 sp=0xc0004903a8 pc=0x7b0b4e
+net/http.(*Transport).roundTrip(0x12c2960, 0xc0003b4000)
+	net/http/transport.go:685 +0xb57 fp=0xc000490778 sp=0xc000490580 pc=0x7ac877
+net/http.(*Transport).RoundTrip(0xc000180008?, 0xccade0?)
+	net/http/roundtrip.go:30 +0x13 fp=0xc000490798 sp=0xc000490778 pc=0x7bb013
+net/http.send(0xc0003b4000, {0xccade0, 0x12c2960}, {0x133b301?, 0x47c46c?, 0x0?})
+	net/http/client.go:259 +0x5e2 fp=0xc000490988 sp=0xc000490798 pc=0x777882
+net/http.(*Client).send(0xc0000246f0, 0xc0003b4000, {0x47c318?, 0x640000000042a016?, 0x0?})
+	net/http/client.go:180 +0x91 fp=0xc000490a00 sp=0xc000490988 pc=0x777131
+net/http.(*Client).do(0xc0000246f0, 0xc0003b4000)
+	net/http/client.go:728 +0x989 fp=0xc000490bf0 sp=0xc000490a00 pc=0x779669
+net/http.(*Client).Do(...)
+	net/http/client.go:587
+cmd/go/internal/web.get.func1(0xc000490f88)
+	cmd/go/internal/web/http.go:159 +0x3cb fp=0xc000490d68 sp=0xc000490bf0 pc=0x7ce02b
+cmd/go/internal/web.get(0x1, 0xc000491050)
+	cmd/go/internal/web/http.go:206 +0x482 fp=0xc000491028 sp=0xc000490d68 pc=0x7cd102
+cmd/go/internal/web.Get(...)
+	cmd/go/internal/web/api.go:186
+cmd/go/internal/modfetch.(*proxyRepo).getBody(0xc0003b0000, {0xba3421?, 0xe?}, {0xc000295218, 0xe})
+	cmd/go/internal/modfetch/proxy.go:282 +0x13f fp=0xc000491118 sp=0xc000491028 pc=0x84257f
+cmd/go/internal/modfetch.(*proxyRepo).getBytes(0xc0001ae796?, {0xcd0a58?, 0x1339ea0?}, {0xc000295218?, 0x82d4b4?})
+	cmd/go/internal/modfetch/proxy.go:260 +0x5b fp=0xc0004911e0 sp=0xc000491118 pc=0x84213b
+cmd/go/internal/modfetch.(*proxyRepo).GoMod(0xc0003b0000, {0xcd0a58, 0x1339ea0}, {0xc0001ae796, 0x7})
+	cmd/go/internal/modfetch/proxy.go:412 +0x10d fp=0xc000491248 sp=0xc0004911e0 pc=0x84386d
+cmd/go/internal/modfetch.(*cachingRepo).GoMod.func1()
+	cmd/go/internal/modfetch/cache.go:318 +0xa5 fp=0xc000491300 sp=0xc000491248 pc=0x82e1e5
+cmd/internal/par.(*ErrCache[...]).Do.func1()
+	cmd/internal/par/work.go:119 +0x28 fp=0xc000491338 sp=0xc000491300 pc=0x848a88
+cmd/internal/par.(*Cache[...]).Do(0xcd54c0, {0xc0001ae796, 0x7}, 0xc000295468)
+	cmd/internal/par/work.go:160 +0x156 fp=0xc000491418 sp=0xc000491338 pc=0x848d76
+cmd/internal/par.(*ErrCache[...]).Do(0x843fac?, {0xc0001ae796?, 0xcd53c0?}, 0xc000226120?)
+	cmd/internal/par/work.go:118 +0x47 fp=0xc0004914b8 sp=0xc000491418 pc=0x8489a7
+cmd/go/internal/modfetch.(*cachingRepo).GoMod(0xcd0a58?, {0xcd0a58?, 0x1339ea0?}, {0xc0001ae796, 0x7})
+	cmd/go/internal/modfetch/cache.go:311 +0xfa fp=0xc000491548 sp=0xc0004914b8 pc=0x82e05a
+cmd/go/internal/modfetch.GoMod.func2({0xc000226120?, 0x0?})
+	cmd/go/internal/modfetch/cache.go:411 +0x73 fp=0xc0004915a8 sp=0xc000491548 pc=0x82ecf3
+cmd/go/internal/modfetch.TryProxies(0xc000491680)
+	cmd/go/internal/modfetch/proxy.go:164 +0xaf fp=0xc000491628 sp=0xc0004915a8 pc=0x8417cf
+cmd/go/internal/modfetch.GoMod({0xcd0a58, 0x1339ea0}, {0xc0001d4600, 0x21}, {0xc0001ae796, 0x7})
+	cmd/go/internal/modfetch/cache.go:410 +0x258 fp=0xc0004916f8 sp=0xc000491628 pc=0x82ebb8
+cmd/go/internal/modload.rawGoModData({{0xc0001d4600?, 0x47d499?}, {0xc0001ae796?, 0xb58360?}})
+	cmd/go/internal/modload/modfile.go:786 +0x15f fp=0xc000491858 sp=0xc0004916f8 pc=0x8a3e3f
+cmd/go/internal/modload.rawGoModSummary.func1()
+	cmd/go/internal/modload/modfile.go:695 +0x59 fp=0xc0004919c0 sp=0xc000491858 pc=0x8a33b9
+cmd/internal/par.(*ErrCache[...]).Do.func1()
+	cmd/internal/par/work.go:119 +0x13 fp=0xc0004919d0 sp=0xc0004919c0 pc=0x8b3b33
+cmd/internal/par.(*Cache[...]).Do(0xcd5240, {{0xc0001d4600, 0x21}, {0xc0001ae796, 0x7}}, 0xc00006ea80)
+	cmd/internal/par/work.go:160 +0x13c fp=0xc000491a48 sp=0xc0004919d0 pc=0x8b3d7c
+cmd/internal/par.(*ErrCache[...]).Do(0x0?, {{0xc0001d4600?, 0xc0001d44e0?}, {0xc0001ae796?, 0x0?}}, 0xba3f93?)
+	cmd/internal/par/work.go:118 +0x45 fp=0xc000491aa8 sp=0xc000491a48 pc=0x8b3ac5
+cmd/go/internal/modload.rawGoModSummary({{0xc0001d4600?, 0xc00000000312010?}, {0xc0001ae796?, 0xffffbe962a78?}})
+	cmd/go/internal/modload/modfile.go:693 +0x385 fp=0xc000491b58 sp=0xc000491aa8 pc=0x8a3265
+cmd/go/internal/modload.goModSummary({{0xc0001d4600?, 0x3c?}, {0xc0001ae796?, 0xc0000a20e0?}})
+	cmd/go/internal/modload/modfile.go:602 +0x3ae fp=0xc000491ca8 sp=0xc000491b58 pc=0x8a27ee
+cmd/go/internal/modload.readModGraph.func2.1()
+	cmd/go/internal/modload/buildlist.go:380 +0x65 fp=0xc000491d48 sp=0xc000491ca8 pc=0x86e345
+cmd/internal/par.(*ErrCache[...]).Do.func1()
+	cmd/internal/par/work.go:119 +0x13 fp=0xc000491d58 sp=0xc000491d48 pc=0x8b3b33
+cmd/internal/par.(*Cache[...]).Do(0xcd5240, {{0xc0001d4600, 0x21}, {0xc0001ae796, 0x7}}, 0xc00006ee08)
+	cmd/internal/par/work.go:160 +0x13c fp=0xc000491dd0 sp=0xc000491d58 pc=0x8b3d7c
+cmd/internal/par.(*ErrCache[...]).Do(0x0?, {{0xc0001d4600?, 0x0?}, {0xc0001ae796?, 0x0?}}, 0x0?)
+	cmd/internal/par/work.go:118 +0x45 fp=0xc000491e30 sp=0xc000491dd0 pc=0x8b3ac5
+cmd/go/internal/modload.readModGraph.func2({{0xc0001d4600?, 0x0?}, {0xc0001ae796?, 0x0?}})
+	cmd/go/internal/modload/buildlist.go:379 +0x9b fp=0xc000491eb8 sp=0xc000491e30 pc=0x86e29b
+cmd/go/internal/modload.readModGraph.func3.1()
+	cmd/go/internal/modload/buildlist.go:408 +0x56 fp=0xc000491f60 sp=0xc000491eb8 pc=0x86e0d6
+cmd/internal/par.(*Queue).Add.func1()
+	cmd/internal/par/queue.go:58 +0x5c fp=0xc000491fe0 sp=0xc000491f60 pc=0x5edd3c
+runtime.goexit({})
+	runtime/asm_amd64.s:1700 +0x1 fp=0xc000491fe8 sp=0xc000491fe0 pc=0x487861
+created by cmd/internal/par.(*Queue).Add in goroutine 1
+	cmd/internal/par/queue.go:56 +0x1d3
+
+goroutine 50 gp=0xc000302380 m=nil [select]:
+runtime.gopark(0xc00039b5b8?, 0x2?, 0x7?, 0x0?, 0xc00039b470?)
+	runtime/proc.go:435 +0xce fp=0xc00039b2f8 sp=0xc00039b2d8 pc=0x47fa2e
+runtime.selectgo(0xc00039b5b8, 0xc00039b46c, 0x14?, 0x0, 0x0?, 0x1)
+	runtime/select.go:351 +0x837 fp=0xc00039b430 sp=0xc00039b2f8 pc=0x45d597
+net.(*Resolver).lookupIPAddr(0x1316040, {0xcd0a20, 0xc0001481c0}, {0xba2f91, 0x3}, {0xc000000228, 0x10})
+	net/lookup.go:342 +0x3d9 fp=0xc00039b610 sp=0xc00039b430 pc=0x6be139
+net.(*Resolver).internetAddrList(0x1316040?, {0xcd0a20?, 0xc0001481c0?}, {0xba2f91, 0x3}, {0xc000000228?, 0x423165?})
+	net/ipsock.go:289 +0x4c5 fp=0xc00039b708 sp=0xc00039b610 pc=0x6bc425
+net.(*Resolver).resolveAddrList(0x1316040, {0xcd0a20, 0xc0001481c0}, {0xba35b1, 0x4}, {0xba2f91?, 0x426405?}, {0xc000000228, 0x14}, {0x0, ...})
+	net/dial.go:353 +0x3e5 fp=0xc00039b808 sp=0xc00039b708 pc=0x6aa265
+net.(*Dialer).DialContext(0xc0000a0090, {0xcd09b0, 0xc000322140}, {0xba2f91, 0x3}, {0xc000000228, 0x14})
+	net/dial.go:560 +0x408 fp=0xc00039b978 sp=0xc00039b808 pc=0x6ab008
+net.(*Dialer).DialContext-fm({0xcd09b0?, 0xc000322140?}, {0xba2f91?, 0x1339ea0?}, {0xc000000228?, 0xc000114a18?})
+	<autogenerated>:1 +0x49 fp=0xc00039b9c0 sp=0xc00039b978 pc=0x7c6629
+net/http.(*Transport).dial(0xc0001d45a0?, {0xcd09b0?, 0xc000322140?}, {0xba2f91?, 0x1316520?}, {0xc000000228?, 0xc0001d2340?})
+	net/http/transport.go:1278 +0xd2 fp=0xc00039ba28 sp=0xc00039b9c0 pc=0x7afb92
+net/http.(*Transport).dialConn(0x12c2960, {0xcd09b0, 0xc000322140}, {{}, 0x0, {0xc0000b81e0, 0x5}, {0xc000000228, 0x14}, 0x0})
+	net/http/transport.go:1783 +0x7e5 fp=0xc00039bee0 sp=0xc00039ba28 pc=0x7b2b65
+net/http.(*Transport).dialConnFor(0x12c2960, 0xc00034a000)
+	net/http/transport.go:1618 +0xb8 fp=0xc00039bf90 sp=0xc00039bee0 pc=0x7b1678
+net/http.(*Transport).startDialConnForLocked.func1()
+	net/http/transport.go:1600 +0x35 fp=0xc00039bfe0 sp=0xc00039bf90 pc=0x7b14b5
+runtime.goexit({})
+	runtime/asm_amd64.s:1700 +0x1 fp=0xc00039bfe8 sp=0xc00039bfe0 pc=0x487861
+created by net/http.(*Transport).startDialConnForLocked in goroutine 24
+	net/http/transport.go:1599 +0x112
+
+goroutine 51 gp=0xc000302540 m=nil [select]:
+runtime.gopark(0xc0000b75b8?, 0x2?, 0x7?, 0x0?, 0xc0000b7470?)
+	runtime/proc.go:435 +0xce fp=0xc0000b72f8 sp=0xc0000b72d8 pc=0x47fa2e
+runtime.selectgo(0xc0000b75b8, 0xc0000b746c, 0x14?, 0x0, 0x0?, 0x1)
+	runtime/select.go:351 +0x837 fp=0xc0000b7430 sp=0xc0000b72f8 pc=0x45d597
+net.(*Resolver).lookupIPAddr(0x1316040, {0xcd0a20, 0xc0003ba1c0}, {0xba2f91, 0x3}, {0xc000220378, 0x10})
+	net/lookup.go:342 +0x3d9 fp=0xc0000b7610 sp=0xc0000b7430 pc=0x6be139
+net.(*Resolver).internetAddrList(0x1316040?, {0xcd0a20?, 0xc0003ba1c0?}, {0xba2f91, 0x3}, {0xc000220378?, 0x423165?})
+	net/ipsock.go:289 +0x4c5 fp=0xc0000b7708 sp=0xc0000b7610 pc=0x6bc425
+net.(*Resolver).resolveAddrList(0x1316040, {0xcd0a20, 0xc0003ba1c0}, {0xba35b1, 0x4}, {0xba2f91?, 0x426405?}, {0xc000220378, 0x14}, {0x0, ...})
+	net/dial.go:353 +0x3e5 fp=0xc0000b7808 sp=0xc0000b7708 pc=0x6aa265
+net.(*Dialer).DialContext(0xc0000a0090, {0xcd09b0, 0xc0003b00f0}, {0xba2f91, 0x3}, {0xc000220378, 0x14})
+	net/dial.go:560 +0x408 fp=0xc0000b7978 sp=0xc0000b7808 pc=0x6ab008
+net.(*Dialer).DialContext-fm({0xcd09b0?, 0xc0003b00f0?}, {0xba2f91?, 0x1339ea0?}, {0xc000220378?, 0xc000258a18?})
+	<autogenerated>:1 +0x49 fp=0xc0000b79c0 sp=0xc0000b7978 pc=0x7c6629
+net/http.(*Transport).dial(0xc0001d4540?, {0xcd09b0?, 0xc0003b00f0?}, {0xba2f91?, 0x1316520?}, {0xc000220378?, 0xc0001d4510?})
+	net/http/transport.go:1278 +0xd2 fp=0xc0000b7a28 sp=0xc0000b79c0 pc=0x7afb92
+net/http.(*Transport).dialConn(0x12c2960, {0xcd09b0, 0xc0003b00f0}, {{}, 0x0, {0xc00031c0a0, 0x5}, {0xc000220378, 0x14}, 0x0})
+	net/http/transport.go:1783 +0x7e5 fp=0xc0000b7ee0 sp=0xc0000b7a28 pc=0x7b2b65
+net/http.(*Transport).dialConnFor(0x12c2960, 0xc0003bc000)
+	net/http/transport.go:1618 +0xb8 fp=0xc0000b7f90 sp=0xc0000b7ee0 pc=0x7b1678
+net/http.(*Transport).startDialConnForLocked.func1()
+	net/http/transport.go:1600 +0x35 fp=0xc0000b7fe0 sp=0xc0000b7f90 pc=0x7b14b5
+runtime.goexit({})
+	runtime/asm_amd64.s:1700 +0x1 fp=0xc0000b7fe8 sp=0xc0000b7fe0 pc=0x487861
+created by net/http.(*Transport).startDialConnForLocked in goroutine 27
+	net/http/transport.go:1599 +0x112
+
+goroutine 52 gp=0xc000302700 m=nil [select]:
+runtime.gopark(0xc0001235b8?, 0x2?, 0xa8?, 0xc1?, 0xc000123470?)
+	runtime/proc.go:435 +0xce fp=0xc0001232f8 sp=0xc0001232d8 pc=0x47fa2e
+runtime.selectgo(0xc0001235b8, 0xc00012346c, 0x14?, 0x0, 0x0?, 0x1)
+	runtime/select.go:351 +0x837 fp=0xc000123430 sp=0xc0001232f8 pc=0x45d597
+net.(*Resolver).lookupIPAddr(0x1316040, {0xcd0a20, 0xc0004241c0}, {0xba2f91, 0x3}, {0xc000420018, 0x10})
+	net/lookup.go:342 +0x3d9 fp=0xc000123610 sp=0xc000123430 pc=0x6be139
+net.(*Resolver).internetAddrList(0x1316040?, {0xcd0a20?, 0xc0004241c0?}, {0xba2f91, 0x3}, {0xc000420018?, 0x423165?})
+	net/ipsock.go:289 +0x4c5 fp=0xc000123708 sp=0xc000123610 pc=0x6bc425
+net.(*Resolver).resolveAddrList(0x1316040, {0xcd0a20, 0xc0004241c0}, {0xba35b1, 0x4}, {0xba2f91?, 0x426405?}, {0xc000420018, 0x14}, {0x0, ...})
+	net/dial.go:353 +0x3e5 fp=0xc000123808 sp=0xc000123708 pc=0x6aa265
+net.(*Dialer).DialContext(0xc0000a0090, {0xcd09b0, 0xc0004960a0}, {0xba2f91, 0x3}, {0xc000420018, 0x14})
+	net/dial.go:560 +0x408 fp=0xc000123978 sp=0xc000123808 pc=0x6ab008
+net.(*Dialer).DialContext-fm({0xcd09b0?, 0xc0004960a0?}, {0xba2f91?, 0x1339ea0?}, {0xc000420018?, 0xc00042ca18?})
+	<autogenerated>:1 +0x49 fp=0xc0001239c0 sp=0xc000123978 pc=0x7c6629
+net/http.(*Transport).dial(0x0?, {0xcd09b0?, 0xc0004960a0?}, {0xba2f91?, 0x0?}, {0xc000420018?, 0x0?})
+	net/http/transport.go:1278 +0xd2 fp=0xc000123a28 sp=0xc0001239c0 pc=0x7afb92
+net/http.(*Transport).dialConn(0x12c2960, {0xcd09b0, 0xc0004960a0}, {{}, 0x0, {0xc0001340e0, 0x5}, {0xc000420018, 0x14}, 0x0})
+	net/http/transport.go:1783 +0x7e5 fp=0xc000123ee0 sp=0xc000123a28 pc=0x7b2b65
+net/http.(*Transport).dialConnFor(0x12c2960, 0xc00049c000)
+	net/http/transport.go:1618 +0xb8 fp=0xc000123f90 sp=0xc000123ee0 pc=0x7b1678
+net/http.(*Transport).startDialConnForLocked.func1()
+	net/http/transport.go:1600 +0x35 fp=0xc000123fe0 sp=0xc000123f90 pc=0x7b14b5
+runtime.goexit({})
+	runtime/asm_amd64.s:1700 +0x1 fp=0xc000123fe8 sp=0xc000123fe0 pc=0x487861
+created by net/http.(*Transport).startDialConnForLocked in goroutine 22
+	net/http/transport.go:1599 +0x112
+
+goroutine 53 gp=0xc0003028c0 m=nil [select]:
+runtime.gopark(0xc0003975b8?, 0x2?, 0xa8?, 0xc1?, 0xc000397470?)
+	runtime/proc.go:435 +0xce fp=0xc0003972f8 sp=0xc0003972d8 pc=0x47fa2e
+runtime.selectgo(0xc0003975b8, 0xc00039746c, 0x14?, 0x0, 0x0?, 0x1)
+	runtime/select.go:351 +0x837 fp=0xc000397430 sp=0xc0003972f8 pc=0x45d597
+net.(*Resolver).lookupIPAddr(0x1316040, {0xcd0a20, 0xc000264460}, {0xba2f91, 0x3}, {0xc000146018, 0x10})
+	net/lookup.go:342 +0x3d9 fp=0xc000397610 sp=0xc000397430 pc=0x6be139
+net.(*Resolver).internetAddrList(0x1316040?, {0xcd0a20?, 0xc000264460?}, {0xba2f91, 0x3}, {0xc000146018?, 0x423165?})
+	net/ipsock.go:289 +0x4c5 fp=0xc000397708 sp=0xc000397610 pc=0x6bc425
+net.(*Resolver).resolveAddrList(0x1316040, {0xcd0a20, 0xc000264460}, {0xba35b1, 0x4}, {0xba2f91?, 0xc00025c9b0?}, {0xc000146018, 0x14}, {0x0, ...})
+	net/dial.go:353 +0x3e5 fp=0xc000397808 sp=0xc000397708 pc=0x6aa265
+net.(*Dialer).DialContext(0xc0000a0090, {0xcd09b0, 0xc0001380f0}, {0xba2f91, 0x3}, {0xc000146018, 0x14})
+	net/dial.go:560 +0x408 fp=0xc000397978 sp=0xc000397808 pc=0x6ab008
+net.(*Dialer).DialContext-fm({0xcd09b0?, 0xc0001380f0?}, {0xba2f91?, 0x1339ea0?}, {0xc000146018?, 0xc00025ca18?})
+	<autogenerated>:1 +0x49 fp=0xc0003979c0 sp=0xc000397978 pc=0x7c6629
+net/http.(*Transport).dial(0xc0001ae738?, {0xcd09b0?, 0xc0001380f0?}, {0xba2f91?, 0x1316520?}, {0xc000146018?, 0xc0001d2360?})
+	net/http/transport.go:1278 +0xd2 fp=0xc000397a28 sp=0xc0003979c0 pc=0x7afb92
+net/http.(*Transport).dialConn(0x12c2960, {0xcd09b0, 0xc0001380f0}, {{}, 0x0, {0xc000198230, 0x5}, {0xc000146018, 0x14}, 0x0})
+	net/http/transport.go:1783 +0x7e5 fp=0xc000397ee0 sp=0xc000397a28 pc=0x7b2b65
+net/http.(*Transport).dialConnFor(0x12c2960, 0xc00014a000)
+	net/http/transport.go:1618 +0xb8 fp=0xc000397f90 sp=0xc000397ee0 pc=0x7b1678
+net/http.(*Transport).startDialConnForLocked.func1()
+	net/http/transport.go:1600 +0x35 fp=0xc000397fe0 sp=0xc000397f90 pc=0x7b14b5
+runtime.goexit({})
+	runtime/asm_amd64.s:1700 +0x1 fp=0xc000397fe8 sp=0xc000397fe0 pc=0x487861
+created by net/http.(*Transport).startDialConnForLocked in goroutine 21
+	net/http/transport.go:1599 +0x112
+
+goroutine 54 gp=0xc000302a80 m=nil [select]:
+runtime.gopark(0xc0000b55b8?, 0x2?, 0x8?, 0x18?, 0xc0000b5470?)
+	runtime/proc.go:435 +0xce fp=0xc0000b52f8 sp=0xc0000b52d8 pc=0x47fa2e
+runtime.selectgo(0xc0000b55b8, 0xc0000b546c, 0x14?, 0x0, 0x0?, 0x1)
+	runtime/select.go:351 +0x837 fp=0xc0000b5430 sp=0xc0000b52f8 pc=0x45d597
+net.(*Resolver).lookupIPAddr(0x1316040, {0xcd0a20, 0xc0003481c0}, {0xba2f91, 0x3}, {0xc000492018, 0x10})
+	net/lookup.go:342 +0x3d9 fp=0xc0000b5610 sp=0xc0000b5430 pc=0x6be139
+net.(*Resolver).internetAddrList(0x1316040?, {0xcd0a20?, 0xc0003481c0?}, {0xba2f91, 0x3}, {0xc000492018?, 0x423165?})
+	net/ipsock.go:289 +0x4c5 fp=0xc0000b5708 sp=0xc0000b5610 pc=0x6bc425
+net.(*Resolver).resolveAddrList(0x1316040, {0xcd0a20, 0xc0003481c0}, {0xba35b1, 0x4}, {0xba2f91?, 0x426405?}, {0xc000492018, 0x14}, {0x0, ...})
+	net/dial.go:353 +0x3e5 fp=0xc0000b5808 sp=0xc0000b5708 pc=0x6aa265
+net.(*Dialer).DialContext(0xc0000a0090, {0xcd09b0, 0xc0004160f0}, {0xba2f91, 0x3}, {0xc000492018, 0x14})
+	net/dial.go:560 +0x408 fp=0xc0000b5978 sp=0xc0000b5808 pc=0x6ab008
+net.(*Dialer).DialContext-fm({0xcd09b0?, 0xc0004160f0?}, {0xba2f91?, 0x1339ea0?}, {0xc000492018?, 0xc000110a18?})
+	<autogenerated>:1 +0x49 fp=0xc0000b59c0 sp=0xc0000b5978 pc=0x7c6629
+net/http.(*Transport).dial(0xc0001ae760?, {0xcd09b0?, 0xc0004160f0?}, {0xba2f91?, 0x1316520?}, {0xc000492018?, 0xc0001d2380?})
+	net/http/transport.go:1278 +0xd2 fp=0xc0000b5a28 sp=0xc0000b59c0 pc=0x7afb92
+net/http.(*Transport).dialConn(0x12c2960, {0xcd09b0, 0xc0004160f0}, {{}, 0x0, {0xc0003b2000, 0x5}, {0xc000492018, 0x14}, 0x0})
+	net/http/transport.go:1783 +0x7e5 fp=0xc0000b5ee0 sp=0xc0000b5a28 pc=0x7b2b65
+net/http.(*Transport).dialConnFor(0x12c2960, 0xc000426000)
+	net/http/transport.go:1618 +0xb8 fp=0xc0000b5f90 sp=0xc0000b5ee0 pc=0x7b1678
+net/http.(*Transport).startDialConnForLocked.func1()
+	net/http/transport.go:1600 +0x35 fp=0xc0000b5fe0 sp=0xc0000b5f90 pc=0x7b14b5
+runtime.goexit({})
+	runtime/asm_amd64.s:1700 +0x1 fp=0xc0000b5fe8 sp=0xc0000b5fe0 pc=0x487861
+created by net/http.(*Transport).startDialConnForLocked in goroutine 28
+	net/http/transport.go:1599 +0x112
+
+goroutine 3 gp=0xc0000056c0 m=nil [select]:
+runtime.gopark(0xc0002915b8?, 0x2?, 0x34?, 0x27?, 0xc000291470?)
+	runtime/proc.go:435 +0xce fp=0xc0002912f8 sp=0xc0002912d8 pc=0x47fa2e
+runtime.selectgo(0xc0002915b8, 0xc00029146c, 0x14?, 0x0, 0x0?, 0x1)
+	runtime/select.go:351 +0x837 fp=0xc000291430 sp=0xc0002912f8 pc=0x45d597
+net.(*Resolver).lookupIPAddr(0x1316040, {0xcd0a20, 0xc0000c21c0}, {0xba2f91, 0x3}, {0xc0003200c0, 0x10})
+	net/lookup.go:342 +0x3d9 fp=0xc000291610 sp=0xc000291430 pc=0x6be139
+net.(*Resolver).internetAddrList(0x1316040?, {0xcd0a20?, 0xc0000c21c0?}, {0xba2f91, 0x3}, {0xc0003200c0?, 0x423165?})
+	net/ipsock.go:289 +0x4c5 fp=0xc000291708 sp=0xc000291610 pc=0x6bc425
+net.(*Resolver).resolveAddrList(0x1316040, {0xcd0a20, 0xc0000c21c0}, {0xba35b1, 0x4}, {0xba2f91?, 0xc0000739b0?}, {0xc0003200c0, 0x14}, {0x0, ...})
+	net/dial.go:353 +0x3e5 fp=0xc000291808 sp=0xc000291708 pc=0x6aa265
+net.(*Dialer).DialContext(0xc0000a0090, {0xcd09b0, 0xc0000be0f0}, {0xba2f91, 0x3}, {0xc0003200c0, 0x14})
+	net/dial.go:560 +0x408 fp=0xc000291978 sp=0xc000291808 pc=0x6ab008
+net.(*Dialer).DialContext-fm({0xcd09b0?, 0xc0000be0f0?}, {0xba2f91?, 0x1339ea0?}, {0xc0003200c0?, 0xc000073a18?})
+	<autogenerated>:1 +0x49 fp=0xc0002919c0 sp=0xc000291978 pc=0x7c6629
+net/http.(*Transport).dial(0xc0001ae790?, {0xcd09b0?, 0xc0000be0f0?}, {0xba2f91?, 0x1316520?}, {0xc0003200c0?, 0xc0001de408?})
+	net/http/transport.go:1278 +0xd2 fp=0xc000291a28 sp=0xc0002919c0 pc=0x7afb92
+net/http.(*Transport).dialConn(0x12c2960, {0xcd09b0, 0xc0000be0f0}, {{}, 0x0, {0xc000260140, 0x5}, {0xc0003200c0, 0x14}, 0x0})
+	net/http/transport.go:1783 +0x7e5 fp=0xc000291ee0 sp=0xc000291a28 pc=0x7b2b65
+net/http.(*Transport).dialConnFor(0x12c2960, 0xc0000c4000)
+	net/http/transport.go:1618 +0xb8 fp=0xc000291f90 sp=0xc000291ee0 pc=0x7b1678
+net/http.(*Transport).startDialConnForLocked.func1()
+	net/http/transport.go:1600 +0x35 fp=0xc000291fe0 sp=0xc000291f90 pc=0x7b14b5
+runtime.goexit({})
+	runtime/asm_amd64.s:1700 +0x1 fp=0xc000291fe8 sp=0xc000291fe0 pc=0x487861
+created by net/http.(*Transport).startDialConnForLocked in goroutine 26
+	net/http/transport.go:1599 +0x112
+
+goroutine 35 gp=0xc00024e1c0 m=nil [select]:
+runtime.gopark(0xc0002935b8?, 0x2?, 0xa8?, 0xc1?, 0xc000293470?)
+	runtime/proc.go:435 +0xce fp=0xc0002932f8 sp=0xc0002932d8 pc=0x47fa2e
+runtime.selectgo(0xc0002935b8, 0xc00029346c, 0x14?, 0x0, 0x0?, 0x1)
+	runtime/select.go:351 +0x837 fp=0xc000293430 sp=0xc0002932f8 pc=0x45d597
+net.(*Resolver).lookupIPAddr(0x1316040, {0xcd0a20, 0xc0002641c0}, {0xba2f91, 0x3}, {0xc0003b6018, 0x10})
+	net/lookup.go:342 +0x3d9 fp=0xc000293610 sp=0xc000293430 pc=0x6be139
+net.(*Resolver).internetAddrList(0x1316040?, {0xcd0a20?, 0xc0002641c0?}, {0xba2f91, 0x3}, {0xc0003b6018?, 0x423165?})
+	net/ipsock.go:289 +0x4c5 fp=0xc000293708 sp=0xc000293610 pc=0x6bc425
+net.(*Resolver).resolveAddrList(0x1316040, {0xcd0a20, 0xc0002641c0}, {0xba35b1, 0x4}, {0xba2f91?, 0xc00025c9b0?}, {0xc0003b6018, 0x14}, {0x0, ...})
+	net/dial.go:353 +0x3e5 fp=0xc000293808 sp=0xc000293708 pc=0x6aa265
+net.(*Dialer).DialContext(0xc0000a0090, {0xcd09b0, 0xc000212190}, {0xba2f91, 0x3}, {0xc0003b6018, 0x14})
+	net/dial.go:560 +0x408 fp=0xc000293978 sp=0xc000293808 pc=0x6ab008
+net.(*Dialer).DialContext-fm({0xcd09b0?, 0xc000212190?}, {0xba2f91?, 0x1339ea0?}, {0xc0003b6018?, 0xc00025ca18?})
+	<autogenerated>:1 +0x49 fp=0xc0002939c0 sp=0xc000293978 pc=0x7c6629
+net/http.(*Transport).dial(0xc0001ae738?, {0xcd09b0?, 0xc000212190?}, {0xba2f91?, 0x1316520?}, {0xc0003b6018?, 0xc0001d2360?})
+	net/http/transport.go:1278 +0xd2 fp=0xc000293a28 sp=0xc0002939c0 pc=0x7afb92
+net/http.(*Transport).dialConn(0x12c2960, {0xcd09b0, 0xc000212190}, {{}, 0x0, {0xc000418000, 0x5}, {0xc0003b6018, 0x14}, 0x0})
+	net/http/transport.go:1783 +0x7e5 fp=0xc000293ee0 sp=0xc000293a28 pc=0x7b2b65
+net/http.(*Transport).dialConnFor(0x12c2960, 0xc000266000)
+	net/http/transport.go:1618 +0xb8 fp=0xc000293f90 sp=0xc000293ee0 pc=0x7b1678
+net/http.(*Transport).startDialConnForLocked.func1()
+	net/http/transport.go:1600 +0x35 fp=0xc000293fe0 sp=0xc000293f90 pc=0x7b14b5
+runtime.goexit({})
+	runtime/asm_amd64.s:1700 +0x1 fp=0xc000293fe8 sp=0xc000293fe0 pc=0x487861
+created by net/http.(*Transport).startDialConnForLocked in goroutine 23
+	net/http/transport.go:1599 +0x112
+
+goroutine 29 gp=0xc000183dc0 m=nil [select]:
+runtime.gopark(0xc00011f5b8?, 0x2?, 0x7?, 0x0?, 0xc00011f470?)
+	runtime/proc.go:435 +0xce fp=0xc00011f2f8 sp=0xc00011f2d8 pc=0x47fa2e
+runtime.selectgo(0xc00011f5b8, 0xc00011f46c, 0x14?, 0x0, 0x47d0c5?, 0x1)
+	runtime/select.go:351 +0x837 fp=0xc00011f430 sp=0xc00011f2f8 pc=0x45d597
+net.(*Resolver).lookupIPAddr(0x1316040, {0xcd0a20, 0xc0002d4150}, {0xba2f91, 0x3}, {0xc0001de5b8, 0x10})
+	net/lookup.go:342 +0x3d9 fp=0xc00011f610 sp=0xc00011f430 pc=0x6be139
+net.(*Resolver).internetAddrList(0x1316040?, {0xcd0a20?, 0xc0002d4150?}, {0xba2f91, 0x3}, {0xc0001de5b8?, 0x423165?})
+	net/ipsock.go:289 +0x4c5 fp=0xc00011f708 sp=0xc00011f610 pc=0x6bc425
+net.(*Resolver).resolveAddrList(0x1316040, {0xcd0a20, 0xc0002d4150}, {0xba35b1, 0x4}, {0xba2f91?, 0x0?}, {0xc0001de5b8, 0x14}, {0x0, ...})
+	net/dial.go:353 +0x3e5 fp=0xc00011f808 sp=0xc00011f708 pc=0x6aa265
+net.(*Dialer).DialContext(0xc0000a0090, {0xcd09b0, 0xc0002853b0}, {0xba2f91, 0x3}, {0xc0001de5b8, 0x14})
+	net/dial.go:560 +0x408 fp=0xc00011f978 sp=0xc00011f808 pc=0x6ab008
+net.(*Dialer).DialContext-fm({0xcd09b0?, 0xc0002853b0?}, {0xba2f91?, 0x1339ea0?}, {0xc0001de5b8?, 0xc00006ea18?})
+	<autogenerated>:1 +0x49 fp=0xc00011f9c0 sp=0xc00011f978 pc=0x7c6629
+net/http.(*Transport).dial(0xc0001ae796?, {0xcd09b0?, 0xc0002853b0?}, {0xba2f91?, 0x1316520?}, {0xc0001de5b8?, 0xc0001d4600?})
+	net/http/transport.go:1278 +0xd2 fp=0xc00011fa28 sp=0xc00011f9c0 pc=0x7afb92
+net/http.(*Transport).dialConn(0x12c2960, {0xcd09b0, 0xc0002853b0}, {{}, 0x0, {0xc0001d8320, 0x5}, {0xc0001de5b8, 0x14}, 0x0})
+	net/http/transport.go:1783 +0x7e5 fp=0xc00011fee0 sp=0xc00011fa28 pc=0x7b2b65
+net/http.(*Transport).dialConnFor(0x12c2960, 0xc0001c82c0)
+	net/http/transport.go:1618 +0xb8 fp=0xc00011ff90 sp=0xc00011fee0 pc=0x7b1678
+net/http.(*Transport).startDialConnForLocked.func1()
+	net/http/transport.go:1600 +0x35 fp=0xc00011ffe0 sp=0xc00011ff90 pc=0x7b14b5
+runtime.goexit({})
+	runtime/asm_amd64.s:1700 +0x1 fp=0xc00011ffe8 sp=0xc00011ffe0 pc=0x487861
+created by net/http.(*Transport).startDialConnForLocked in goroutine 25
+	net/http/transport.go:1599 +0x112
+
+goroutine 4 gp=0xc000005880 m=nil [chan receive]:
+runtime.gopark(0xf?, 0xc0000282e0?, 0xf1?, 0x82?, 0xc0000b3370?)
+	runtime/proc.go:435 +0xce fp=0xc0000b32f8 sp=0xc0000b32d8 pc=0x47fa2e
+runtime.chanrecv(0xc0000c2310, 0xc0000b33a8, 0x1)
+	runtime/chan.go:664 +0x445 fp=0xc0000b3370 sp=0xc0000b32f8 pc=0x41b1a5
+runtime.chanrecv1(0x454c3f?, 0xc0000b33a8?)
+	runtime/chan.go:506 +0x12 fp=0xc0000b3398 sp=0xc0000b3370 pc=0x41ad32
+net.(*Resolver).goLookupIPCNAMEOrder.func4({0xc000073620?, 0x488e1b?}, 0x42f0?)
+	net/dnsclient_unix.go:673 +0x65 fp=0xc0000b3428 sp=0xc0000b3398 pc=0x6b2005
+net.(*Resolver).goLookupIPCNAMEOrder(_, {_, _}, {_, _}, {_, _}, _, _)
+	net/dnsclient_unix.go:683 +0xbe6 fp=0xc0000b3c00 sp=0xc0000b3428 pc=0x6b1326
+net.(*Resolver).lookupIP(0x1316040, {0xcd09b0, 0xc0000be140}, {0xba2f91, 0x3}, {0xc0003200c0, 0x10})
+	net/lookup_unix.go:68 +0x131 fp=0xc0000b3e58 sp=0xc0000b3c00 pc=0x6bf3f1
+net.(*Resolver).lookupIP-fm({0xcd09b0?, 0xc0000be140?}, {0xba2f91?, 0xc0000c4078?}, {0xc0003200c0?, 0xc0002506b0?})
+	<autogenerated>:1 +0x49 fp=0xc0000b3ea0 sp=0xc0000b3e58 pc=0x6d4b89
+net.init.func1({0xcd09b0?, 0xc0000be140?}, 0xc0000be0f0?, {0xba2f91?, 0xc000260140?}, {0xc0003200c0?, 0xc0003200c0?})
+	net/hook.go:21 +0x37 fp=0xc0000b3ee0 sp=0xc0000b3ea0 pc=0x6a5897
+net.(*Resolver).lookupIPAddr.func1()
+	net/lookup.go:334 +0x37 fp=0xc0000b3f38 sp=0xc0000b3ee0 pc=0x6be9f7
+internal/singleflight.(*Group).doCall(0x1316050, 0xc0000be190, {0xc000000240, 0x14}, 0x0?)
+	internal/singleflight/singleflight.go:93 +0x34 fp=0xc0000b3fa8 sp=0xc0000b3f38 pc=0x6a49b4
+internal/singleflight.(*Group).DoChan.gowrap1()
+	internal/singleflight/singleflight.go:86 +0x30 fp=0xc0000b3fe0 sp=0xc0000b3fa8 pc=0x6a4950
+runtime.goexit({})
+	runtime/asm_amd64.s:1700 +0x1 fp=0xc0000b3fe8 sp=0xc0000b3fe0 pc=0x487861
+created by internal/singleflight.(*Group).DoChan in goroutine 3
+	internal/singleflight/singleflight.go:86 +0x2d3
+
+goroutine 5 gp=0xc000005a40 m=nil [runnable]:
+runtime.asyncPreempt2()
+	runtime/preempt.go:308 +0x39 fp=0xc0003991b0 sp=0xc000399190 pc=0x4497f9
+runtime.asyncPreempt()
+	runtime/preempt_amd64.s:46 +0xdb fp=0xc000399338 sp=0xc0003991b0 pc=0x488e1b
+net.(*Resolver).dial(0xc000200370?, {0xcd0a20?, 0xc0002645b0?}, {0xba2f94?, 0x13173a0?}, {0xc0000142b0?, 0x0?})
+	net/lookup.go:695 +0xa5 fp=0xc000399420 sp=0xc000399338 pc=0x6bed25
+net.(*Resolver).exchange(_, {_, _}, {_, _}, {{{0x70, 0x72, 0x6f, 0x78, 0x79, ...}, ...}, ...}, ...)
+	net/dnsclient_unix.go:185 +0x34a fp=0xc0003997f8 sp=0xc000399420 pc=0x6ae32a
+net.(*Resolver).tryOneName(0x1316040, {0xcd09b0, 0xc0000be140}, 0xc0000a2500?, {0xc0000005d0, 0x11}, 0x1)
+	net/dnsclient_unix.go:316 +0x4c6 fp=0xc000399e18 sp=0xc0003997f8 pc=0x6af6c6
+net.(*Resolver).goLookupIPCNAMEOrder.func3.1(0x0?)
+	net/dnsclient_unix.go:667 +0x85 fp=0xc000399fc8 sp=0xc000399e18 pc=0x6b22e5
+net.(*Resolver).goLookupIPCNAMEOrder.func3.gowrap1()
+	net/dnsclient_unix.go:670 +0x24 fp=0xc000399fe0 sp=0xc000399fc8 pc=0x6b2224
+runtime.goexit({})
+	runtime/asm_amd64.s:1700 +0x1 fp=0xc000399fe8 sp=0xc000399fe0 pc=0x487861
+created by net.(*Resolver).goLookupIPCNAMEOrder.func3 in goroutine 4
+	net/dnsclient_unix.go:666 +0x13f
+
+goroutine 6 gp=0xc000005c00 m=nil [runnable]:
+runtime.asyncPreempt2()
+	runtime/preempt.go:308 +0x39 fp=0xc0005051b0 sp=0xc000505190 pc=0x4497f9
+runtime.asyncPreempt()
+	runtime/preempt_amd64.s:46 +0xdb fp=0xc000505338 sp=0xc0005051b0 pc=0x488e1b
+net.(*Resolver).dial(0xc0000303f0?, {0xcd0a20?, 0xc0000c23f0?}, {0xba2f94?, 0x13173a0?}, {0xc0000142b0?, 0x0?})
+	net/lookup.go:695 +0xa5 fp=0xc000505420 sp=0xc000505338 pc=0x6bed25
+net.(*Resolver).exchange(_, {_, _}, {_, _}, {{{0x70, 0x72, 0x6f, 0x78, 0x79, ...}, ...}, ...}, ...)
+	net/dnsclient_unix.go:185 +0x34a fp=0xc0005057f8 sp=0xc000505420 pc=0x6ae32a
+net.(*Resolver).tryOneName(0x1316040, {0xcd09b0, 0xc0000be140}, 0xc0000a2500?, {0xc0000005d0, 0x11}, 0x1c)
+	net/dnsclient_unix.go:316 +0x4c6 fp=0xc000505e18 sp=0xc0005057f8 pc=0x6af6c6
+net.(*Resolver).goLookupIPCNAMEOrder.func3.1(0x41e8?)
+	net/dnsclient_unix.go:667 +0x85 fp=0xc000505fc8 sp=0xc000505e18 pc=0x6b22e5
+net.(*Resolver).goLookupIPCNAMEOrder.func3.gowrap1()
+	net/dnsclient_unix.go:670 +0x24 fp=0xc000505fe0 sp=0xc000505fc8 pc=0x6b2224
+runtime.goexit({})
+	runtime/asm_amd64.s:1700 +0x1 fp=0xc000505fe8 sp=0xc000505fe0 pc=0x487861
+created by net.(*Resolver).goLookupIPCNAMEOrder.func3 in goroutine 4
+	net/dnsclient_unix.go:666 +0x13f
+
+rax    0x1
+rbx    0x0
+rcx    0x0
+rdx    0x129fae490
+rdi    0x133a0e8
+rsi    0xffffffffb430ee40
+rbp    0xffff5e7fbc48
+rsp    0xffff5e7fb5d0
+r8     0x77
+r9     0x72
+r10    0xa
+r11    0x0
+r12    0xffff5e7fb650
+r13    0x1
+r14    0xc0003021c0
+r15    0x1
+rip    0x44424e
+rflags 0x206
+cs     0x33
+fs     0x0
+gs     0x0
+Error: [linux/amd64]: building at STEP "RUN go mod download": while running runtime: exit status 2
+
+make: *** [podman-cross-build] Error 2
+WARNING: Build failed for console-dashboards-plugin @ release-coo-ocp-4.12 (exit code 2), continuing...
+==========================================
+Building distributed-tracing-console-plugin @ release-coo-ocp-4.12 with VERSION=v0.3.3 ORG=rh-ee-emurasak
+==========================================
+Already on 'release-coo-ocp-4.12'
+M	Makefile
+Your branch is up to date with 'origin/release-coo-ocp-4.12'.
+From https://github.com/openshift/distributed-tracing-console-plugin
+ * branch            release-coo-ocp-4.12 -> FETCH_HEAD
+Already up to date.
+podman manifest rm quay.io/rh-ee-emurasak/distributed-tracing-console-plugin:v0.3.3 || true
+Untagged: quay.io/rh-ee-emurasak/distributed-tracing-console-plugin:v0.3.3
+Deleted: 1435542cdc1d1874e7db705cfc0df901451360c753ca7e57cb25f36edf1bce75
+podman manifest create quay.io/rh-ee-emurasak/distributed-tracing-console-plugin:v0.3.3
+93b7cd00bf4e72fc4c0f87616d31d9f90c9a53cea4793c234f93674de3d1707d
+podman build --platform=linux/arm64,linux/amd64 --manifest quay.io/rh-ee-emurasak/distributed-tracing-console-plugin:v0.3.3 -f Dockerfile
+[linux/amd64] [1/3] STEP 1/8: FROM registry.redhat.io/ubi8/nodejs-22:latest AS web-builder
+[linux/amd64] [1/3] STEP 2/8: WORKDIR /opt/app-root
+--> Using cache 5c0cf74e634d477f3a8b90775a7069661d476aa0335bb1ddc1bf3a5999a8bf0d
+--> 5c0cf74e634d
+[linux/amd64] [1/3] STEP 3/8: USER 0
+--> Using cache 5f5757c23263b9d624c994718c11f6f1836bfc49d30c579d24bb9d52b5874077
+--> 5f5757c23263
+[linux/amd64] [1/3] STEP 4/8: COPY web/package*.json web/
+--> Using cache 7e39214be85683c7dd55948f1f03a7af26ec818ab9063654079edfae62613310
+--> 7e39214be856
+[linux/amd64] [1/3] STEP 5/8: COPY Makefile Makefile
+--> Using cache 75d113fef4af9b70b7883d7ce24840d9562ce40aae921e3f96ad008b1ed1f4b3
+--> 75d113fef4af
+[linux/amd64] [1/3] STEP 6/8: RUN make install-frontend-ci-clean
+--> Using cache 011b8fb153273cf2ea36e35be80827fd2f45ebdbaecf0b4c75bd61b667cce54e
+--> 011b8fb15327
+[linux/amd64] [1/3] STEP 7/8: COPY web/ web/
+--> Using cache 284c193385269aeb1a71e76836f9a98d14347dfd0f952a59e9fd07bf68305e9a
+--> 284c19338526
+[linux/amd64] [1/3] STEP 8/8: RUN make build-frontend
+--> Using cache 74126fc8921d41c3383f40563067f0e4d534341d9372ca2f92ad9f06f4596596
+--> 74126fc8921d
+[linux/amd64] [2/3] STEP 1/11: FROM brew.registry.redhat.io/rh-osbs/openshift-golang-builder:rhel_9_1.25 AS go-builder
+[linux/amd64] [2/3] STEP 2/11: WORKDIR /opt/app-root
+--> Using cache f6b923a6bb0b7b65a061b318df8c9f9f7dd37fef76eb231cd64d457317042265
+--> f6b923a6bb0b
+[linux/amd64] [2/3] STEP 3/11: COPY Makefile Makefile
+--> Using cache 7bf8d1337fbf7c377952bb02c57fe38fffaebcbe0cdb3fdf6ef3ffd0ecd1d1cd
+--> 7bf8d1337fbf
+[linux/amd64] [2/3] STEP 4/11: COPY go.mod go.mod
+--> Using cache 95ec4bd5d7b90d39337cfa22287edf508e00127ad1c7c07d2df51d6eff645e23
+--> 95ec4bd5d7b9
+[linux/amd64] [2/3] STEP 5/11: COPY go.sum go.sum
+--> Using cache 7e1020f2084b09ac718fa542f91bbf0c344e0c9c2a3366e89c2e1078bc16c5aa
+--> 7e1020f2084b
+[linux/amd64] [2/3] STEP 6/11: RUN go mod download
+--> Using cache 679df3f264d380ea88e28f29ea2b4c6503aba18e1325a1097abc78eb2f45b136
+--> 679df3f264d3
+[linux/amd64] [2/3] STEP 7/11: COPY cmd/ cmd/
+--> Using cache bcc0f144a716220c3d44c34d9a1a00d86ad24494ee065e34c742a8760eafcb8c
+--> bcc0f144a716
+[linux/amd64] [2/3] STEP 8/11: COPY pkg/ pkg/
+--> Using cache 5739fc66630d1105d7b36d2a73390f4b739eb5ea735be00c924d429e03e8bc47
+--> 5739fc66630d
+[linux/amd64] [2/3] STEP 9/11: ENV GOEXPERIMENT=strictfipsruntime
+--> Using cache 3ecbd2ea2f4e89b6ae327e4916a91886b40d735c11c44bff74eabfdf55207ff0
+--> 3ecbd2ea2f4e
+[linux/amd64] [2/3] STEP 10/11: ENV CGO_ENABLED=1
+--> Using cache 29ab9148715cafa366a4e7d17abadc87786e98fb131faf45a5cfb1cec76ccbd3
+--> 29ab9148715c
+[linux/amd64] [2/3] STEP 11/11: RUN make build-backend BUILD_OPTS="-tags strictfipsruntime"
+--> Using cache 9fc812f609fa77598dd916c301f6be8d4b5a39c850d8bc2b49592d17c04db5ce
+--> 9fc812f609fa
+[linux/arm64] [1/3] STEP 1/8: FROM registry.redhat.io/ubi8/nodejs-22:latest AS web-builder
+Trying to pull registry.redhat.io/ubi8/nodejs-22:latest...
+Getting image source signatures
+Checking if image destination supports signatures
+Copying blob sha256:158c7ccacdc1bf2d10cdb1aabf204e4d3065fb88dff752bf3fff00404bde36fc
+Copying blob sha256:be14e4bd5c48c79aa0c1bc73f7ad1515b7d2452caa02d5e74ad2e4fb3b70fa27
+Copying blob sha256:e1de3abe41200e76a94241f1669175174b71b6f683a92b1d52ffc1ba0a8b8d0a
+Copying config sha256:fdfa0b70e89329feaa226e2c9056c31972b91f9955eed1e23fa5a33d89224f54
+Writing manifest to image destination
+Storing signatures
+[linux/arm64] [1/3] STEP 2/8: WORKDIR /opt/app-root
+--> Using cache 92ca7a2a0204f8f78f02ca99ad816106c4bbd579d72feff1f00ee32fff486aaf
+--> 92ca7a2a0204
+[linux/arm64] [1/3] STEP 3/8: USER 0
+--> Using cache a72c76b7052db84dff47a46f5df06a4c163b924d1b39f7d1be7650b4fc0c91e9
+--> a72c76b7052d
+[linux/arm64] [1/3] STEP 4/8: COPY web/package*.json web/
+--> Using cache bb50ef713c6169d40fedd46534a8a0e10295be1d5fa1c9b26b53b104de4f298f
+--> bb50ef713c61
+[linux/arm64] [1/3] STEP 5/8: COPY Makefile Makefile
+--> Using cache 403d395b2df44952758e081faea03fbd41686a73ea13f4f902b5c71b9844b6af
+--> 403d395b2df4
+[linux/arm64] [1/3] STEP 6/8: RUN make install-frontend-ci-clean
+--> Using cache a3118a4aa1ff1d38383725df63b04b2d5bf7887b28e0ac9370f4c98e47ed751b
+--> a3118a4aa1ff
+[linux/arm64] [1/3] STEP 7/8: COPY web/ web/
+--> Using cache 30fae688ea53c184a4e0e47d78815336de881cc3542f71669fa30421497828dd
+--> 30fae688ea53
+[linux/arm64] [1/3] STEP 8/8: RUN make build-frontend
+--> Using cache 51dcaf0ef376b9059e4972595ff627081d9f026d43063645ebd1197645f532cd
+--> 51dcaf0ef376
+[linux/amd64] [3/3] STEP 1/4: FROM registry.access.redhat.com/ubi9/ubi-minimal
+[linux/amd64] [3/3] STEP 2/4: COPY --from=web-builder /opt/app-root/web/dist /opt/app-root/web/dist
+--> Using cache 591e6f09d059dce59bcad61b2c8234459b9ba9f8712f38695e2bda9291482ed3
+--> 591e6f09d059
+[linux/amd64] [3/3] STEP 3/4: COPY --from=go-builder /opt/app-root/plugin-backend /opt/app-root
+--> Using cache c0f698cf4a3988133fa41c279951569acdd077692e9bd44f8ada88465a3e0f4d
+--> c0f698cf4a39
+[linux/amd64] [3/3] STEP 4/4: ENTRYPOINT ["/opt/app-root/plugin-backend", "-static-path", "/opt/app-root/web/dist", "-config-path", "/opt/app-root/web/dist"]
+--> Using cache 8285a635366c772bf0ed84df0f54a36caa52d416152eea71eada274545922517
+--> 8285a635366c
+[linux/arm64] [2/3] STEP 1/11: FROM brew.registry.redhat.io/rh-osbs/openshift-golang-builder:rhel_9_1.25 AS go-builder
+Trying to pull brew.registry.redhat.io/rh-osbs/openshift-golang-builder:rhel_9_1.25...
+8285a635366c772bf0ed84df0f54a36caa52d416152eea71eada274545922517
+Getting image source signatures
+Copying blob sha256:b98d37c87f15536538dc20373f6feca81ccf73779a63f168b7855ce2c2360cff
+Copying blob sha256:9e9bee4738d78cc5b8c68706e99751b669394b1e52ebb360fabf583fee381119
+Copying config sha256:6cc0ec0f03bcbce80b198dae197eb1ca379eb2fa2e7f2e456cf01f6464e2b1ec
+Writing manifest to image destination
+[linux/arm64] [2/3] STEP 2/11: WORKDIR /opt/app-root
+--> Using cache 924774af5a2bef69edd1d79dab207c8a950fc41c3d8f44249f7e8e3f8b1b1c6a
+--> 924774af5a2b
+[linux/arm64] [2/3] STEP 3/11: COPY Makefile Makefile
+--> Using cache 09faf94f8b7c4cf79e1cf493efdef614a8b16dad1af606c207c973f21caa0e60
+--> 09faf94f8b7c
+[linux/arm64] [2/3] STEP 4/11: COPY go.mod go.mod
+--> Using cache 8ce680444ec9fc48fa73737f396d4644b48e43d21fbc227a3cd73239f376a400
+--> 8ce680444ec9
+[linux/arm64] [2/3] STEP 5/11: COPY go.sum go.sum
+--> Using cache 90ea1010a79936a8cf9136574ad2bb090b353acf7ceaa535d7a2c7ee9689c7a3
+--> 90ea1010a799
+[linux/arm64] [2/3] STEP 6/11: RUN go mod download
+--> Using cache 570e113b9f9eac4a4acd7d74528f2df21b8a411912b70528aafa84c227ad461b
+--> 570e113b9f9e
+[linux/arm64] [2/3] STEP 7/11: COPY cmd/ cmd/
+--> Using cache 2f78cf9ab99bd197d0a90819d4053d14c55bf45b43d0e4264aff5e1e54604c15
+--> 2f78cf9ab99b
+[linux/arm64] [2/3] STEP 8/11: COPY pkg/ pkg/
+--> Using cache 89552f1c01fc291e2a0fcc253e1430a70bec3b356c83853d69c493ba6644f5fc
+--> 89552f1c01fc
+[linux/arm64] [2/3] STEP 9/11: ENV GOEXPERIMENT=strictfipsruntime
+--> Using cache fec96c6da645697f700bd2630d440e0768e9084d1ba33f36b3a332cf63da1e70
+--> fec96c6da645
+[linux/arm64] [2/3] STEP 10/11: ENV CGO_ENABLED=1
+--> Using cache 68762f5d6771358efa2f52c6b93bbcaa9e58c90c30fbc222ea1a4d2e3b535a4e
+--> 68762f5d6771
+[linux/arm64] [2/3] STEP 11/11: RUN make build-backend BUILD_OPTS="-tags strictfipsruntime"
+--> Using cache bff565eea72077f526a37450799a7aa7d1fd07cf595a7294e341984ff4c35da5
+--> bff565eea720
+[linux/arm64] [3/3] STEP 1/4: FROM registry.access.redhat.com/ubi9/ubi-minimal
+Trying to pull registry.access.redhat.com/ubi9/ubi-minimal:latest...
+Getting image source signatures
+Checking if image destination supports signatures
+Copying blob sha256:7db43598c7e47cf895f880f92e3cee9c07787091c97802ea3f2bea8fa4848040
+Copying config sha256:64826a3b202499f826f4af0dc0afdbd7fd6681218074b7ea7ed3969c6e12009e
+Writing manifest to image destination
+Storing signatures
+[linux/arm64] [3/3] STEP 2/4: COPY --from=web-builder /opt/app-root/web/dist /opt/app-root/web/dist
+--> Using cache 8a4c5e7fe7047ec211cf3eb197cdf896eb42118f884fde2c09ffb9ac20e95339
+--> 8a4c5e7fe704
+[linux/arm64] [3/3] STEP 3/4: COPY --from=go-builder /opt/app-root/plugin-backend /opt/app-root
+--> Using cache aec8d5cbdf6d4e1b731271443285cf58b378e653789794e257ca7611fadba492
+--> aec8d5cbdf6d
+[linux/arm64] [3/3] STEP 4/4: ENTRYPOINT ["/opt/app-root/plugin-backend", "-static-path", "/opt/app-root/web/dist", "-config-path", "/opt/app-root/web/dist"]
+--> Using cache 2ccd1c92ee21e0038bbcf51f63246cce8f01cb515c81752f11b6c9bb350da091
+--> 2ccd1c92ee21
+2ccd1c92ee21e0038bbcf51f63246cce8f01cb515c81752f11b6c9bb350da091
+podman manifest push quay.io/rh-ee-emurasak/distributed-tracing-console-plugin:v0.3.3
+Getting image list signatures
+Copying 2 images generated from 2 images in list
+Copying image sha256:cea2663832c575f964a522db995e1574edcbad2bb63dbc83a6cf0184e4b9b331 (1/2)
+Getting image source signatures
+Copying blob sha256:1ed401758f2deeaf688de06206e8d8162e8127c8b0369c2dca1e5924a1b1af71
+Copying blob sha256:fc619adba729ec24fef75235acd9b59c5e52bdef3e16a3803a6e9e3022ba748b
+Copying blob sha256:a911b4f72ae937a2f0e49565aebfca5cae1c5689b7467e6239ef120378a11c18
+Error: pushing manifest list quay.io/rh-ee-emurasak/distributed-tracing-console-plugin:v0.3.3: copying image 1/2 from manifest list: writing blob: initiating layer upload to /v2/rh-ee-emurasak/distributed-tracing-console-plugin/blobs/uploads/ in quay.io: unauthorized: access to the requested resource is not authorized
+make: *** [podman-cross-build] Error 125
+WARNING: Build failed for distributed-tracing-console-plugin @ release-coo-ocp-4.12 (exit code 2), continuing...
+==========================================
+Building logging-view-plugin @ release-coo-ocp-4.12 with VERSION=v6.0.5 ORG=rh-ee-emurasak
+==========================================
+Already on 'release-coo-ocp-4.12'
+M	Makefile
+Your branch is up to date with 'origin/release-coo-ocp-4.12'.
+From https://github.com/openshift/logging-view-plugin
+ * branch            release-coo-ocp-4.12 -> FETCH_HEAD
+Already up to date.
+podman manifest rm quay.io/rh-ee-emurasak/logging-view-plugin:v6.0.5 || true
+Untagged: quay.io/rh-ee-emurasak/logging-view-plugin:v6.0.5
+Deleted: 97435d38876bdb7887e2850c7c1696ab76cd84c4c27dcb818dea5f822c9735cc
+podman manifest create quay.io/rh-ee-emurasak/logging-view-plugin:v6.0.5
+784a26e1811669da4f2eae489538d27b0a2308b016847e38aef2165beb2bd217
+podman build --platform=linux/arm64,linux/amd64 --manifest quay.io/rh-ee-emurasak/logging-view-plugin:v6.0.5 -f Dockerfile
+[linux/arm64] [1/3] STEP 1/9: FROM registry.redhat.io/ubi9/nodejs-18:latest AS web-builder
+Trying to pull registry.redhat.io/ubi9/nodejs-18:latest...
+Getting image source signatures
+Checking if image destination supports signatures
+Copying blob sha256:d2d4277551d19aaf448f46617629ba5ce8decceacdd7a9e3f6d43a7763294f84
+Copying blob sha256:c0c6f119f250bcd571815218a238bf91fcd968aa4bfe95c224309ec367df747e
+Copying blob sha256:d92b30fd88841f53962ad35d9c474465d043b096524bdc2ef18640daf2e51e82

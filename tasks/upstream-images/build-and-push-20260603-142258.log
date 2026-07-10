@@ -1,0 +1,63 @@
+Logging to /Users/emurasak/workspace/harness/tasks/upstream-images/build-and-push-20260603-142258.log
+Fetching all branches for each repo...
+  Fetching console-dashboards-plugin...
+  Fetching distributed-tracing-console-plugin...
+  Fetching logging-view-plugin...
+  Fetching monitoring-plugin...
+  Fetching troubleshooting-panel-console-plugin...
+Fetch complete.
+==========================================
+Building console-dashboards-plugin @ release-coo-ocp-4.12 with VERSION=v0.4.3 ORG=rh-ee-emurasak
+==========================================
+Already on 'release-coo-ocp-4.12'
+M	Makefile
+Your branch is up to date with 'origin/release-coo-ocp-4.12'.
+podman manifest rm quay.io/rh-ee-emurasak/console-dashboards-plugin:v0.4.3 || true
+Untagged: quay.io/rh-ee-emurasak/console-dashboards-plugin:v0.4.3
+Deleted: 1d3f255cd16f9b4e4909673b14239fd3e9eba72774029c61cc63c18a5ee5b66a
+podman manifest create quay.io/rh-ee-emurasak/console-dashboards-plugin:v0.4.3
+fbc8260c7cffa4bd042f8ff60432d7dba42d65d43418f21a78439833096c255f
+podman build --platform=linux/arm64,linux/amd64 --manifest quay.io/rh-ee-emurasak/console-dashboards-plugin:v0.4.3 -f Dockerfile
+[linux/arm64] [1/3] STEP 1/8: FROM registry.redhat.io/ubi8/nodejs-18:latest AS web-builder
+[linux/arm64] [1/3] STEP 2/8: WORKDIR /opt/app-root
+--> Using cache dcaa669251a9be459bc9351266e6fc0ee9c6b2a1ae162c6c3e36ae0c34b84795
+--> dcaa669251a9
+[linux/arm64] [1/3] STEP 3/8: USER 0
+--> Using cache 383760893bcdd90821dc93ba7507b2d8eaed7b3f2899ccb79ca5d0ea63d9d152
+--> 383760893bcd
+[linux/arm64] [1/3] STEP 4/8: COPY web/package*.json web/
+--> Using cache 199db1763aebcc51f5e4acb7908febab8a9193769a28b2a9b4ad59d17dfc6491
+--> 199db1763aeb
+[linux/arm64] [1/3] STEP 5/8: COPY Makefile Makefile
+--> Using cache 1fff721a7debded85a8f199bf712f78f882f55a9a810c45c132483ef75bc32cb
+--> 1fff721a7deb
+[linux/arm64] [1/3] STEP 6/8: RUN make install-frontend-ci-clean
+--> Using cache 16f72adee23067aa51f7eebfe761c8278cc878e2f7e52213abe077f099165358
+--> 16f72adee230
+[linux/arm64] [1/3] STEP 7/8: COPY web/ web/
+--> Using cache 6ecef1013e2fdba62e97ada7c753d03f3dca59abedf7e357f7cf4e83eac76fa7
+--> 6ecef1013e2f
+[linux/arm64] [1/3] STEP 8/8: RUN make build-frontend
+--> Using cache 8de8641794f8c00c19831e414512aa0b7794e3d8bbd45ab3e7ec299403a5e618
+--> 8de8641794f8
+[linux/arm64] [2/3] STEP 1/11: FROM registry.ci.openshift.org/ocp/builder:rhel-8-golang-1.24-openshift-4.20 AS go-builder
+[linux/arm64] [2/3] STEP 2/11: WORKDIR /opt/app-root
+--> 37cdd7b5e46e
+[linux/arm64] [2/3] STEP 3/11: COPY Makefile Makefile
+--> 8d99da79d150
+[linux/arm64] [2/3] STEP 4/11: COPY go.mod go.mod
+--> e23a1632065c
+[linux/arm64] [2/3] STEP 5/11: COPY go.sum go.sum
+--> c5ec5f336870
+[linux/arm64] [2/3] STEP 6/11: RUN go mod download
+--> 9f45e9c5a91d
+[linux/arm64] [2/3] STEP 7/11: COPY cmd/ cmd/
+--> c96d9c337c06
+[linux/arm64] [2/3] STEP 8/11: COPY pkg/ pkg/
+--> ef7644af32c0
+[linux/arm64] [2/3] STEP 9/11: ENV GOEXPERIMENT=strictfipsruntime
+--> bb60fe75bbf3
+[linux/arm64] [2/3] STEP 10/11: ENV CGO_ENABLED=1
+--> ac5409c94730
+[linux/arm64] [2/3] STEP 11/11: RUN make build-backend BUILD_OPTS="-tags strictfipsruntime"
+go build -tags strictfipsruntime -o plugin-backend -mod=readonly cmd/plugin-backend.go

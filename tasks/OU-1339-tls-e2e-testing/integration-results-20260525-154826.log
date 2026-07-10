@@ -1,0 +1,23 @@
+# COO Integration TLS E2E Results — Mon May 25 15:48:26 -03 2026
+
+
+[1m[0;36m=== COO Integration TLS E2E Tests ===[0m
+
+[0;36m[INFO][0m  Namespace: openshift-cluster-observability-operator
+[0;36m[INFO][0m  Plugins:   Logging, Monitoring, Dashboards, Distributed Tracing, Troubleshooting Panel
+[0;36m[INFO][0m  Report:    /Users/emurasak/workspace/harness/tasks/OU-1339-tls-e2e-testing/integration-results-20260525-154826.log
+[0;36m[INFO][0m  Timestamp: Mon May 25 15:48:26 -03 2026
+
+[1m[0;36m=== Prerequisites ===[0m
+
+[0;32m[PASS][0m  oc CLI found
+[0;32m[PASS][0m  Logged in as: kube:admin
+[0;32m[PASS][0m  UIPlugin CRD exists
+[0;31m[FAIL][0m  Observability Operator not running in openshift-cluster-observability-operator
+[0;32m[PASS][0m  UIPlugin CR 'logging' exists
+[0;32m[PASS][0m  UIPlugin CR 'monitoring' exists
+[0;32m[PASS][0m  UIPlugin CR 'dashboards' exists
+[0;32m[PASS][0m  UIPlugin CR 'distributed-tracing' exists
+[0;32m[PASS][0m  UIPlugin CR 'troubleshooting-panel' exists
+[0;36m[INFO][0m  Cluster version: 4.22.0-0.nightly-2026-05-25-014749
+[0;31m[FAIL][0m  Prerequisites check failed — aborting

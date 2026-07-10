@@ -1,0 +1,347 @@
+Logging to /Users/emurasak/workspace/harness/tasks/upstream-images/build-and-push-20260603-142545.log
+Fetching all branches for each repo...
+  Fetching console-dashboards-plugin...
+  Fetching distributed-tracing-console-plugin...
+  Fetching logging-view-plugin...
+  Fetching monitoring-plugin...
+  Fetching troubleshooting-panel-console-plugin...
+Fetch complete.
+==========================================
+Building console-dashboards-plugin @ release-coo-ocp-4.12 with VERSION=v0.4.3 ORG=rh-ee-emurasak
+==========================================
+Already on 'release-coo-ocp-4.12'
+M	Makefile
+Your branch is up to date with 'origin/release-coo-ocp-4.12'.
+From https://github.com/openshift/console-dashboards-plugin
+ * branch            release-coo-ocp-4.12 -> FETCH_HEAD
+Already up to date.
+podman manifest rm quay.io/rh-ee-emurasak/console-dashboards-plugin:v0.4.3 || true
+Untagged: quay.io/rh-ee-emurasak/console-dashboards-plugin:v0.4.3
+Deleted: fbc8260c7cffa4bd042f8ff60432d7dba42d65d43418f21a78439833096c255f
+podman manifest create quay.io/rh-ee-emurasak/console-dashboards-plugin:v0.4.3
+470ed54cc8e1841d4205aec4defaa7da9125b5e6b9bb3e277150e9ecb9651ba8
+podman build --platform=linux/arm64,linux/amd64 --manifest quay.io/rh-ee-emurasak/console-dashboards-plugin:v0.4.3 -f Dockerfile
+[linux/arm64] [1/3] STEP 1/8: FROM registry.redhat.io/ubi8/nodejs-18:latest AS web-builder
+[linux/arm64] [1/3] STEP 2/8: WORKDIR /opt/app-root
+--> Using cache dcaa669251a9be459bc9351266e6fc0ee9c6b2a1ae162c6c3e36ae0c34b84795
+--> dcaa669251a9
+[linux/arm64] [1/3] STEP 3/8: USER 0
+--> Using cache 383760893bcdd90821dc93ba7507b2d8eaed7b3f2899ccb79ca5d0ea63d9d152
+--> 383760893bcd
+[linux/arm64] [1/3] STEP 4/8: COPY web/package*.json web/
+--> Using cache 199db1763aebcc51f5e4acb7908febab8a9193769a28b2a9b4ad59d17dfc6491
+--> 199db1763aeb
+[linux/arm64] [1/3] STEP 5/8: COPY Makefile Makefile
+--> Using cache 1fff721a7debded85a8f199bf712f78f882f55a9a810c45c132483ef75bc32cb
+--> 1fff721a7deb
+[linux/arm64] [1/3] STEP 6/8: RUN make install-frontend-ci-clean
+--> Using cache 16f72adee23067aa51f7eebfe761c8278cc878e2f7e52213abe077f099165358
+--> 16f72adee230
+[linux/arm64] [1/3] STEP 7/8: COPY web/ web/
+--> Using cache 6ecef1013e2fdba62e97ada7c753d03f3dca59abedf7e357f7cf4e83eac76fa7
+--> 6ecef1013e2f
+[linux/arm64] [1/3] STEP 8/8: RUN make build-frontend
+--> Using cache 8de8641794f8c00c19831e414512aa0b7794e3d8bbd45ab3e7ec299403a5e618
+--> 8de8641794f8
+[linux/arm64] [2/3] STEP 1/11: FROM registry.ci.openshift.org/ocp/builder:rhel-8-golang-1.24-openshift-4.20 AS go-builder
+[linux/arm64] [2/3] STEP 2/11: WORKDIR /opt/app-root
+--> Using cache 37cdd7b5e46e0da5bb28fe03b2e212e4d648dcf2a8d20ff7941c13885a138495
+--> 37cdd7b5e46e
+[linux/arm64] [2/3] STEP 3/11: COPY Makefile Makefile
+--> Using cache 8d99da79d150c6f1403d46e4597f9b30b35611a2e98b4c40a9616cc0ed8a2db0
+--> 8d99da79d150
+[linux/arm64] [2/3] STEP 4/11: COPY go.mod go.mod
+--> Using cache e23a1632065c6d2bf45ea8db14b92bd0f72e6b61e5f79aa15bc97fc89ac78838
+--> e23a1632065c
+[linux/arm64] [2/3] STEP 5/11: COPY go.sum go.sum
+--> Using cache c5ec5f33687078edad188a677d45c8e372af1180b1564a13cf118033eb05506d
+--> c5ec5f336870
+[linux/arm64] [2/3] STEP 6/11: RUN go mod download
+--> Using cache 9f45e9c5a91d4a32c5f958da7f143927ffb2f89b3e72b9309963d33ea9385b1d
+--> 9f45e9c5a91d
+[linux/arm64] [2/3] STEP 7/11: COPY cmd/ cmd/
+--> Using cache c96d9c337c06ef833fa9530e722bfc48da72ab76a0f072e4e3eae7979fd2b0d6
+--> c96d9c337c06
+[linux/arm64] [2/3] STEP 8/11: COPY pkg/ pkg/
+--> Using cache ef7644af32c087755deb5971167b195cbb26d425755386e3e8755bb6a5ff97ea
+--> ef7644af32c0
+[linux/arm64] [2/3] STEP 9/11: ENV GOEXPERIMENT=strictfipsruntime
+--> Using cache bb60fe75bbf3191d6b83d923c59f2c4dca2fee41f9e9ebb04640fba4335594fb
+--> bb60fe75bbf3
+[linux/arm64] [2/3] STEP 10/11: ENV CGO_ENABLED=1
+--> Using cache ac5409c9473080d3b70dcb285fb4d1586e7509f902fbb40ac199f37f0336fbf9
+--> ac5409c94730
+[linux/arm64] [2/3] STEP 11/11: RUN make build-backend BUILD_OPTS="-tags strictfipsruntime"
+go build -tags strictfipsruntime -o plugin-backend -mod=readonly cmd/plugin-backend.go
+--> 74ad8a1964b9
+[linux/amd64] [1/3] STEP 1/8: FROM registry.redhat.io/ubi8/nodejs-18:latest AS web-builder
+Trying to pull registry.redhat.io/ubi8/nodejs-18:latest...
+Getting image source signatures
+Checking if image destination supports signatures
+Copying blob sha256:43ddc3bd12b8691687c9f6c273331ca07e3a89b50a619e0db9b040a8a629386d
+Copying blob sha256:046eb6416170db2ab33e464d04c6f7c0c8c6cc8563597aca8e9fb7736dff00f9
+Copying blob sha256:b610fd6091ba2163b8943d2214e20665977bc8064dc769d47be9ae868e48a301
+Copying config sha256:ab55058334c5c32969b838cea2db23ee8c69c1b742006a75c031ed4f1b286bc5
+Writing manifest to image destination
+Storing signatures
+[linux/amd64] [1/3] STEP 2/8: WORKDIR /opt/app-root
+--> Using cache 8d245ba2300a3cdcddb4c89b8975a5f4c92ff72709ed4e6d3d9c06f7747a27d4
+--> 8d245ba2300a
+[linux/amd64] [1/3] STEP 3/8: USER 0
+--> Using cache 57df2d0da29f7b83ce17fa02608fec69dfb2161d2974e6f988f0da646542153a
+--> 57df2d0da29f
+[linux/amd64] [1/3] STEP 4/8: COPY web/package*.json web/
+--> Using cache f15a10c9c9e2a76b4d11a2d235e27286fa17f25080cceeafaaa5f74f83a6582e
+--> f15a10c9c9e2
+[linux/amd64] [1/3] STEP 5/8: COPY Makefile Makefile
+--> Using cache 2b36b9f22b1573490bf00f6db5554be1c0fca41d181a719c644983dfe1cb39ed
+--> 2b36b9f22b15
+[linux/amd64] [1/3] STEP 6/8: RUN make install-frontend-ci-clean
+--> Using cache 0a27e8de8b2d16805f0297f75addbfa198817ed4133f0121dd931cf0f6f38978
+--> 0a27e8de8b2d
+[linux/amd64] [1/3] STEP 7/8: COPY web/ web/
+--> Using cache af31d83c2e9376f2f5f26ca4d377ed3ac32ecf04f43d10ac0e73bbb30146d046
+--> af31d83c2e93
+[linux/amd64] [1/3] STEP 8/8: RUN make build-frontend
+--> Using cache cbfc11cb6bfdc6d97cc105f034da28150a82d5867aa44421d36cbd02f72e24dc
+--> cbfc11cb6bfd
+[linux/arm64] [3/3] STEP 1/4: FROM registry.access.redhat.com/ubi8/ubi
+Trying to pull registry.access.redhat.com/ubi8/ubi:latest...
+Getting image source signatures
+Checking if image destination supports signatures
+Copying blob sha256:be14e4bd5c48c79aa0c1bc73f7ad1515b7d2452caa02d5e74ad2e4fb3b70fa27
+Copying config sha256:246c9f5c31bef2af103d26b16c4f628dfa0b4a8329a0715c2e58dd3b6c2c8d5c
+Writing manifest to image destination
+Storing signatures
+[linux/arm64] [3/3] STEP 2/4: COPY --from=web-builder /opt/app-root/web/dist /opt/app-root/web/dist
+--> a02f90902dca
+[linux/arm64] [3/3] STEP 3/4: COPY --from=go-builder /opt/app-root/plugin-backend /opt/app-root
+--> a79fef0a5330
+[linux/arm64] [3/3] STEP 4/4: ENTRYPOINT ["/opt/app-root/plugin-backend", "-static-path", "/opt/app-root/web/dist"]
+[linux/arm64] [3/3] COMMIT
+--> 09778d4f6a7c
+[linux/amd64] [2/3] STEP 1/11: FROM registry.ci.openshift.org/ocp/builder:rhel-8-golang-1.24-openshift-4.20 AS go-builder
+Trying to pull registry.ci.openshift.org/ocp/builder:rhel-8-golang-1.24-openshift-4.20...
+09778d4f6a7cc86db1fbdea6aed5e453a293436529e8e61fadd61c13649363a4
+Error: [linux/amd64]: creating build container: unable to copy from source docker://registry.ci.openshift.org/ocp/builder:rhel-8-golang-1.24-openshift-4.20: initializing source docker://registry.ci.openshift.org/ocp/builder:rhel-8-golang-1.24-openshift-4.20: reading manifest rhel-8-golang-1.24-openshift-4.20 in registry.ci.openshift.org/ocp/builder: authentication required
+
+make: *** [podman-cross-build] Error 125
+WARNING: Build failed for console-dashboards-plugin @ release-coo-ocp-4.12 (exit code 2), continuing...
+==========================================
+Building distributed-tracing-console-plugin @ release-coo-ocp-4.12 with VERSION=v0.3.3 ORG=rh-ee-emurasak
+==========================================
+Already on 'release-coo-ocp-4.12'
+M	Makefile
+Your branch is behind 'origin/release-coo-ocp-4.12' by 6 commits, and can be fast-forwarded.
+  (use "git pull" to update your local branch)
+From https://github.com/openshift/distributed-tracing-console-plugin
+ * branch            release-coo-ocp-4.12 -> FETCH_HEAD
+Updating a408c77..96ba973
+Fast-forward
+ go.mod                                             |    1 +
+ go.sum                                             |    2 +
+ pkg/proxy/proxy.go                                 |    3 +
+ pkg/server.go                                      |   17 +-
+ scripts/start-console.sh                           |   23 +-
+ ...plugin__distributed-tracing-console-plugin.json |    3 +-
+ web/package-lock.json                              | 1441 ++++++++++----------
+ web/package.json                                   |   26 +-
+ web/src/components/ClosableAlert.tsx               |   16 +
+ web/src/pages/TracesPage/LimitSelect.tsx           |    2 +-
+ web/src/pages/TracesPage/QueryBrowser.tsx          |   33 +-
+ web/src/pages/TracesPage/ScatterPlot.tsx           |    2 +-
+ web/src/pages/TracesPage/Toolbar/FilterToolbar.css |    4 +
+ web/src/pages/TracesPage/Toolbar/FilterToolbar.tsx |    6 +-
+ web/tsconfig.json                                  |   13 +-
+ 15 files changed, 796 insertions(+), 796 deletions(-)
+ create mode 100644 web/src/components/ClosableAlert.tsx
+ create mode 100644 web/src/pages/TracesPage/Toolbar/FilterToolbar.css
+podman manifest rm quay.io/rh-ee-emurasak/distributed-tracing-console-plugin:v0.3.3 || true
+Untagged: quay.io/rh-ee-emurasak/distributed-tracing-console-plugin:v0.3.3
+Deleted: 138194d517e186d38fc293a3560436c01ce80eac9d1763a865b913aea561c8e7
+podman manifest create quay.io/rh-ee-emurasak/distributed-tracing-console-plugin:v0.3.3
+9993612d5ad256d0f114c918df4817fd1b4bb7d6dad1e92400de74ad59a84850
+podman build --platform=linux/arm64,linux/amd64 --manifest quay.io/rh-ee-emurasak/distributed-tracing-console-plugin:v0.3.3 -f Dockerfile
+[linux/arm64] [1/3] STEP 1/8: FROM registry.redhat.io/ubi8/nodejs-22:latest AS web-builder
+[linux/arm64] [1/3] STEP 2/8: WORKDIR /opt/app-root
+--> Using cache 3f1cf4b36a5bcea97efa834c27cd60cd1ed571e7c81791dbbb0fe35752a8a77c
+--> 3f1cf4b36a5b
+[linux/arm64] [1/3] STEP 3/8: USER 0
+--> Using cache 749a3d5d7178b7b7fac5f50003a08733ae5c15118868cf3b6c10f92bc8def496
+--> 749a3d5d7178
+[linux/arm64] [1/3] STEP 4/8: COPY web/package*.json web/
+--> ead1cbd29f9a
+[linux/arm64] [1/3] STEP 5/8: COPY Makefile Makefile
+--> 644dff5526d1
+[linux/arm64] [1/3] STEP 6/8: RUN make install-frontend-ci-clean
+cd web && npm ci --ignore-scripts --omit=optional
+npm warn deprecated trim@0.0.1: Use String.prototype.trim() instead
+npm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+npm warn deprecated mini-create-react-context@0.4.1: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
+npm warn deprecated popper.js@1.16.1: You can find the new Popper v2 at @popperjs/core, this package is dedicated to the legacy v1
+npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+npm warn deprecated i18next-parser@8.13.0: Project is deprecated, use i18next-cli instead
+npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+npm warn deprecated eslint@8.57.1: This version is no longer supported. Please see https://eslint.org/version-support for other options.
+npm warn deprecated circular-json@0.3.3: CircularJSON is in maintenance only, flatted is its successor.
+npm warn deprecated core-js@2.6.12: core-js@<3.23.3 is no longer maintained and not recommended for usage due to the number of issues. Because of the V8 engine whims, feature detection in old core-js versions could cause a slowdown up to 100x even if nothing is polyfilled. Some versions have web compatibility issues. Please, upgrade your dependencies to the actual version of core-js.
+npm warn deprecated @humanwhocodes/object-schema@2.0.3: Use @eslint/object-schema instead
+npm warn deprecated @humanwhocodes/config-array@0.13.0: Use @eslint/config-array instead
+npm warn deprecated uuid@3.4.0: Please upgrade  to version 7 or higher.  Older versions may use Math.random() in certain circumstances, which is known to be problematic.  See https://v8.dev/blog/math-random for details.
+npm warn deprecated rimraf@2.7.1: Rimraf versions prior to v4 are no longer supported
+npm warn deprecated rimraf@2.6.3: Rimraf versions prior to v4 are no longer supported
+npm warn deprecated browserslist@2.11.3: Browserslist 2 could fail on reading Browserslist >3.0 config used in other tools.
+
+added 2089 packages, and audited 2090 packages in 1m
+
+318 packages are looking for funding
+  run `npm fund` for details
+
+69 vulnerabilities (1 low, 48 moderate, 20 high)
+
+To address issues that do not require attention, run:
+  npm audit fix
+
+To address all issues possible (including breaking changes), run:
+  npm audit fix --force
+
+Some issues need review, and may require choosing
+a different dependency.
+
+Run `npm audit` for details.
+cd web && npm cache clean --force
+npm warn using --force Recommended protections disabled.
+--> 14914110be28
+[linux/arm64] [1/3] STEP 7/8: COPY web/ web/
+--> 58faf10f7a63
+[linux/arm64] [1/3] STEP 8/8: RUN make build-frontend
+cd web && npm run build
+
+> distributed-tracing-console-plugin@0.3.0 build
+> npm run clean && NODE_ENV=production npm run webpack
+
+
+> distributed-tracing-console-plugin@0.3.0 clean
+> rm -rf dist
+
+
+> distributed-tracing-console-plugin@0.3.0 webpack
+> node -r ts-node/register ./node_modules/.bin/webpack
+
+assets by path assets/ 1.27 MiB
+  assets by path assets/*.woff 740 KiB 42 assets
+  assets by path assets/*.woff2 565 KiB
+    asset assets/inter-latin-ext-600-normal..woff2 35.4 KiB [emitted] [from: ../node_modules/@fontsource/inter/files/inter-latin-ext-600-normal.woff2] (auxiliary id hint: vendors)
+    asset assets/inter-latin-ext-700-normal..woff2 35.4 KiB [emitted] [from: ../node_modules/@fontsource/inter/files/inter-latin-ext-700-normal.woff2] (auxiliary id hint: vendors)
+    + 40 assets
+assets by path *.js 2.91 MiB
+  assets by chunk 2.85 MiB (id hint: vendors)
+    asset 231-chunk-f6f04aea9cd53f0eebdb.min.js 2.71 MiB [emitted] [immutable] [minimized] [big] (id hint: vendors) 1 related asset
+    + 2 assets
+  + 4 assets
+asset locales/en/plugin__distributed-tracing-console-plugin.json 4.06 KiB [emitted] [from: ../locales/en/plugin__distributed-tracing-console-plugin.json] [copied]
+asset plugin-manifest.json 951 bytes [emitted]
+orphan modules 23.6 MiB (javascript) 168 bytes (consume-shared) [orphan] 14918 modules
+runtime modules 18.8 KiB 14 modules
+built modules 9.82 MiB (javascript) 1.27 MiB (asset) 1010 bytes (consume-shared) 42 bytes (share-init) [built]
+  javascript modules 9.82 MiB
+    modules by path ../node_modules/ 9.72 MiB 654 modules
+    modules by path ./ 104 KiB 15 modules
+    container entry 42 bytes [built] [code generated]
+  asset modules 1.27 MiB (asset) 3.45 KiB (javascript)
+    modules by path ../node_modules/@fontsource/inter/files/*.woff2 565 KiB (asset) 1.72 KiB (javascript) 42 modules
+    modules by path ../node_modules/@fontsource/inter/files/*.woff 740 KiB (asset) 1.72 KiB (javascript) 42 modules
+  consume-shared-module modules 1010 bytes
+    modules by path *.0 (singleton) 378 bytes 9 modules
+    modules by path *.1 (singleton) 84 bytes 2 modules
+    + 13 modules
+  provide shared module (default) react-helmet@6.1.0 = ../node_modules/react-helme...(truncated) 42 bytes [built] [code generated]
+
+WARNING in asset size limit: The following asset(s) exceed the recommended size limit (244 KiB).
+This can impact web performance.
+Assets: 
+  231-chunk-f6f04aea9cd53f0eebdb.min.js (2.71 MiB)
+
+webpack 5.105.3 compiled with 1 warning in 87131 ms
+--> ee52f6f53c4d
+[linux/arm64] [2/3] STEP 1/11: FROM brew.registry.redhat.io/rh-osbs/openshift-golang-builder:rhel_9_1.25 AS go-builder
+[linux/arm64] [2/3] STEP 2/11: WORKDIR /opt/app-root
+--> Using cache 6fb86888b307266eab1efd7628def2ac0b91fd246dc166fc4178213297baf78a
+--> 6fb86888b307
+[linux/arm64] [2/3] STEP 3/11: COPY Makefile Makefile
+--> Using cache e3c3fa4bea548d53b9399f0ec9d5e7a2812448feab5bd287a904bd1b301fe808
+--> e3c3fa4bea54
+[linux/arm64] [2/3] STEP 4/11: COPY go.mod go.mod
+--> 769dd6a36401
+[linux/arm64] [2/3] STEP 5/11: COPY go.sum go.sum
+--> 88fff560f17b
+[linux/arm64] [2/3] STEP 6/11: RUN go mod download
+Go compliance shim [1] [rhel-9-golang-1.25][openshift-golang-builder]: assessment: CGO_ENABLED=1
+Go compliance shim [1] [rhel-9-golang-1.25][openshift-golang-builder]: assessment: dynamic linking
+Go compliance shim [1] [rhel-9-golang-1.25][openshift-golang-builder]: skipping forced compliance due to broad exemption
+Go compliance shim [1] [rhel-9-golang-1.25][openshift-golang-builder]: EXEMPT: 1
+
+
+Go compliance shim [1] [rhel-9-golang-1.25][openshift-golang-builder]: final command line arguments: "mod" "download" 
+
+Go compliance shim [1] [rhel-9-golang-1.25][openshift-golang-builder]: invoking real go binary
+Go compliance shim [1] [rhel-9-golang-1.25][openshift-golang-builder]: Exited with: 0
+--> b3529f41f701
+[linux/arm64] [2/3] STEP 7/11: COPY cmd/ cmd/
+--> 1137992a1113
+[linux/arm64] [2/3] STEP 8/11: COPY pkg/ pkg/
+--> 081f000d30d3
+[linux/arm64] [2/3] STEP 9/11: ENV GOEXPERIMENT=strictfipsruntime
+--> 733ceae913fa
+[linux/arm64] [2/3] STEP 10/11: ENV CGO_ENABLED=1
+--> aa6ce74d6c8b
+[linux/arm64] [2/3] STEP 11/11: RUN make build-backend BUILD_OPTS="-tags strictfipsruntime"
+go build -tags strictfipsruntime -o plugin-backend -mod=readonly cmd/plugin-backend.go
+Go compliance shim [2] [rhel-9-golang-1.25][openshift-golang-builder]: assessment: CGO_ENABLED=1
+Go compliance shim [2] [rhel-9-golang-1.25][openshift-golang-builder]: assessment: dynamic linking
+Go compliance shim [2] [rhel-9-golang-1.25][openshift-golang-builder]: skipping forced compliance due to broad exemption
+Go compliance shim [2] [rhel-9-golang-1.25][openshift-golang-builder]: EXEMPT: 1
+
+
+Go compliance shim [2] [rhel-9-golang-1.25][openshift-golang-builder]: final command line arguments: "build" "-tags" "strictfipsruntime" "-o" "plugin-backend" "-mod=readonly" "cmd/plugin-backend.go" 
+
+Go compliance shim [2] [rhel-9-golang-1.25][openshift-golang-builder]: invoking real go binary
+Go compliance shim [2] [rhel-9-golang-1.25][openshift-golang-builder]: Exited with: 0
+--> aac93234f733
+[linux/amd64] [1/3] STEP 1/8: FROM registry.redhat.io/ubi8/nodejs-22:latest AS web-builder
+Trying to pull registry.redhat.io/ubi8/nodejs-22:latest...
+Getting image source signatures
+Checking if image destination supports signatures
+Copying blob sha256:e114f3bf44fdb152acae3e98961a32b080cc92a8b1274947ef95777f65996518
+Copying blob sha256:b659079ce01565873eb67c4d47f0a94a60731d09351f7acfef987e5a525230aa
+Copying blob sha256:21534294e787fc96343978989fe438bd9c6b835220e7ab6102d5b3909e617005
+Copying config sha256:5ea91e077e50a926f72f6d553f79216fae172994f0f75d8e6d25a0ac5be9a951
+Writing manifest to image destination
+Storing signatures
+[linux/amd64] [1/3] STEP 2/8: WORKDIR /opt/app-root
+--> Using cache 71226b477b204dee6e0a91bb359780a52449866db0efef6c34cebffc8830d7d3
+--> 71226b477b20
+[linux/amd64] [1/3] STEP 3/8: USER 0
+--> Using cache 35ed3f6a41b8198c80bd26ee29358eb8fb728ba6783f2ecb827b5fd51c40ed02
+--> 35ed3f6a41b8
+[linux/amd64] [1/3] STEP 4/8: COPY web/package*.json web/
+--> 3da605653d40
+[linux/amd64] [1/3] STEP 5/8: COPY Makefile Makefile
+--> 3fa3437dc380
+[linux/amd64] [1/3] STEP 6/8: RUN make install-frontend-ci-clean
+cd web && npm ci --ignore-scripts --omit=optional
+npm warn deprecated trim@0.0.1: Use String.prototype.trim() instead
+npm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+npm warn deprecated mini-create-react-context@0.4.1: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
+npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+npm warn deprecated circular-json@0.3.3: CircularJSON is in maintenance only, flatted is its successor.
+npm warn deprecated i18next-parser@8.13.0: Project is deprecated, use i18next-cli instead
+npm warn deprecated @humanwhocodes/config-array@0.13.0: Use @eslint/config-array instead
+npm warn deprecated @humanwhocodes/object-schema@2.0.3: Use @eslint/object-schema instead
+npm warn deprecated rimraf@2.7.1: Rimraf versions prior to v4 are no longer supported
+npm warn deprecated rimraf@2.6.3: Rimraf versions prior to v4 are no longer supported
+npm warn deprecated uuid@3.4.0: Please upgrade  to version 7 or higher.  Older versions may use Math.random() in certain circumstances, which is known to be problematic.  See https://v8.dev/blog/math-random for details.
+npm warn deprecated popper.js@1.16.1: You can find the new Popper v2 at @popperjs/core, this package is dedicated to the legacy v1
+npm warn deprecated browserslist@2.11.3: Browserslist 2 could fail on reading Browserslist >3.0 config used in other tools.
+npm notice This endpoint is being retired. Use the bulk advisory endpoint instead. See the following docs for more info: https://api-docs.npmjs.com/#tag/Audit

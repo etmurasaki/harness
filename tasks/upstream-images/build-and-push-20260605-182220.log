@@ -1,0 +1,30 @@
+Logging to /Users/emurasak/workspace/harness/tasks/upstream-images/build-and-push-20260605-182220.log
+Fetching all branches for each repo...
+  Fetching console-dashboards-plugin...
+  Fetching distributed-tracing-console-plugin...
+  Fetching logging-view-plugin...
+  Fetching monitoring-plugin...
+  Fetching troubleshooting-panel-console-plugin...
+Fetch complete.
+==========================================
+Building console-dashboards-plugin @ release-coo-ocp-4.12 with VERSION=v0.4.3 ORG=openshift-observability-ui
+==========================================
+Already on 'release-coo-ocp-4.12'
+Your branch is up to date with 'origin/release-coo-ocp-4.12'.
+From https://github.com/openshift/console-dashboards-plugin
+ * branch            release-coo-ocp-4.12 -> FETCH_HEAD
+Already up to date.
+--- Attempt 1/3 ---
+podman manifest rm quay.io/openshift-observability-ui/console-dashboards-plugin:v0.4.3 || true
+Error: quay.io/openshift-observability-ui/console-dashboards-plugin:v0.4.3: image not known
+podman manifest create quay.io/openshift-observability-ui/console-dashboards-plugin:v0.4.3
+a22e0dc0c9f1b4827ebb160e82e686988522bb5d8b56977edbe4bcb03a31e3ee
+podman build --platform=linux/arm64,linux/amd64 --manifest quay.io/openshift-observability-ui/console-dashboards-plugin:v0.4.3 -f Dockerfile
+[linux/arm64] [1/3] STEP 1/8: FROM registry.redhat.io/ubi8/nodejs-18:latest AS web-builder
+Trying to pull registry.redhat.io/ubi8/nodejs-18:latest...
+Getting image source signatures
+Checking if image destination supports signatures
+Copying blob sha256:c4fff77bc060c02d4f09680032367cb302e83402fc25b7c7ac001cb00238876f
+Copying blob sha256:8fd64178c906794da03bc9b7d2d5e3b70073b47f8aa659230381d7fd897dc11b
+Copying blob sha256:6ad04be99c8f2547888de53fad691136f65cf5a11c7a2567ef29477c3413f587
+make: *** [podman-cross-build] Interrupt: 2

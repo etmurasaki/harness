@@ -1,0 +1,13 @@
+# COO Integration TLS E2E Results — Mon May 25 15:47:26 -03 2026
+
+
+[1m[0;36m=== COO Integration TLS E2E Tests ===[0m
+
+[0;36m[INFO][0m  Namespace: openshift-cluster-observability-operator
+[0;36m[INFO][0m  Plugins:   Logging, Monitoring, Dashboards, Distributed Tracing, Troubleshooting Panel
+[0;36m[INFO][0m  Report:    /Users/emurasak/workspace/harness/tasks/OU-1339-tls-e2e-testing/integration-results-20260525-154726.log
+[0;36m[INFO][0m  Timestamp: Mon May 25 15:47:26 -03 2026
+
+[1m[0;36m=== Prerequisites ===[0m
+
+[0;32m[PASS][0m  oc CLI found

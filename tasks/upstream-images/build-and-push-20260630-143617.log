@@ -1,0 +1,72 @@
+Logging to /Users/emurasak/workspace/harness/tasks/upstream-images/build-and-push-20260630-143617.log
+Fetching all branches for each repo...
+  Fetching console-dashboards-plugin...
+From https://github.com/openshift/console-dashboards-plugin
+   1dd25f5..138d515  release-coo-ocp-4.12 -> origin/release-coo-ocp-4.12
+ * [new branch]      update-vulnerable-dependencies-4.12-26-06-2026 -> origin/update-vulnerable-dependencies-4.12-26-06-2026
+  Fetching distributed-tracing-console-plugin...
+From https://github.com/openshift/distributed-tracing-console-plugin
+   96ba973..82b87f6  release-coo-ocp-4.12 -> origin/release-coo-ocp-4.12
+   262e71c..35bfd87  main                 -> origin/main
+   ee610cc..a695d12  release-coo-ocp-4.15 -> origin/release-coo-ocp-4.15
+   5efd64c..ab35720  release-coo-ocp-4.19 -> origin/release-coo-ocp-4.19
+   a1fec23..d36dd66  release-coo-ocp-4.22 -> origin/release-coo-ocp-4.22
+ * [new branch]      update-vulnerable-dependencies-26-06-2026 -> origin/update-vulnerable-dependencies-26-06-2026
+ * [new branch]      update-vulnerable-dependencies-4.12-26-06-2026 -> origin/update-vulnerable-dependencies-4.12-26-06-2026
+ * [new branch]      update-vulnerable-dependencies-4.15-26-06-2026 -> origin/update-vulnerable-dependencies-4.15-26-06-2026
+ * [new branch]      update-vulnerable-dependencies-4.19-26-06-2026 -> origin/update-vulnerable-dependencies-4.19-26-06-2026
+  Fetching logging-view-plugin...
+From https://github.com/openshift/logging-view-plugin
+   3b46bba..65042b0  release-coo-ocp-4.15 -> origin/release-coo-ocp-4.15
+   24e235d..79326c0  main                 -> origin/main
+   f1264b9..5d3f32f  release-coo-ocp-4.12 -> origin/release-coo-ocp-4.12
+   9eb1afc..7edfaf8  release-coo-ocp-4.22 -> origin/release-coo-ocp-4.22
+  Fetching monitoring-plugin...
+From https://github.com/openshift/monitoring-plugin
+   4af68e3..c6e230f  release-coo-ocp-4.22 -> origin/release-coo-ocp-4.22
+   4ca173b..4cdeb09  main                 -> origin/main
+   2d6815c..5a2d9fc  release-4.16         -> origin/release-4.16
+   6a4293a..24144b9  release-4.17         -> origin/release-4.17
+   dd0f32a..12a19ea  release-4.19         -> origin/release-4.19
+   4f318bf..7a87d24  release-4.20         -> origin/release-4.20
+   f47b7a5..9f74739  release-4.21         -> origin/release-4.21
+   2b3a204..4cdeb09  release-4.23         -> origin/release-4.23
+   2b3a204..4cdeb09  release-5.0          -> origin/release-5.0
+   2b3a204..4cdeb09  release-5.1          -> origin/release-5.1
+   d544f4b..524eb72  release-coo-ocp-4.15 -> origin/release-coo-ocp-4.15
+   4e61b5d..b4c81a8  release-coo-ocp-4.19 -> origin/release-coo-ocp-4.19
+  Fetching troubleshooting-panel-console-plugin...
+From https://github.com/openshift/troubleshooting-panel-console-plugin
+   94d11ba..5b562b1  release-coo-ocp-4.22 -> origin/release-coo-ocp-4.22
+   0f3e31a..bfecdd5  main                 -> origin/main
+   83f2504..4a04933  release-coo-ocp-4.19 -> origin/release-coo-ocp-4.19
+ * [new branch]      update-vulnerable-dependencies-26-06-2026 -> origin/update-vulnerable-dependencies-26-06-2026
+ * [new branch]      update-vulnerable-dependencies-4.19-26-06-2026 -> origin/update-vulnerable-dependencies-4.19-26-06-2026
+Fetch complete.
+==========================================
+Building console-dashboards-plugin @ release-coo-ocp-4.12 with VERSION=v0.4.3 ORG=rh-ee-emurasak
+==========================================
+Already on 'release-coo-ocp-4.12'
+Your branch is behind 'origin/release-coo-ocp-4.12' by 2 commits, and can be fast-forwarded.
+  (use "git pull" to update your local branch)
+From https://github.com/openshift/console-dashboards-plugin
+ * branch            release-coo-ocp-4.12 -> FETCH_HEAD
+Updating 1dd25f5..138d515
+Fast-forward
+ go.mod                |  10 +-
+ go.sum                |  20 ++--
+ web/package-lock.json | 299 +++++++++++++++++++++++++++++---------------------
+ 3 files changed, 186 insertions(+), 143 deletions(-)
+--- Attempt 1/3 ---
+podman manifest rm quay.io/rh-ee-emurasak/console-dashboards-plugin:v0.4.3 || true
+Error: quay.io/rh-ee-emurasak/console-dashboards-plugin:v0.4.3: image not known
+podman manifest create quay.io/rh-ee-emurasak/console-dashboards-plugin:v0.4.3
+f64f875d6955fbb59f98f03672ceba6c75e6e0d096322bae74d18cb44d230b5a
+podman build --platform=linux/arm64,linux/amd64 --manifest quay.io/rh-ee-emurasak/console-dashboards-plugin:v0.4.3 -f Dockerfile
+[linux/amd64] [1/3] STEP 1/8: FROM registry.redhat.io/ubi8/nodejs-18:latest AS web-builder
+Trying to pull registry.redhat.io/ubi8/nodejs-18:latest...
+Getting image source signatures
+Checking if image destination supports signatures
+Copying blob sha256:43ddc3bd12b8691687c9f6c273331ca07e3a89b50a619e0db9b040a8a629386d
+Copying blob sha256:046eb6416170db2ab33e464d04c6f7c0c8c6cc8563597aca8e9fb7736dff00f9
+Copying blob sha256:b610fd6091ba2163b8943d2214e20665977bc8064dc769d47be9ae868e48a301

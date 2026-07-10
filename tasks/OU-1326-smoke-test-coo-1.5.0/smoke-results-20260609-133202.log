@@ -1,0 +1,256 @@
+
+[1m[0;36m=== COO 1.5.0 Smoke Test — Resource Consumption + COO-1014 Validation ===[0m
+
+[0;36m[INFO][0m  Report: /Users/emurasak/workspace/harness/tasks/OU-1326-smoke-test-coo-1.5.0/smoke-results-20260609-133202.log
+[0;36m[INFO][0m  Started: Tue Jun  9 13:32:03 -03 2026
+
+[1m[0;36m=== Preflight Checks ===[0m
+
+[0;36m[INFO][0m  Logged in as: kube:admin
+[0;36m[INFO][0m  COO CRD found
+[0;36m[INFO][0m  Operator pods running: 1
+[0;36m[INFO][0m  Extracting CSV resource requests ...
+[0;36m[INFO][0m  CSV: cluster-observability-operator.v1.5.0
+[0;36m[INFO][0m  CSV resource requests/limits (memory):
+  obo-prometheus-operator/prometheus-operator: request=150Mi limit=500Mi
+  obo-prometheus-operator-admission-webhook/prometheus-operator-admission-webhook: request=50Mi limit=200Mi
+  observability-operator/operator: request=256Mi limit=512Mi
+  perses-operator/perses-operator: request=128Mi limit=512Mi
+
+[1m[0;36m=== Phase 1: Create Cluster Load (100 namespaces, 10 secrets each) ===[0m
+
+[0;36m[INFO][0m  Skipping load creation (--skip-load)
+
+[1m[0;36m=== Phase 2: Baseline Measurement ===[0m
+
+[0;36m[INFO][0m  Node resource usage:
+NAME                                        CPU(cores)   CPU(%)   MEMORY(bytes)   MEMORY(%)   
+ip-10-0-22-150.us-east-2.compute.internal   86m          2%       2220Mi          15%         
+ip-10-0-31-236.us-east-2.compute.internal   680m         19%      11423Mi         78%         
+ip-10-0-43-156.us-east-2.compute.internal   647m         18%      7841Mi          53%         
+ip-10-0-54-179.us-east-2.compute.internal   1921m        54%      11113Mi         76%         
+ip-10-0-80-24.us-east-2.compute.internal    516m         14%      8250Mi          56%         
+ip-10-0-87-228.us-east-2.compute.internal   542m         15%      8688Mi          59%         
+
+[0;36m[INFO][0m  Pod resource usage in openshift-cluster-observability-operator (before UIPlugin):
+NAME                                                       CPU(cores)   MEMORY(bytes)   
+obo-prometheus-operator-7667fff886-pnqvb                   1m           22Mi            
+obo-prometheus-operator-admission-webhook-75b4d5b7-2jfjb   1m           7Mi             
+obo-prometheus-operator-admission-webhook-75b4d5b7-z4nmd   1m           50Mi            
+observability-operator-595b6d75b6-dncx4                    1m           35Mi            
+perses-operator-b77d8fd87-h8bf9                            1m           19Mi            
+[0;36m[INFO][0m  Baseline perses-operator memory: 19Mi
+[0;36m[INFO][0m  Baseline perses server memory: N/A
+
+[1m[0;36m=== Phase 3: Deploy Monitoring UIPlugin (Perses enabled) ===[0m
+
+[0;36m[INFO][0m  Skipping UIPlugin deployment (--skip-deploy) — measuring existing pods
+
+[1m[0;36m=== Phase 4: Create PersesDashboard Load ===[0m
+
+[0;36m[INFO][0m  Templates found: 4 (openshift-cluster-sample-dashboard perses-dashboard-sample prometheus-overview thanos-compact-overview )
+[0;36m[INFO][0m  Variants per template: 2 → 8 dashboards per namespace
+[0;36m[INFO][0m  Total dashboards: 8 × 100 = 800
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-001
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-002
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-003
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-004
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-005
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-006
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-007
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-008
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-009
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-010
+[0;36m[INFO][0m  Progress: 10/100 namespaces (80 dashboards)
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-011
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-012
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-013
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-014
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-015
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-016
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-017
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-018
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-019
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-020
+[0;36m[INFO][0m  Progress: 20/100 namespaces (160 dashboards)
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-021
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-022
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-023
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-024
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-025
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-026
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-027
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-028
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-029
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-030
+[0;36m[INFO][0m  Progress: 30/100 namespaces (240 dashboards)
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-031
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-032
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-033
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-034
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-035
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-036
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-037
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-038
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-039
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-040
+[0;36m[INFO][0m  Progress: 40/100 namespaces (320 dashboards)
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-041
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-042
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-043
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-044
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-045
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-046
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-047
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-048
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-049
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-050
+[0;36m[INFO][0m  Progress: 50/100 namespaces (400 dashboards)
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-051
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-052
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-053
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-054
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-055
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-056
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-057
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-058
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-059
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-060
+[0;36m[INFO][0m  Progress: 60/100 namespaces (480 dashboards)
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-061
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-062
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-063
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-064
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-065
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-066
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-067
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-068
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-069
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-070
+[0;36m[INFO][0m  Progress: 70/100 namespaces (560 dashboards)
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-071
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-072
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-073
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-074
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-075
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-076
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-077
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-078
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-079
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-080
+[0;36m[INFO][0m  Progress: 80/100 namespaces (640 dashboards)
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-081
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-082
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-083
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-084
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-085
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-086
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-087
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-088
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-089
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-090
+[0;36m[INFO][0m  Progress: 90/100 namespaces (720 dashboards)
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-091
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-092
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-093
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-094
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-095
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-096
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-097
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-098
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-099
+[0;33m[WARN][0m  Failed to apply dashboards in smoke-test-ns-100
+[0;36m[INFO][0m  Progress: 100/100 namespaces (800 dashboards)
+[0;36m[INFO][0m  Dashboard creation complete: 100 namespaces × 8 = 800 dashboards
+
+[1m[0;36m=== Phase 5: Resource Measurement (post-deployment) ===[0m
+
+[0;36m[INFO][0m  Node resource usage (after deployment):
+NAME                                        CPU(cores)   CPU(%)   MEMORY(bytes)   MEMORY(%)   
+ip-10-0-22-150.us-east-2.compute.internal   87m          2%       2262Mi          15%         
+ip-10-0-31-236.us-east-2.compute.internal   957m         27%      10570Mi         72%         
+ip-10-0-43-156.us-east-2.compute.internal   376m         10%      7804Mi          53%         
+ip-10-0-54-179.us-east-2.compute.internal   656m         18%      11001Mi         75%         
+ip-10-0-80-24.us-east-2.compute.internal    410m         11%      8097Mi          55%         
+ip-10-0-87-228.us-east-2.compute.internal   349m         9%       8667Mi          59%         
+
+[0;36m[INFO][0m  Pod resource usage in openshift-cluster-observability-operator:
+NAME                                                       CPU(cores)   MEMORY(bytes)   
+obo-prometheus-operator-7667fff886-pnqvb                   1m           23Mi            
+obo-prometheus-operator-admission-webhook-75b4d5b7-2jfjb   1m           7Mi             
+obo-prometheus-operator-admission-webhook-75b4d5b7-z4nmd   1m           50Mi            
+observability-operator-595b6d75b6-dncx4                    1m           34Mi            
+perses-operator-b77d8fd87-h8bf9                            1m           19Mi            
+
+[0;36m[INFO][0m  Detailed pod resource breakdown:
+[0;36m[INFO][0m    Operator memory: 34Mi
+[0;36m[INFO][0m    Monitoring plugin memory: N/A
+[0;36m[INFO][0m    Perses server (perses-0) memory: N/A
+[0;36m[INFO][0m    Perses operator memory: 19Mi
+
+[1m[0;36m=== Phase 5b: Memory Recovery After Dashboard Deletion ===[0m
+
+[0;36m[INFO][0m  Post-creation memory: perses-operator=19Mi, perses server=N/A
+[0;36m[INFO][0m  Deleting all PersesDashboard CRs ...
+[0;36m[INFO][0m  Cleaning up PersesDashboard CRs in smoke-test namespaces ...
+[0;36m[INFO][0m  No PersesDashboard CRs found in smoke-test namespaces
+[0;36m[INFO][0m  Waiting 60s for reconciliation and GC ...
+[0;36m[INFO][0m  Re-measuring memory after dashboard deletion ...
+[0;36m[INFO][0m  Post-deletion memory: perses-operator=19Mi, perses server=N/A
+
+[0;36m[INFO][0m  Memory lifecycle (perses-operator):
+  Baseline:            19Mi
+  Post-creation:       19Mi
+  Post-deletion:       19Mi
+
+[0;36m[INFO][0m  Memory lifecycle (perses server):
+  Baseline:            N/A
+  Post-creation:       N/A
+  Post-deletion:       N/A
+
+[1m[0;36m=== Phase 6: OOMKill Detection (COO-1014) ===[0m
+
+[0;36m[INFO][0m  Checking for OOMKilled containers in openshift-cluster-observability-operator ...
+[0;32m[PASS][0m  [COO-1014] No OOMKilled containers found in openshift-cluster-observability-operator
+
+[1m[0;36m=== Phase 7: Resource Comparison ===[0m
+
+[0;36m[INFO][0m  Fetching resource requests/limits from running deployments ...
+
+[1m[0;36m=== COO-1014: Memory Limit Adequacy Check (minimum 500Mi) ===[0m
+
+[0;32m[PASS][0m  [COO-1014] Observability Operator: memory limit 512Mi (512Mi) >= 500Mi
+[0;32m[PASS][0m  [COO-1014] Perses Operator: memory limit 512Mi (512Mi) >= 500Mi
+
+
+[1m[0;36m=== Resource Comparison (actual vs request vs limit) ===[0m
+
+[1mComponent                      Actual       Request      Limit        Status    [0m
+---                            ---          ---          ---          ---       
+Observability Operator         34Mi         256Mi        512Mi        [0;32mPASS      [0m
+Monitoring Console Plugin      N/A          N/A          N/A          SKIP      
+Perses Server                  N/A          N/A          N/A          SKIP      
+Perses Operator                19Mi         128Mi        512Mi        [0;32mPASS      [0m
+
+
+[1m[0;36m=== Memory Recovery Check (perses-operator) ===[0m
+
+  Baseline:            19Mi         (19Mi)
+  Post-creation:       19Mi         (19Mi)
+  Post-deletion:       19Mi         (19Mi)
+  Threshold:           38Mi (baseline × 2)
+[0;32m[PASS][0m  [PR#414] perses-operator memory recovered: 19Mi <= 38Mi threshold
+
+
+[1m[0;36m=== Summary ===[0m
+
+[0;36m[INFO][0m  Pass: 6  Fail: 0
+[0;32m[PASS][0m  SMOKE TEST PASSED — all checks passed
+
+[1m[0;36m=== Cleanup ===[0m
+
+[0;36m[INFO][0m  Cleaning up PersesDashboard CRs in smoke-test namespaces ...
+[0;36m[INFO][0m  No PersesDashboard CRs found in smoke-test namespaces
+[0;36m[INFO][0m  Deleting smoke-test namespaces (prefix: smoke-test-ns) ...
+[0;36m[INFO][0m  No smoke-test namespaces found to delete
+[0;36m[INFO][0m  Total duration: 629s

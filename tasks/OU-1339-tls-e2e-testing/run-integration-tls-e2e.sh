@@ -6,7 +6,7 @@ set -eo pipefail
 #
 # Validates TLS profile propagation and enforcement across all UIPlugin types
 # (Logging, Monitoring, Dashboards, Distributed Tracing, Troubleshooting Panel)
-# simultaneously.
+# and the korrel8r deployment (owned by TroubleshootingPanel) simultaneously.
 #
 # Usage:
 #   ./run-integration-tls-e2e.sh                        # Run all tests
@@ -61,22 +61,23 @@ SELECTED_TESTS=()
 SELECTED_PRIORITY=""
 TESTS_STARTED=false
 SCANNER_INSTALLED=false
+KORREL8R_DEPLOY=""
 
 # ---------------------------------------------------------------------------
 # Priority → test map
 # ---------------------------------------------------------------------------
 priority_tests() {
   case "$1" in
-    P1) echo "it_01 it_02 it_03 it_04" ;;
-    P2) echo "it_05 it_06 it_07 it_08 it_09" ;;
-    P3) echo "it_10 it_11 it_12 it_12_dt it_12_tp" ;;
+    P1) echo "it_01 it_02 it_03 it_04 it_21 it_22" ;;
+    P2) echo "it_05 it_06 it_07 it_08 it_09 it_23 it_24" ;;
+    P3) echo "it_10 it_11 it_12 it_12_dt it_12_tp it_25" ;;
     P4) echo "it_13 it_14 it_15 it_16 it_20" ;;
     P5) echo "it_17 it_18 it_19" ;;
     *)  echo "" ;;
   esac
 }
 
-readonly ALL_TESTS="it_01 it_02 it_03 it_04 it_07 it_10 it_11 it_12 it_12_dt it_12_tp it_05 it_08 it_06 it_09 it_13 it_14 it_15 it_16 it_20 it_17 it_18 it_19"
+readonly ALL_TESTS="it_01 it_02 it_03 it_04 it_21 it_22 it_07 it_10 it_11 it_12 it_12_dt it_12_tp it_25 it_05 it_08 it_06 it_09 it_23 it_24 it_13 it_14 it_15 it_16 it_20 it_17 it_18 it_19"
 
 # ---------------------------------------------------------------------------
 # Plugin helpers (bash 3.x — positional lookup)
@@ -147,6 +148,22 @@ detect_deploy_names() {
     fi
   done
   PLUGIN_DEPLOY_NAMES="$detected"
+}
+
+detect_korrel8r_deploy() {
+  log_info "Auto-detecting korrel8r deployment..."
+  KORREL8R_DEPLOY=$(oc get deployments -n "${NAMESPACE}" -l "app.kubernetes.io/part-of=UIPlugin" \
+    -o jsonpath='{range .items[*]}{.metadata.ownerReferences[0].name}{" "}{.metadata.name}{"\n"}{end}' 2>/dev/null \
+    | awk '$1 == "troubleshooting-panel" && $2 ~ /korrel8r/ {print $2; exit}')
+  if [[ -z "$KORREL8R_DEPLOY" ]]; then
+    KORREL8R_DEPLOY=$(oc get deployment -n "${NAMESPACE}" -o jsonpath='{range .items[*]}{.metadata.name}{"\n"}{end}' 2>/dev/null \
+      | grep korrel8r | head -1 || echo "")
+  fi
+  if [[ -n "$KORREL8R_DEPLOY" ]]; then
+    log_info "  korrel8r → ${KORREL8R_DEPLOY}"
+  else
+    log_warn "  korrel8r deployment not found — korrel8r tests will be skipped"
+  fi
 }
 
 # ---------------------------------------------------------------------------
@@ -247,6 +264,12 @@ get_deployment_args() {
   local deploy_name="$1"
   oc get "deployment/${deploy_name}" -n "${NAMESPACE}" \
     -o jsonpath='{.spec.template.spec.containers[0].args}' 2>/dev/null
+}
+
+get_deployment_command() {
+  local deploy_name="$1"
+  oc get "deployment/${deploy_name}" -n "${NAMESPACE}" \
+    -o jsonpath='{.spec.template.spec.containers[0].command}' 2>/dev/null
 }
 
 get_deployment_generation() {
@@ -1471,6 +1494,389 @@ it_12_tp() {
   fi
 }
 
+# ===========================================================================
+# KORREL8R TLS TESTS (IT-21 through IT-25)
+#
+# The troubleshooting-panel UIPlugin owns two deployments: the plugin itself
+# and korrel8r. Korrel8r uses container "command" with double-dash flags
+# (--tls-min-version, --tls-cipher-suites), unlike UIPlugins which use
+# container "args" with single-dash flags.
+# ===========================================================================
+
+# ---------------------------------------------------------------------------
+# IT-21: Korrel8r Deployment Has TLS Args
+# ---------------------------------------------------------------------------
+it_21() {
+  log_test "IT-21: Korrel8r Deployment Has TLS Args (Intermediate)"
+
+  if [[ -z "$KORREL8R_DEPLOY" ]]; then
+    record_result "IT-21" "skip" "Korrel8r deployment not found"
+    return
+  fi
+
+  local cmd
+  cmd=$(get_deployment_command "$KORREL8R_DEPLOY")
+
+  if [[ -z "$cmd" ]]; then
+    log_fail "IT-21: Korrel8r deployment has no command"
+    record_result "IT-21" "fail" "No command found on korrel8r deployment"
+    return
+  fi
+
+  log_info "IT-21: ${KORREL8R_DEPLOY} command: ${cmd}"
+
+  local passed=true
+
+  if echo "$cmd" | grep -q "\-\-tls-min-version"; then
+    log_pass "IT-21: ${KORREL8R_DEPLOY} has --tls-min-version"
+  else
+    log_fail "IT-21: ${KORREL8R_DEPLOY} missing --tls-min-version"
+    passed=false
+  fi
+
+  if echo "$cmd" | grep -q "\-\-tls-cipher-suites"; then
+    log_pass "IT-21: ${KORREL8R_DEPLOY} has --tls-cipher-suites"
+  else
+    log_fail "IT-21: ${KORREL8R_DEPLOY} missing --tls-cipher-suites"
+    passed=false
+  fi
+
+  if [[ "$passed" == true ]]; then
+    record_result "IT-21" "pass" "Korrel8r deployment has TLS args under Intermediate profile"
+  else
+    record_result "IT-21" "fail" "Korrel8r deployment missing TLS args"
+  fi
+}
+
+# ---------------------------------------------------------------------------
+# IT-22: Korrel8r TLS Args Consistent with UIPlugins
+# ---------------------------------------------------------------------------
+it_22() {
+  log_test "IT-22: Korrel8r TLS Args Consistent with UIPlugins"
+
+  if [[ -z "$KORREL8R_DEPLOY" ]]; then
+    record_result "IT-22" "skip" "Korrel8r deployment not found"
+    return
+  fi
+
+  local cmd
+  cmd=$(get_deployment_command "$KORREL8R_DEPLOY")
+  local korrel8r_min_ver
+  korrel8r_min_ver=$(echo "$cmd" | grep -o '\-\-tls-min-version=[^ ,"]*' | head -1 | sed 's/--tls-min-version=//' || echo "")
+
+  if [[ -z "$korrel8r_min_ver" ]]; then
+    log_fail "IT-22: Cannot extract TLS min version from korrel8r command"
+    record_result "IT-22" "fail" "Could not extract korrel8r TLS min version"
+    return
+  fi
+
+  log_info "IT-22: Korrel8r TLS min version: ${korrel8r_min_ver}"
+
+  local passed=true
+  local ref_deploy
+  ref_deploy=$(echo "$PLUGIN_DEPLOY_NAMES" | awk '{print $1}')
+  local ref_args
+  ref_args=$(get_deployment_args "$ref_deploy" 2>/dev/null || echo "")
+  local ref_min_ver
+  ref_min_ver=$(echo "$ref_args" | grep -o '\-tls-min-version=[^ ,"]*' | head -1 | sed 's/-tls-min-version=//' || echo "")
+
+  log_info "IT-22: Reference plugin (${ref_deploy}) TLS min version: ${ref_min_ver}"
+
+  if [[ "$korrel8r_min_ver" == "$ref_min_ver" ]]; then
+    log_pass "IT-22: Korrel8r TLS min version matches UIPlugin (${korrel8r_min_ver})"
+  else
+    log_fail "IT-22: Korrel8r TLS min version '${korrel8r_min_ver}' differs from UIPlugin '${ref_min_ver}'"
+    passed=false
+  fi
+
+  local korrel8r_ciphers
+  korrel8r_ciphers=$(echo "$cmd" | grep -o '\-\-tls-cipher-suites=[^ "]*' | head -1 | sed 's/--tls-cipher-suites=//' || echo "")
+  local ref_ciphers
+  ref_ciphers=$(echo "$ref_args" | grep -o '\-tls-cipher-suites=[^ "]*' | head -1 | sed 's/-tls-cipher-suites=//' || echo "")
+
+  if [[ "$korrel8r_ciphers" == "$ref_ciphers" ]]; then
+    log_pass "IT-22: Korrel8r cipher suites match UIPlugin"
+  else
+    log_warn "IT-22: Korrel8r ciphers may differ from UIPlugin (expected if flag format varies)"
+    log_detail "Korrel8r: ${korrel8r_ciphers:-<none>}"
+    log_detail "UIPlugin: ${ref_ciphers:-<none>}"
+  fi
+
+  if [[ "$passed" == true ]]; then
+    record_result "IT-22" "pass" "Korrel8r TLS configuration consistent with UIPlugins"
+  else
+    record_result "IT-22" "fail" "Korrel8r TLS configuration inconsistent with UIPlugins"
+  fi
+}
+
+# ---------------------------------------------------------------------------
+# IT-23: Korrel8r TLS Profile Propagation (Modern)
+# ---------------------------------------------------------------------------
+it_23() {
+  log_test "IT-23: Korrel8r TLS Profile Propagation (Modern)"
+
+  if [[ -z "$KORREL8R_DEPLOY" ]]; then
+    record_result "IT-23" "skip" "Korrel8r deployment not found"
+    return
+  fi
+
+  local gen_before
+  gen_before=$(get_deployment_generation "$KORREL8R_DEPLOY")
+  log_info "IT-23: Korrel8r generation before: ${gen_before}"
+
+  set_tls_profile "Modern"
+
+  local elapsed=0
+  local updated=false
+  while [[ $elapsed -lt $RECONCILE_WAIT ]]; do
+    local cmd
+    cmd=$(get_deployment_command "$KORREL8R_DEPLOY" 2>/dev/null || echo "")
+    if echo "$cmd" | grep -q "VersionTLS13"; then
+      updated=true
+      break
+    fi
+    sleep "${POLL_INTERVAL}"
+    elapsed=$((elapsed + POLL_INTERVAL))
+  done
+
+  wait_for_rollout "$KORREL8R_DEPLOY" || true
+
+  local passed=true
+
+  local gen_after
+  gen_after=$(get_deployment_generation "$KORREL8R_DEPLOY")
+  if [[ "$gen_after" -gt "$gen_before" ]]; then
+    log_pass "IT-23: Korrel8r generation increased (${gen_before} → ${gen_after})"
+  else
+    log_warn "IT-23: Korrel8r generation unchanged (may have already been Modern)"
+  fi
+
+  local cmd_after
+  cmd_after=$(get_deployment_command "$KORREL8R_DEPLOY")
+  if echo "$cmd_after" | grep -q "VersionTLS13"; then
+    log_pass "IT-23: Korrel8r has VersionTLS13 under Modern profile"
+  else
+    log_fail "IT-23: Korrel8r missing VersionTLS13 after profile change"
+    passed=false
+  fi
+
+  if [[ "$passed" == true ]]; then
+    record_result "IT-23" "pass" "Modern profile propagated to korrel8r"
+  else
+    record_result "IT-23" "fail" "Modern profile not propagated to korrel8r"
+  fi
+
+  set_tls_profile "Intermediate"
+  elapsed=0
+  while [[ $elapsed -lt $RECONCILE_WAIT ]]; do
+    local cmd
+    cmd=$(get_deployment_command "$KORREL8R_DEPLOY" 2>/dev/null || echo "")
+    if echo "$cmd" | grep -q "VersionTLS12"; then break; fi
+    sleep "${POLL_INTERVAL}"
+    elapsed=$((elapsed + POLL_INTERVAL))
+  done
+  wait_for_rollout "$KORREL8R_DEPLOY" || true
+}
+
+# ---------------------------------------------------------------------------
+# IT-24: Korrel8r In-Cluster TLS Enforcement
+# ---------------------------------------------------------------------------
+it_24() {
+  log_test "IT-24: Korrel8r TLS Enforcement — Intermediate and Modern"
+
+  if [[ -z "$KORREL8R_DEPLOY" ]]; then
+    record_result "IT-24" "skip" "Korrel8r deployment not found"
+    return
+  fi
+
+  ensure_scanner
+
+  local passed=true
+
+  # --- Phase 1: Intermediate profile ---
+  log_info "IT-24: Phase 1 — Intermediate profile enforcement"
+  set_tls_profile "Intermediate"
+  local elapsed=0
+  while [[ $elapsed -lt $RECONCILE_WAIT ]]; do
+    local cmd
+    cmd=$(get_deployment_command "$KORREL8R_DEPLOY" 2>/dev/null || echo "")
+    if echo "$cmd" | grep -q "VersionTLS12"; then break; fi
+    sleep "${POLL_INTERVAL}"
+    elapsed=$((elapsed + POLL_INTERVAL))
+  done
+  wait_for_rollout "$KORREL8R_DEPLOY" || true
+
+  local pod_ip
+  pod_ip=$(get_pod_ip "$KORREL8R_DEPLOY")
+
+  if [[ -z "$pod_ip" ]]; then
+    log_fail "IT-24: Could not get pod IP for korrel8r"
+    record_result "IT-24" "fail" "Cannot resolve korrel8r pod IP"
+    return
+  fi
+
+  log_info "IT-24: Scanning korrel8r at ${pod_ip}:${PLUGIN_PORT}"
+  log_info "IT-24: korrel8r command: $(get_deployment_command "$KORREL8R_DEPLOY" | grep -o '\-\-tls-min-version=[^ ,"]*')"
+
+  # TLS 1.1 should be rejected
+  local result verdict
+  log_info "IT-24: \$ openssl s_client -connect ${pod_ip}:${PLUGIN_PORT} -tls1_1"
+  result=$(scanner_openssl "$pod_ip" "-tls1_1")
+  verdict=$(echo "$result" | grep -oE "Cipher is.*|alert protocol version|alert handshake failure" | head -1 || echo "")
+  log_detail "TLS 1.1 result: ${verdict:-<connection failed>}"
+  if tls_connection_succeeds "$result"; then
+    log_fail "IT-24: Korrel8r accepted TLS 1.1 (should reject)"
+    passed=false
+  else
+    log_pass "IT-24: Korrel8r correctly rejected TLS 1.1"
+  fi
+
+  # TLS 1.2 should be accepted
+  log_info "IT-24: \$ openssl s_client -connect ${pod_ip}:${PLUGIN_PORT} -tls1_2"
+  result=$(scanner_openssl "$pod_ip" "-tls1_2")
+  verdict=$(echo "$result" | grep -oE "Protocol\s*:.*|Cipher is.*" | head -2 || echo "")
+  log_detail "TLS 1.2 result: ${verdict:-<connection failed>}"
+  if tls_connection_succeeds "$result"; then
+    log_pass "IT-24: Korrel8r correctly accepted TLS 1.2"
+  else
+    log_fail "IT-24: Korrel8r rejected TLS 1.2 (should accept)"
+    passed=false
+  fi
+
+  # TLS 1.3 should be accepted
+  log_info "IT-24: \$ openssl s_client -connect ${pod_ip}:${PLUGIN_PORT} -tls1_3"
+  result=$(scanner_openssl "$pod_ip" "-tls1_3")
+  verdict=$(echo "$result" | grep -oE "Protocol\s*:.*|Cipher is.*" | head -2 || echo "")
+  log_detail "TLS 1.3 result: ${verdict:-<connection failed>}"
+  if tls_connection_succeeds "$result"; then
+    log_pass "IT-24: Korrel8r correctly accepted TLS 1.3"
+  else
+    log_warn "IT-24: Korrel8r rejected TLS 1.3 (may not be supported)"
+  fi
+
+  # --- Phase 2: Modern profile ---
+  log_info "IT-24: Phase 2 — Modern profile enforcement"
+  set_tls_profile "Modern"
+  elapsed=0
+  while [[ $elapsed -lt $RECONCILE_WAIT ]]; do
+    local cmd
+    cmd=$(get_deployment_command "$KORREL8R_DEPLOY" 2>/dev/null || echo "")
+    if echo "$cmd" | grep -q "VersionTLS13"; then break; fi
+    sleep "${POLL_INTERVAL}"
+    elapsed=$((elapsed + POLL_INTERVAL))
+  done
+  wait_for_rollout "$KORREL8R_DEPLOY" || true
+  sleep 10
+
+  pod_ip=$(get_pod_ip "$KORREL8R_DEPLOY")
+  if [[ -z "$pod_ip" ]]; then
+    log_fail "IT-24: Could not get pod IP for korrel8r after Modern rollout"
+    record_result "IT-24" "fail" "Cannot resolve korrel8r pod IP after rollout"
+    return
+  fi
+
+  log_info "IT-24: korrel8r command: $(get_deployment_command "$KORREL8R_DEPLOY" | grep -o '\-\-tls-min-version=[^ ,"]*')"
+
+  # TLS 1.2 should be rejected under Modern
+  log_info "IT-24: \$ openssl s_client -connect ${pod_ip}:${PLUGIN_PORT} -tls1_2"
+  result=$(scanner_openssl "$pod_ip" "-tls1_2")
+  verdict=$(echo "$result" | grep -oE "Protocol\s*:.*|Cipher is.*|alert protocol version|alert handshake failure" | head -3 || echo "")
+  log_detail "TLS 1.2 result: ${verdict:-<connection failed>}"
+  if tls_connection_succeeds "$result"; then
+    log_fail "IT-24: Korrel8r accepted TLS 1.2 under Modern (should reject)"
+    passed=false
+  else
+    log_pass "IT-24: Korrel8r correctly rejected TLS 1.2 under Modern"
+  fi
+
+  # TLS 1.3 should be accepted
+  log_info "IT-24: \$ openssl s_client -connect ${pod_ip}:${PLUGIN_PORT} -tls1_3"
+  result=$(scanner_openssl "$pod_ip" "-tls1_3")
+  verdict=$(echo "$result" | grep -oE "Protocol\s*:.*|Cipher is.*" | head -2 || echo "")
+  log_detail "TLS 1.3 result: ${verdict:-<connection failed>}"
+  if tls_connection_succeeds "$result"; then
+    log_pass "IT-24: Korrel8r correctly accepted TLS 1.3 under Modern"
+  else
+    log_fail "IT-24: Korrel8r rejected TLS 1.3 (should accept under Modern)"
+    passed=false
+  fi
+
+  if [[ "$passed" == true ]]; then
+    record_result "IT-24" "pass" "Korrel8r enforces TLS version restrictions (Intermediate + Modern)"
+  else
+    record_result "IT-24" "fail" "Korrel8r TLS enforcement issues detected"
+  fi
+
+  set_tls_profile "Intermediate"
+  elapsed=0
+  while [[ $elapsed -lt $RECONCILE_WAIT ]]; do
+    local cmd
+    cmd=$(get_deployment_command "$KORREL8R_DEPLOY" 2>/dev/null || echo "")
+    if echo "$cmd" | grep -q "VersionTLS12"; then break; fi
+    sleep "${POLL_INTERVAL}"
+    elapsed=$((elapsed + POLL_INTERVAL))
+  done
+  wait_for_rollout "$KORREL8R_DEPLOY" || true
+}
+
+# ---------------------------------------------------------------------------
+# IT-25: Korrel8r Endpoint Responds Over TLS
+# ---------------------------------------------------------------------------
+it_25() {
+  log_test "IT-25: Korrel8r Endpoint Responds Over TLS"
+
+  if [[ -z "$KORREL8R_DEPLOY" ]]; then
+    record_result "IT-25" "skip" "Korrel8r deployment not found"
+    return
+  fi
+
+  ensure_scanner
+
+  local passed=true
+
+  local url
+  url=$(svc_url "$KORREL8R_DEPLOY" "/api/v1alpha1/domains")
+  log_info "IT-25: Testing HTTPS connectivity to korrel8r: ${url}"
+
+  local http_code
+  http_code=$(scanner_curl "$url")
+  log_info "IT-25: ${KORREL8R_DEPLOY}/api/v1alpha1/domains → HTTP ${http_code}"
+
+  if [[ "$http_code" =~ ^[2345][0-9][0-9]$ ]]; then
+    log_pass "IT-25: Korrel8r endpoint responds over HTTPS (HTTP ${http_code})"
+  else
+    log_warn "IT-25: Korrel8r /api/v1alpha1/domains returned HTTP ${http_code} — trying root endpoint"
+    http_code=$(scanner_curl "$(svc_url "$KORREL8R_DEPLOY" "/")")
+    log_info "IT-25: ${KORREL8R_DEPLOY}/ → HTTP ${http_code}"
+    if [[ "$http_code" =~ ^[2345][0-9][0-9]$ ]]; then
+      log_pass "IT-25: Korrel8r root endpoint responds over HTTPS (HTTP ${http_code})"
+    else
+      log_fail "IT-25: Korrel8r not responding over HTTPS (HTTP ${http_code})"
+      passed=false
+    fi
+  fi
+
+  # Verify TLS handshake explicitly
+  local pod_ip
+  pod_ip=$(get_pod_ip "$KORREL8R_DEPLOY")
+  if [[ -n "$pod_ip" ]]; then
+    local result
+    result=$(scanner_openssl "$pod_ip" "-tls1_2")
+    if tls_connection_succeeds "$result"; then
+      log_pass "IT-25: Korrel8r TLS handshake succeeds"
+    else
+      log_fail "IT-25: Korrel8r TLS handshake failed"
+      passed=false
+    fi
+  fi
+
+  if [[ "$passed" == true ]]; then
+    record_result "IT-25" "pass" "Korrel8r endpoint accessible over TLS"
+  else
+    record_result "IT-25" "fail" "Korrel8r endpoint TLS connectivity issues"
+  fi
+}
+
 # ---------------------------------------------------------------------------
 # IT-13: Operator Restart Preserves TLS Across All Plugins
 # ---------------------------------------------------------------------------
@@ -2136,16 +2542,21 @@ Test cases by priority:
                 it_02 (Cross-plugin consistency)
                 it_03 (All endpoints over HTTPS)
                 it_04 (ConsolePlugin CRs)
+                it_21 (Korrel8r has TLS args)
+                it_22 (Korrel8r TLS consistent with UIPlugins)
   P2 High:      it_05 (Modern → all plugins)
                 it_06 (Custom → all plugins)
                 it_07 (TLS enforcement, Intermediate)
                 it_08 (TLS enforcement, Modern)
                 it_09 (Cipher enforcement, Custom)
+                it_23 (Korrel8r TLS profile propagation)
+                it_24 (Korrel8r TLS enforcement)
   P3 Medium:    it_10 (Logging endpoints)
                 it_11 (Monitoring endpoints)
                 it_12 (Dashboards endpoints + caching)
                 it_12_dt (Distributed tracing endpoints)
                 it_12_tp (Troubleshooting panel endpoints)
+                it_25 (Korrel8r endpoint over TLS)
   P4 Medium:    it_13 (Operator restart)
                 it_14 (Plugin pod restart)
                 it_15 (Profile change during deploy)
@@ -2232,6 +2643,7 @@ main() {
 
   check_prerequisites
   detect_deploy_names
+  detect_korrel8r_deploy
   TESTS_STARTED=true
 
   if [[ "$SKIP_SCANNER_INSTALL" != true ]]; then

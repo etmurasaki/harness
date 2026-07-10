@@ -1,0 +1,47 @@
+Logging to /Users/emurasak/workspace/harness/tasks/upstream-images/build-and-push-20260604-140151.log
+Fetching all branches for each repo...
+  Fetching console-dashboards-plugin...
+  Fetching distributed-tracing-console-plugin...
+  Fetching logging-view-plugin...
+  Fetching monitoring-plugin...
+  Fetching troubleshooting-panel-console-plugin...
+Fetch complete.
+==========================================
+Building console-dashboards-plugin @ release-coo-ocp-4.12 with VERSION=v0.4.3 ORG=rh-ee-emurasak
+==========================================
+Already on 'release-coo-ocp-4.12'
+Your branch is up to date with 'origin/release-coo-ocp-4.12'.
+From https://github.com/openshift/console-dashboards-plugin
+ * branch            release-coo-ocp-4.12 -> FETCH_HEAD
+Already up to date.
+--- Attempt 1/3 ---
+podman manifest rm quay.io/rh-ee-emurasak/console-dashboards-plugin:v0.4.3 || true
+Untagged: quay.io/rh-ee-emurasak/console-dashboards-plugin:v0.4.3
+Deleted: 630fec27d5c604056d8729c39d6a4811ccb0470852248b088e1f0a49f08a5148
+podman manifest create quay.io/rh-ee-emurasak/console-dashboards-plugin:v0.4.3
+0b3b70ca6961888533c539e108a059ee605bf179d065ea45bd45205cdbac4e72
+podman build --platform=linux/arm64,linux/amd64 --manifest quay.io/rh-ee-emurasak/console-dashboards-plugin:v0.4.3 -f Dockerfile.dev
+[linux/arm64] [1/3] STEP 1/9: FROM registry.redhat.io/ubi9/nodejs-22:latest AS web-builder
+Trying to pull registry.redhat.io/ubi9/nodejs-22:latest...
+Getting image source signatures
+Checking if image destination supports signatures
+Copying blob sha256:8cc4364173e08b740ee39103f76581907e7a0eaa07260aeb6afbbebb8dde106e
+Copying blob sha256:6c68ec2cb8914dd7cd64b186ef8674ae644c890fcae14edf9a3b33fde3a76cce
+Copying blob sha256:98245caf86240da0764634e4873f8d78498df819a738bee6e752ffc1dc9be497
+Copying config sha256:bceceabd26d12d7ba9de7f0aad51a65d5ae092bd1ae800eb7bad9330a6a05b8e
+Writing manifest to image destination
+Storing signatures
+[linux/arm64] [1/3] STEP 2/9: WORKDIR /opt/app-root
+--> Using cache 2b3b4ed2e104018013987c6994b39e5230852351d782bce566e3b4d0bb442709
+--> 2b3b4ed2e104
+[linux/arm64] [1/3] STEP 3/9: USER 0
+--> Using cache 7f8f8f3e5982a95b1ab1b2ac58e2650bb7b8362ee264983e92a3a2ed81f346d6
+--> 7f8f8f3e5982
+[linux/arm64] [1/3] STEP 4/9: ENV HUSKY=0
+--> Using cache cd43796b49ca68ad135063a39fd7d828e86f1bfa9a5432f06f9d2f0d1ad3d92f
+--> cd43796b49ca
+[linux/arm64] [1/3] STEP 5/9: COPY web/package*.json web/
+--> 3e6ebb8a2ec1
+[linux/arm64] [1/3] STEP 6/9: COPY Makefile Makefile
+--> 1d67d22da49a
+[linux/arm64] [1/3] STEP 7/9: RUN make install-frontend-ci

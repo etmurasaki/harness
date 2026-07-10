@@ -1,0 +1,133 @@
+Logging to /Users/emurasak/workspace/harness/tasks/upstream-images/build-and-push-20260630-225516.log
+Fetching all branches for each repo...
+  Fetching console-dashboards-plugin...
+  Fetching distributed-tracing-console-plugin...
+  Fetching logging-view-plugin...
+  Fetching monitoring-plugin...
+  Fetching troubleshooting-panel-console-plugin...
+Fetch complete.
+==========================================
+Building console-dashboards-plugin @ release-coo-ocp-4.12 with VERSION=v0.4.3 ORG=rh-ee-emurasak
+==========================================
+Already on 'release-coo-ocp-4.12'
+Your branch is up to date with 'origin/release-coo-ocp-4.12'.
+From https://github.com/openshift/console-dashboards-plugin
+ * branch            release-coo-ocp-4.12 -> FETCH_HEAD
+Already up to date.
+--- Attempt 1/3 ---
+podman manifest rm quay.io/rh-ee-emurasak/console-dashboards-plugin:v0.4.3 || true
+Untagged: quay.io/rh-ee-emurasak/console-dashboards-plugin:v0.4.3
+Deleted: 787a9b3f36420f2cad3d998ed670f06769ecf6ca28d717bf449f033981df4922
+podman manifest create quay.io/rh-ee-emurasak/console-dashboards-plugin:v0.4.3
+780c776da4ea0f28e978d744c721d352d76d6847a178fb9a3c52c64004ecc6dc
+podman build --platform=linux/arm64,linux/amd64 --manifest quay.io/rh-ee-emurasak/console-dashboards-plugin:v0.4.3 -f Dockerfile
+[linux/arm64] [1/3] STEP 1/8: FROM registry.redhat.io/ubi8/nodejs-18:latest AS web-builder
+[linux/arm64] [1/3] STEP 2/8: WORKDIR /opt/app-root
+--> Using cache 3a04ce32e7bc50cb84da7cd07dc4c7d6ab5eab63f0dc9d77b097f4a793bce657
+--> 3a04ce32e7bc
+[linux/arm64] [1/3] STEP 3/8: USER 0
+--> Using cache 5612b35b38e026cb55402b3cbca1b44760992030a2263662076d090e1ff44049
+--> 5612b35b38e0
+[linux/arm64] [1/3] STEP 4/8: COPY web/package*.json web/
+--> Using cache 7fad47df41fb0416aae629027b46d8cd5032bad3093cb1ed40b3e5742383f77c
+--> 7fad47df41fb
+[linux/arm64] [1/3] STEP 5/8: COPY Makefile Makefile
+--> Using cache 289147822189771057028fb887acc57536022a1c51dae85b9ee3086456465d71
+--> 289147822189
+[linux/arm64] [1/3] STEP 6/8: RUN make install-frontend-ci-clean
+--> Using cache 7d907c8ee3ea04af5e68357f3c02ab219c2e796ed1f0ef0a9c685620595065c4
+--> 7d907c8ee3ea
+[linux/arm64] [1/3] STEP 7/8: COPY web/ web/
+--> Using cache b7bc209bc825b3561e3fc31ce045db7d1347948ec4697510217c3d8cab4bfbe3
+--> b7bc209bc825
+[linux/arm64] [1/3] STEP 8/8: RUN make build-frontend
+--> Using cache d37afecf01105b74608d939d645aaa9ceff3c7cba5e93b7c92c930430d0597c4
+--> d37afecf0110
+[linux/arm64] [2/3] STEP 1/11: FROM registry.redhat.io/ubi9/go-toolset:1.25 AS go-builder
+Trying to pull registry.redhat.io/ubi9/go-toolset:1.25...
+Getting image source signatures
+Checking if image destination supports signatures
+Copying blob sha256:3acb2651aa507a3dc73403b6f868ec79a6adc5a0e5b5cd28e1ba929a8242123c
+Copying blob sha256:66c47a7ff47768837c084e8a7889a768b3f736f72ddb31d8896c4c5112926914
+Copying blob sha256:50f4486c2c29c67be01752141bafc257baa50c8faa5233b266dea1d53dd22f42
+Copying blob sha256:fca9483741ef9908527fb331bfc4347aed6bd4c42834bd157908f393ef5cdddf
+Copying config sha256:5ee6e349584b9f289a4846389f30250a2f902f821dfe0be769aaada31a0644bf
+Writing manifest to image destination
+Storing signatures
+[linux/arm64] [2/3] STEP 2/11: WORKDIR /opt/app-root
+--> Using cache 2d87b94829ef59262d99b4be53115121b887fac979a71208ab04a9dc9b8a04aa
+--> 2d87b94829ef
+[linux/arm64] [2/3] STEP 3/11: COPY Makefile Makefile
+--> Using cache a7d43f8290a5e346f7a9ad715fd65d80f97539ae92da605f52c11c53d1aa21a3
+--> a7d43f8290a5
+[linux/arm64] [2/3] STEP 4/11: COPY go.mod go.mod
+--> Using cache 9440152c6a57404d39a5662e00f2845f0b3a98f679709d17d79a540272fd3cc6
+--> 9440152c6a57
+[linux/arm64] [2/3] STEP 5/11: COPY go.sum go.sum
+--> Using cache ddf975f5ff487d5e51d1b84e9a1fbe4cf0ba66a4147bbf1a22b8438f9bafa40b
+--> ddf975f5ff48
+[linux/arm64] [2/3] STEP 6/11: RUN go mod download
+go: go.mod requires go >= 1.26.3 (running go 1.25.9; GOTOOLCHAIN=local)
+[linux/amd64] [1/3] STEP 1/8: FROM registry.redhat.io/ubi8/nodejs-18:latest AS web-builder
+Trying to pull registry.redhat.io/ubi8/nodejs-18:latest...
+Getting image source signatures
+Checking if image destination supports signatures
+Copying blob sha256:046eb6416170db2ab33e464d04c6f7c0c8c6cc8563597aca8e9fb7736dff00f9
+Copying blob sha256:43ddc3bd12b8691687c9f6c273331ca07e3a89b50a619e0db9b040a8a629386d
+Copying blob sha256:b610fd6091ba2163b8943d2214e20665977bc8064dc769d47be9ae868e48a301
+Copying config sha256:ab55058334c5c32969b838cea2db23ee8c69c1b742006a75c031ed4f1b286bc5
+Writing manifest to image destination
+Storing signatures
+[linux/amd64] [1/3] STEP 2/8: WORKDIR /opt/app-root
+--> Using cache 3e6c8fef9f0db81f076f7c17f99adfad90d540dbfad328d4d108a3a1d21cf92e
+--> 3e6c8fef9f0d
+[linux/amd64] [1/3] STEP 3/8: USER 0
+--> Using cache 74db39ef43293c846556d3d8aaafeef2ad2cab22e2dd02605273426e0c50fda6
+--> 74db39ef4329
+[linux/amd64] [1/3] STEP 4/8: COPY web/package*.json web/
+--> Using cache 73eef413178b69264fc91b4cbe383a50706790e1b0b9091bfc7a931d4e4b1abe
+--> 73eef413178b
+[linux/amd64] [1/3] STEP 5/8: COPY Makefile Makefile
+--> Using cache af1a4c6af546abdac94cbfb723406ba6aea572fd1795d14c7a47b02585860ac3
+--> af1a4c6af546
+[linux/amd64] [1/3] STEP 6/8: RUN make install-frontend-ci-clean
+--> Using cache 718268d5473eb480b1f143205712bae3145d1b9d864903281cd33e73d4eb5ede
+--> 718268d5473e
+[linux/amd64] [1/3] STEP 7/8: COPY web/ web/
+--> Using cache 1bcbfe35cd8a0c28d998bd2d325b91bcb12d144a401520f7ffb533fa9b66efc9
+--> 1bcbfe35cd8a
+[linux/amd64] [1/3] STEP 8/8: RUN make build-frontend
+--> Using cache a46c8b267cf62fbd97141aa9cd3392584c19471f93ddcdf73564fcbf13e6672d
+--> a46c8b267cf6
+[linux/amd64] [2/3] STEP 1/11: FROM registry.redhat.io/ubi9/go-toolset:1.25 AS go-builder
+Trying to pull registry.redhat.io/ubi9/go-toolset:1.25...
+Getting image source signatures
+Checking if image destination supports signatures
+Copying blob sha256:b66ab30abd6c3aa6e70bb84e4b3f0025035459b0fa3fc0d28bb37e057cde7b50
+Copying blob sha256:dda984240b64df834c0d31b021fbed482c215cabf5ed5d878186963cb5911973
+Copying blob sha256:45b10115c57ace5faafc3bcd0e634280e70c95bd3c0a576df4aa121f3ec5fc49
+Copying blob sha256:2118fefecd7294918fa82547312fee454e5e7f39fa82dd5d7fd262d06ba68d8c
+Copying config sha256:7fff5af3dd41a2f0ad623df354abde9c1805402da09701bb0e637fcbdcd8087c
+Writing manifest to image destination
+Storing signatures
+[linux/amd64] [2/3] STEP 2/11: WORKDIR /opt/app-root
+--> Using cache 8718da22ad13969b2666c29d410b403ac2685c5bfbdc2b95f852d434aa05ce93
+--> 8718da22ad13
+[linux/amd64] [2/3] STEP 3/11: COPY Makefile Makefile
+--> Using cache 2955d1929a240864b0bed8614dba3d04b0fdb86d92c717cc24f2f7ae5c659fdc
+--> 2955d1929a24
+[linux/amd64] [2/3] STEP 4/11: COPY go.mod go.mod
+--> Using cache 6bfc55f141f4fd86a51448b11e0a7e05830cd1ef923e09272c19b96ee9a87735
+--> 6bfc55f141f4
+[linux/amd64] [2/3] STEP 5/11: COPY go.sum go.sum
+--> Using cache bff13ed72bcfacf79ea55afe18163c5b361081c6b126be1ed3dbfea3f35ce834
+--> bff13ed72bcf
+[linux/amd64] [2/3] STEP 6/11: RUN go mod download
+go: go.mod requires go >= 1.26.3 (running go 1.25.9; GOTOOLCHAIN=local)
+Error: 2 errors occurred:
+	* [linux/arm64]: building at STEP "RUN go mod download": while running runtime: exit status 1
+	* [linux/amd64]: building at STEP "RUN go mod download": while running runtime: exit status 1
+
+
+
+make: *** [podman-cross-build] Error 1

@@ -1,0 +1,25 @@
+
+[1m[0;36m=== COO 1.5.0 Smoke Test — Resource Consumption + COO-1014 Validation ===[0m
+
+[0;36m[INFO][0m  Report: /Users/emurasak/workspace/harness/tasks/OU-1326-smoke-test-coo-1.5.0/smoke-results-20260604-172549.log
+[0;36m[INFO][0m  Started: Thu Jun  4 17:25:49 -03 2026
+[0;36m[INFO][0m  Running cleanup only ...
+
+[1m[0;36m=== Cleanup ===[0m
+
+[0;36m[INFO][0m  Cleaning up PersesDashboard CRs in smoke-test namespaces ...
+[0;36m[INFO][0m  Dashboard cleanup progress: 10 namespaces processed (120 dashboards deleted)
+[0;36m[INFO][0m  Dashboard cleanup progress: 20 namespaces processed (240 dashboards deleted)
+[0;36m[INFO][0m  Dashboard cleanup progress: 30 namespaces processed (360 dashboards deleted)
+[0;36m[INFO][0m  Dashboard cleanup progress: 40 namespaces processed (480 dashboards deleted)
+[0;36m[INFO][0m  Dashboard cleanup progress: 50 namespaces processed (600 dashboards deleted)
+[0;36m[INFO][0m  Dashboard cleanup progress: 60 namespaces processed (720 dashboards deleted)
+[0;36m[INFO][0m  Dashboard cleanup progress: 70 namespaces processed (840 dashboards deleted)
+[0;36m[INFO][0m  Dashboard cleanup progress: 80 namespaces processed (960 dashboards deleted)
+[0;36m[INFO][0m  Dashboard cleanup progress: 90 namespaces processed (1080 dashboards deleted)
+[0;36m[INFO][0m  Dashboard cleanup progress: 100 namespaces processed (1200 dashboards deleted)
+[0;36m[INFO][0m  Dashboard cleanup complete: 1200 PersesDashboard CRs deleted across 100 namespaces
+[0;36m[INFO][0m  Deleting UIPlugin/monitoring ...
+[0;36m[INFO][0m  Deleting smoke-test namespaces (prefix: smoke-test-ns) ...
+[0;36m[INFO][0m  Namespace deletion initiated for 100 namespaces
+[0;36m[INFO][0m  Total duration: 460s

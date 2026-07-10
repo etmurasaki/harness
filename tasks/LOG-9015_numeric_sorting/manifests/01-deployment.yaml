@@ -34,23 +34,30 @@ spec:
             - /bin/sh
             - -c
             - |
+              LEVELS="critical error warning info debug"
+              pick_level() {
+                set -- $LEVELS
+                shift $((RANDOM % 5))
+                echo "$1"
+              }
               burst=0
               while true; do
                 burst=$((burst + 1))
                 seq=1
                 while [ $seq -le 50 ]; do
+                  level=$(pick_level)
                   roll=$((RANDOM % 10))
                   if [ $roll -lt 7 ]; then
-                    printf 'burst=%04d seq=%03d msg=log-generator-line\n' "$burst" "$seq"
+                    printf 'level=%s burst=%04d seq=%03d msg=log-generator-line\n' "$level" "$burst" "$seq"
                   elif [ $roll -lt 9 ]; then
-                    printf 'burst=%04d seq=%03d msg=exception-thrown\n' "$burst" "$seq"
+                    printf 'level=%s burst=%04d seq=%03d msg=exception-thrown\n' "$level" "$burst" "$seq"
                     printf 'java.lang.NullPointerException: value was null\n'
                     printf '  at com.example.service.OrderProcessor.validate(OrderProcessor.java:142)\n'
                     printf '  at com.example.service.OrderProcessor.process(OrderProcessor.java:87)\n'
                     printf '  at com.example.api.OrderController.submit(OrderController.java:53)\n'
                     printf '  at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)\n'
                   else
-                    printf 'burst=%04d seq=%03d msg=audit-event\n' "$burst" "$seq"
+                    printf 'level=%s burst=%04d seq=%03d msg=audit-event\n' "$level" "$burst" "$seq"
                     printf '{\n'
                     printf '  "event": "user.login",\n'
                     printf '  "user": "admin@example.com",\n'

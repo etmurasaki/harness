@@ -1,0 +1,667 @@
+# COO Integration TLS E2E Results — Mon Jun 15 11:38:08 -03 2026
+
+
+[1m[0;36m=== COO Integration TLS E2E Tests ===[0m
+
+[0;36m[INFO][0m  Namespace: openshift-cluster-observability-operator
+[0;36m[INFO][0m  Plugins:   Logging, Monitoring, Dashboards, Distributed Tracing, Troubleshooting Panel
+[0;36m[INFO][0m  Report:    /Users/emurasak/workspace/harness/tasks/OU-1339-tls-e2e-testing/integration-results-20260615-113808.log
+[0;36m[INFO][0m  Timestamp: Mon Jun 15 11:38:08 -03 2026
+
+[1m[0;36m=== Prerequisites ===[0m
+
+[0;32m[PASS][0m  oc CLI found
+[0;32m[PASS][0m  Logged in as: kube:admin
+[0;32m[PASS][0m  UIPlugin CRD exists
+[0;32m[PASS][0m  Observability Operator running
+[0;32m[PASS][0m  UIPlugin CR 'logging' exists
+[0;32m[PASS][0m  UIPlugin CR 'monitoring' exists
+[0;32m[PASS][0m  UIPlugin CR 'dashboards' exists
+[0;32m[PASS][0m  UIPlugin CR 'distributed-tracing' exists
+[0;32m[PASS][0m  UIPlugin CR 'troubleshooting-panel' exists
+[0;36m[INFO][0m  Cluster version: 4.22.0-0.nightly-2026-06-15-001634
+[0;36m[INFO][0m  No explicit TLS profile set (cluster default)
+[0;36m[INFO][0m  Auto-detecting UIPlugin deployment names via ownerReferences...
+[0;36m[INFO][0m    logging → logging
+[0;36m[INFO][0m    monitoring → monitoring
+[0;36m[INFO][0m    dashboards → observability-ui-dashboards
+[0;36m[INFO][0m    distributed-tracing → distributed-tracing
+[0;36m[INFO][0m    troubleshooting-panel → troubleshooting-panel
+[0;36m[INFO][0m  Auto-detecting korrel8r deployment...
+[0;36m[INFO][0m    korrel8r → korrel8r
+[0;36m[INFO][0m  Installing tls-scanner pod in openshift-cluster-observability-operator
+[0;36m[INFO][0m  Waiting for tls-scanner pod...
+[0;32m[PASS][0m  tls-scanner pod ready
+
+[1m[0;36m=== Running Tests ===[0m
+
+
+[1m--- IT-01: Verify All UIPlugins Have TLS Args (Intermediate) ---[0m
+[0;36m[INFO][0m  Setting cluster TLS profile to: Intermediate
+[0;36m[INFO][0m  Verifying pre-installed UIPlugin deployments...
+[0;32m[PASS][0m  Deployment logging exists
+[0;32m[PASS][0m  Deployment monitoring exists
+[0;32m[PASS][0m  Deployment observability-ui-dashboards exists
+[0;32m[PASS][0m  Deployment distributed-tracing exists
+[0;32m[PASS][0m  Deployment troubleshooting-panel exists
+[0;36m[INFO][0m  Waiting for all deployments to become ready...
+[0;32m[PASS][0m  All UIPlugin deployments verified
+[0;36m[INFO][0m  IT-01: logging args: ["-port=9443","-cert=/var/serving-cert/tls.crt","-key=/var/serving-cert/tls.key","-plugin-config-path=/etc/plugin/config/config.yaml","-features=dev-console,alerts,dev-alerts","-tls-min-version=VersionTLS12","-tls-cipher-suites=TLS_AES_128_GCM_SHA256,TLS_AES_256_GCM_SHA384,TLS_CHACHA20_POLY1305_SHA256,TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256,TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256"]
+[0;32m[PASS][0m  IT-01: logging has -tls-min-version
+[0;32m[PASS][0m  IT-01: logging has -tls-cipher-suites
+[0;36m[INFO][0m  IT-01: monitoring args: ["-port=9443","-cert=/var/serving-cert/tls.crt","-key=/var/serving-cert/tls.key","-config-path=/opt/app-root/config","-static-path=/opt/app-root/web/dist","-alertmanager=https://alertmanager.open-cluster-management-observability.svc:9095","-thanos-querier=https://rbac-query-proxy.open-cluster-management-observability.svc:8443","-features=acm-alerting,perses-dashboards,incidents","-tls-min-version=VersionTLS12","-tls-cipher-suites=TLS_AES_128_GCM_SHA256,TLS_AES_256_GCM_SHA384,TLS_CHACHA20_POLY1305_SHA256,TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256,TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256"]
+[0;32m[PASS][0m  IT-01: monitoring has -tls-min-version
+[0;32m[PASS][0m  IT-01: monitoring has -tls-cipher-suites
+[0;36m[INFO][0m  IT-01: observability-ui-dashboards args: ["-port=9443","-cert=/var/serving-cert/tls.crt","-key=/var/serving-cert/tls.key","-tls-min-version=VersionTLS12","-tls-cipher-suites=TLS_AES_128_GCM_SHA256,TLS_AES_256_GCM_SHA384,TLS_CHACHA20_POLY1305_SHA256,TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256,TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256"]
+[0;32m[PASS][0m  IT-01: observability-ui-dashboards has -tls-min-version
+[0;32m[PASS][0m  IT-01: observability-ui-dashboards has -tls-cipher-suites
+[0;36m[INFO][0m  IT-01: distributed-tracing args: ["-port=9443","-cert=/var/serving-cert/tls.crt","-key=/var/serving-cert/tls.key","-plugin-config-path=/etc/plugin/config/config.yaml","-tls-min-version=VersionTLS12","-tls-cipher-suites=TLS_AES_128_GCM_SHA256,TLS_AES_256_GCM_SHA384,TLS_CHACHA20_POLY1305_SHA256,TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256,TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256"]
+[0;32m[PASS][0m  IT-01: distributed-tracing has -tls-min-version
+[0;32m[PASS][0m  IT-01: distributed-tracing has -tls-cipher-suites
+[0;36m[INFO][0m  IT-01: troubleshooting-panel args: ["-port=9443","-cert=/var/serving-cert/tls.crt","-key=/var/serving-cert/tls.key","-plugin-config-path=/etc/plugin/config/config.yaml","-features=agent-navigation","-tls-min-version=VersionTLS12","-tls-cipher-suites=TLS_AES_128_GCM_SHA256,TLS_AES_256_GCM_SHA384,TLS_CHACHA20_POLY1305_SHA256,TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256,TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256"]
+[0;32m[PASS][0m  IT-01: troubleshooting-panel has -tls-min-version
+[0;32m[PASS][0m  IT-01: troubleshooting-panel has -tls-cipher-suites
+[0;32m[PASS][0m  IT-01: All 4 pre-installed plugins have TLS args under Intermediate profile
+
+[1m--- IT-02: Cross-Plugin TLS Arg Consistency ---[0m
+[0;36m[INFO][0m  IT-02: Reference (logging): -tls-min-version=VersionTLS12
+[0;32m[PASS][0m  IT-02: monitoring min version matches
+[0;32m[PASS][0m  IT-02: monitoring cipher list matches
+[0;32m[PASS][0m  IT-02: observability-ui-dashboards min version matches
+[0;32m[PASS][0m  IT-02: observability-ui-dashboards cipher list matches
+[0;32m[PASS][0m  IT-02: distributed-tracing min version matches
+[0;32m[PASS][0m  IT-02: distributed-tracing cipher list matches
+[0;32m[PASS][0m  IT-02: troubleshooting-panel min version matches
+[0;32m[PASS][0m  IT-02: troubleshooting-panel cipher list matches
+[0;32m[PASS][0m  IT-02: All plugins have identical TLS configuration
+
+[1m--- IT-03: All Plugin Endpoints Respond Over HTTPS ---[0m
+[0;32m[PASS][0m  IT-03: logging/health → HTTP 200
+[0;32m[PASS][0m  IT-03: logging/plugin-manifest.json → HTTP 200
+[0;32m[PASS][0m  IT-03: monitoring/health → HTTP 200
+[0;32m[PASS][0m  IT-03: monitoring/plugin-manifest.json → HTTP 200
+[0;32m[PASS][0m  IT-03: observability-ui-dashboards/health → HTTP 200
+[0;32m[PASS][0m  IT-03: observability-ui-dashboards/plugin-manifest.json → HTTP 200
+[0;32m[PASS][0m  IT-03: distributed-tracing/health → HTTP 200
+[0;32m[PASS][0m  IT-03: distributed-tracing/plugin-manifest.json → HTTP 200
+[0;32m[PASS][0m  IT-03: troubleshooting-panel/health → HTTP 200
+[0;32m[PASS][0m  IT-03: troubleshooting-panel/plugin-manifest.json → HTTP 200
+[0;32m[PASS][0m  IT-03: monitoring/features → HTTP 200
+[0;32m[PASS][0m  IT-03: All plugin endpoints respond over HTTPS
+
+[1m--- IT-04: ConsolePlugin CRs Registered ---[0m
+[0;32m[PASS][0m  IT-04: ConsolePlugin 'logging-view-plugin' found for UIPlugin 'logging'
+[0;32m[PASS][0m  IT-04: ConsolePlugin 'monitoring-console-plugin' found for UIPlugin 'monitoring'
+[0;32m[PASS][0m  IT-04: ConsolePlugin 'console-dashboards-plugin' found for UIPlugin 'dashboards'
+[0;32m[PASS][0m  IT-04: ConsolePlugin 'distributed-tracing-console-plugin' found for UIPlugin 'distributed-tracing'
+[0;32m[PASS][0m  IT-04: ConsolePlugin 'troubleshooting-panel-console-plugin' found for UIPlugin 'troubleshooting-panel'
+[0;36m[INFO][0m  IT-04: Console operator plugins list: ["networking-console-plugin","monitoring-plugin","troubleshooting-panel-console-plugin","monitoring-console-plugin","logging-view-plugin","distributed-tracing-console-plugin","console-dashboards-plugin"]
+[0;32m[PASS][0m  IT-04: All ConsolePlugin CRs registered
+
+[1m--- IT-21: Korrel8r Deployment Has TLS Args (Intermediate) ---[0m
+[0;36m[INFO][0m  IT-21: korrel8r command: ["korrel8r","web","--https=:9443","--cert=/secrets/tls.crt","--key=/secrets/tls.key","--config=/config/korrel8r.yaml","--tls-cipher-suites=TLS_AES_128_GCM_SHA256,TLS_AES_256_GCM_SHA384,TLS_CHACHA20_POLY1305_SHA256,TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256,TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256","--tls-min-version=VersionTLS12"]
+[0;32m[PASS][0m  IT-21: korrel8r has --tls-min-version
+[0;32m[PASS][0m  IT-21: korrel8r has --tls-cipher-suites
+[0;32m[PASS][0m  IT-21: Korrel8r deployment has TLS args under Intermediate profile
+
+[1m--- IT-22: Korrel8r TLS Args Consistent with UIPlugins ---[0m
+[0;36m[INFO][0m  IT-22: Korrel8r TLS min version: VersionTLS12
+[0;36m[INFO][0m  IT-22: Reference plugin (logging) TLS min version: VersionTLS12
+[0;32m[PASS][0m  IT-22: Korrel8r TLS min version matches UIPlugin (VersionTLS12)
+[0;32m[PASS][0m  IT-22: Korrel8r cipher suites match UIPlugin
+[0;32m[PASS][0m  IT-22: Korrel8r TLS configuration consistent with UIPlugins
+
+[1m--- IT-07: TLS Enforcement — All Plugins, Intermediate Profile ---[0m
+[0;36m[INFO][0m  Setting cluster TLS profile to: Intermediate
+[0;36m[INFO][0m  Waiting for all deployments to reflect TLS update (timeout: 240s)...
+[0;36m[INFO][0m  All deployments updated after 0s
+[0;36m[INFO][0m  IT-07: Scanning logging at 10.131.0.29:9443
+[0;36m[INFO][0m  IT-07: logging args: -tls-min-version=VersionTLS12
+[0;36m[INFO][0m  IT-07: $ openssl s_client -connect 10.131.0.29:9443 -tls1_1
+         TLS 1.1 result: Cipher is (NONE)
+[0;32m[PASS][0m  IT-07: logging correctly rejected TLS 1.1
+[0;36m[INFO][0m  IT-07: $ openssl s_client -connect 10.131.0.29:9443 -tls1_2
+         TLS 1.2 result: Cipher is ECDHE-RSA-AES128-GCM-SHA256
+Protocol: TLSv1.2
+[0;32m[PASS][0m  IT-07: logging correctly accepted TLS 1.2
+[0;36m[INFO][0m  IT-07: $ openssl s_client -connect 10.131.0.29:9443 -tls1_3
+         TLS 1.3 result: Cipher is TLS_AES_128_GCM_SHA256
+Protocol: TLSv1.3
+[0;32m[PASS][0m  IT-07: logging correctly accepted TLS 1.3
+[0;36m[INFO][0m  IT-07: Scanning monitoring at 10.129.2.20:9443
+[0;36m[INFO][0m  IT-07: monitoring args: -tls-min-version=VersionTLS12
+[0;36m[INFO][0m  IT-07: $ openssl s_client -connect 10.129.2.20:9443 -tls1_1
+         TLS 1.1 result: Cipher is (NONE)
+[0;32m[PASS][0m  IT-07: monitoring correctly rejected TLS 1.1
+[0;36m[INFO][0m  IT-07: $ openssl s_client -connect 10.129.2.20:9443 -tls1_2
+         TLS 1.2 result: Cipher is ECDHE-RSA-AES128-GCM-SHA256
+Protocol: TLSv1.2
+[0;32m[PASS][0m  IT-07: monitoring correctly accepted TLS 1.2
+[0;36m[INFO][0m  IT-07: $ openssl s_client -connect 10.129.2.20:9443 -tls1_3
+         TLS 1.3 result: Cipher is TLS_AES_128_GCM_SHA256
+Protocol: TLSv1.3
+[0;32m[PASS][0m  IT-07: monitoring correctly accepted TLS 1.3
+[0;36m[INFO][0m  IT-07: Scanning observability-ui-dashboards at 10.128.2.47:9443
+[0;36m[INFO][0m  IT-07: observability-ui-dashboards args: -tls-min-version=VersionTLS12
+[0;36m[INFO][0m  IT-07: $ openssl s_client -connect 10.128.2.47:9443 -tls1_1
+         TLS 1.1 result: Cipher is (NONE)
+[0;32m[PASS][0m  IT-07: observability-ui-dashboards correctly rejected TLS 1.1
+[0;36m[INFO][0m  IT-07: $ openssl s_client -connect 10.128.2.47:9443 -tls1_2
+         TLS 1.2 result: Cipher is ECDHE-RSA-AES128-GCM-SHA256
+Protocol: TLSv1.2
+[0;32m[PASS][0m  IT-07: observability-ui-dashboards correctly accepted TLS 1.2
+[0;36m[INFO][0m  IT-07: $ openssl s_client -connect 10.128.2.47:9443 -tls1_3
+         TLS 1.3 result: Cipher is TLS_AES_128_GCM_SHA256
+Protocol: TLSv1.3
+[0;32m[PASS][0m  IT-07: observability-ui-dashboards correctly accepted TLS 1.3
+[0;36m[INFO][0m  IT-07: Scanning distributed-tracing at 10.128.2.46:9443
+[0;36m[INFO][0m  IT-07: distributed-tracing args: -tls-min-version=VersionTLS12
+[0;36m[INFO][0m  IT-07: $ openssl s_client -connect 10.128.2.46:9443 -tls1_1
+         TLS 1.1 result: Cipher is (NONE)
+[0;32m[PASS][0m  IT-07: distributed-tracing correctly rejected TLS 1.1
+[0;36m[INFO][0m  IT-07: $ openssl s_client -connect 10.128.2.46:9443 -tls1_2
+         TLS 1.2 result: Cipher is ECDHE-RSA-AES128-GCM-SHA256
+Protocol: TLSv1.2
+[0;32m[PASS][0m  IT-07: distributed-tracing correctly accepted TLS 1.2
+[0;36m[INFO][0m  IT-07: $ openssl s_client -connect 10.128.2.46:9443 -tls1_3
+         TLS 1.3 result: Cipher is TLS_AES_128_GCM_SHA256
+Protocol: TLSv1.3
+[0;32m[PASS][0m  IT-07: distributed-tracing correctly accepted TLS 1.3
+[0;36m[INFO][0m  IT-07: Scanning troubleshooting-panel at 10.131.0.23:9443
+[0;36m[INFO][0m  IT-07: troubleshooting-panel args: -tls-min-version=VersionTLS12
+[0;36m[INFO][0m  IT-07: $ openssl s_client -connect 10.131.0.23:9443 -tls1_1
+         TLS 1.1 result: Cipher is (NONE)
+[0;32m[PASS][0m  IT-07: troubleshooting-panel correctly rejected TLS 1.1
+[0;36m[INFO][0m  IT-07: $ openssl s_client -connect 10.131.0.23:9443 -tls1_2
+         TLS 1.2 result: Cipher is ECDHE-RSA-AES128-GCM-SHA256
+Protocol: TLSv1.2
+[0;32m[PASS][0m  IT-07: troubleshooting-panel correctly accepted TLS 1.2
+[0;36m[INFO][0m  IT-07: $ openssl s_client -connect 10.131.0.23:9443 -tls1_3
+         TLS 1.3 result: Cipher is TLS_AES_128_GCM_SHA256
+Protocol: TLSv1.3
+[0;32m[PASS][0m  IT-07: troubleshooting-panel correctly accepted TLS 1.3
+[0;32m[PASS][0m  IT-07: All plugins enforce Intermediate TLS profile
+
+[1m--- IT-10: Logging Plugin Endpoints Under TLS ---[0m
+[0;32m[PASS][0m  IT-10: /health → HTTP 200
+[0;32m[PASS][0m  IT-10: /plugin-manifest.json contains logging plugin metadata
+[0;32m[PASS][0m  IT-10: Logging plugin endpoints working under TLS
+
+[1m--- IT-11: Monitoring Plugin Endpoints Under TLS ---[0m
+[0;32m[PASS][0m  IT-11: /health → HTTP 200
+[0;32m[PASS][0m  IT-11: /plugin-manifest.json contains monitoring plugin metadata
+[0;32m[PASS][0m  IT-11: /features → HTTP 200
+[0;32m[PASS][0m  IT-11: Monitoring plugin endpoints working under TLS
+
+[1m--- IT-12: Dashboards Plugin Endpoints and Cache Headers Under TLS ---[0m
+[0;32m[PASS][0m  IT-12: /health → HTTP 200
+[0;32m[PASS][0m  IT-12: /plugin-manifest.json contains dashboards plugin metadata
+[0;32m[PASS][0m  IT-12: /plugin-entry.js has Cache-Control: no-cache header
+[0;32m[PASS][0m  IT-12: /plugin-entry.js has Expires: 0 header
+[0;32m[PASS][0m  IT-12: Dashboards plugin endpoints and caching headers correct
+
+[1m--- IT-12-DT: Distributed Tracing Plugin Endpoints Under TLS ---[0m
+[0;32m[PASS][0m  IT-12-DT: /health → HTTP 200
+[0;32m[PASS][0m  IT-12-DT: /plugin-manifest.json contains distributed tracing plugin metadata
+[0;32m[PASS][0m  IT-12-DT: Distributed tracing plugin endpoints working under TLS
+
+[1m--- IT-12-TP: Troubleshooting Panel Plugin Endpoints Under TLS ---[0m
+[0;32m[PASS][0m  IT-12-TP: /health → HTTP 200
+[0;32m[PASS][0m  IT-12-TP: /plugin-manifest.json contains troubleshooting panel plugin metadata
+[0;32m[PASS][0m  IT-12-TP: Troubleshooting panel plugin endpoints working under TLS
+
+[1m--- IT-25: Korrel8r Endpoint Responds Over TLS ---[0m
+[0;36m[INFO][0m  IT-25: Testing HTTPS connectivity to korrel8r: https://korrel8r.openshift-cluster-observability-operator.svc:9443/api/v1alpha1/domains
+[0;36m[INFO][0m  IT-25: korrel8r/api/v1alpha1/domains → HTTP 200
+[0;32m[PASS][0m  IT-25: Korrel8r endpoint responds over HTTPS (HTTP 200)
+[0;32m[PASS][0m  IT-25: Korrel8r TLS handshake succeeds
+[0;32m[PASS][0m  IT-25: Korrel8r endpoint accessible over TLS
+
+[1m--- IT-05: Modern Profile Propagates to All Plugins ---[0m
+[0;36m[INFO][0m  Setting cluster TLS profile to: Modern
+[0;36m[INFO][0m  Waiting for all deployments to reflect TLS update (timeout: 240s)...
+[0;36m[INFO][0m  All deployments updated after 5s
+[0;32m[PASS][0m  IT-05: logging generation increased (1 → 2)
+[0;32m[PASS][0m  IT-05: logging has VersionTLS13
+[0;32m[PASS][0m  IT-05: monitoring generation increased (1 → 2)
+[0;32m[PASS][0m  IT-05: monitoring has VersionTLS13
+[0;32m[PASS][0m  IT-05: observability-ui-dashboards generation increased (1 → 2)
+[0;32m[PASS][0m  IT-05: observability-ui-dashboards has VersionTLS13
+[0;32m[PASS][0m  IT-05: distributed-tracing generation increased (1 → 2)
+[0;32m[PASS][0m  IT-05: distributed-tracing has VersionTLS13
+[0;32m[PASS][0m  IT-05: troubleshooting-panel generation increased (1 → 2)
+[0;32m[PASS][0m  IT-05: troubleshooting-panel has VersionTLS13
+[0;32m[PASS][0m  IT-05: Modern profile propagated to all plugins
+[0;36m[INFO][0m  Setting cluster TLS profile to: Intermediate
+[0;36m[INFO][0m  Waiting for all deployments to reflect TLS update (timeout: 240s)...
+[0;36m[INFO][0m  All deployments updated after 20s
+
+[1m--- IT-08: TLS Enforcement — All Plugins, Modern Profile ---[0m
+[0;36m[INFO][0m  Setting cluster TLS profile to: Modern
+[0;36m[INFO][0m  Waiting for all deployments to reflect TLS update (timeout: 240s)...
+[0;36m[INFO][0m  All deployments updated after 30s
+[0;36m[INFO][0m  IT-08: logging args: -tls-min-version=VersionTLS13
+[0;36m[INFO][0m  IT-08: monitoring args: -tls-min-version=VersionTLS13
+[0;36m[INFO][0m  IT-08: observability-ui-dashboards args: -tls-min-version=VersionTLS13
+[0;36m[INFO][0m  IT-08: distributed-tracing args: -tls-min-version=VersionTLS13
+[0;36m[INFO][0m  IT-08: troubleshooting-panel args: -tls-min-version=VersionTLS13
+[0;36m[INFO][0m  IT-08: Scanning logging at 10.128.2.99:9443
+[0;36m[INFO][0m  IT-08: $ openssl s_client -connect 10.128.2.99:9443 -tls1_2
+         TLS 1.2 result: alert protocol version
+Cipher is (NONE)
+Protocol: TLSv1.2
+[0;32m[PASS][0m  IT-08: logging correctly rejected TLS 1.2 under Modern
+[0;36m[INFO][0m  IT-08: $ openssl s_client -connect 10.128.2.99:9443 -tls1_3
+         TLS 1.3 result: Cipher is TLS_AES_128_GCM_SHA256
+Protocol: TLSv1.3
+[0;32m[PASS][0m  IT-08: logging correctly accepted TLS 1.3
+[0;36m[INFO][0m  IT-08: Scanning monitoring at 10.128.2.95:9443
+[0;36m[INFO][0m  IT-08: $ openssl s_client -connect 10.128.2.95:9443 -tls1_2
+         TLS 1.2 result: alert protocol version
+Cipher is (NONE)
+Protocol: TLSv1.2
+[0;32m[PASS][0m  IT-08: monitoring correctly rejected TLS 1.2 under Modern
+[0;36m[INFO][0m  IT-08: $ openssl s_client -connect 10.128.2.95:9443 -tls1_3
+         TLS 1.3 result: Cipher is TLS_AES_128_GCM_SHA256
+Protocol: TLSv1.3
+[0;32m[PASS][0m  IT-08: monitoring correctly accepted TLS 1.3
+[0;36m[INFO][0m  IT-08: Scanning observability-ui-dashboards at 10.128.2.100:9443
+[0;36m[INFO][0m  IT-08: $ openssl s_client -connect 10.128.2.100:9443 -tls1_2
+         TLS 1.2 result: alert protocol version
+Cipher is (NONE)
+Protocol: TLSv1.2
+[0;32m[PASS][0m  IT-08: observability-ui-dashboards correctly rejected TLS 1.2 under Modern
+[0;36m[INFO][0m  IT-08: $ openssl s_client -connect 10.128.2.100:9443 -tls1_3
+         TLS 1.3 result: Cipher is TLS_AES_128_GCM_SHA256
+Protocol: TLSv1.3
+[0;32m[PASS][0m  IT-08: observability-ui-dashboards correctly accepted TLS 1.3
+[0;36m[INFO][0m  IT-08: Scanning distributed-tracing at 10.128.2.101:9443
+[0;36m[INFO][0m  IT-08: $ openssl s_client -connect 10.128.2.101:9443 -tls1_2
+         TLS 1.2 result: alert protocol version
+Cipher is (NONE)
+Protocol: TLSv1.2
+[0;32m[PASS][0m  IT-08: distributed-tracing correctly rejected TLS 1.2 under Modern
+[0;36m[INFO][0m  IT-08: $ openssl s_client -connect 10.128.2.101:9443 -tls1_3
+         TLS 1.3 result: Cipher is TLS_AES_128_GCM_SHA256
+Protocol: TLSv1.3
+[0;32m[PASS][0m  IT-08: distributed-tracing correctly accepted TLS 1.3
+[0;36m[INFO][0m  IT-08: Scanning troubleshooting-panel at 10.128.2.97:9443
+[0;36m[INFO][0m  IT-08: $ openssl s_client -connect 10.128.2.97:9443 -tls1_2
+         TLS 1.2 result: alert protocol version
+Cipher is (NONE)
+Protocol: TLSv1.2
+[0;32m[PASS][0m  IT-08: troubleshooting-panel correctly rejected TLS 1.2 under Modern
+[0;36m[INFO][0m  IT-08: $ openssl s_client -connect 10.128.2.97:9443 -tls1_3
+         TLS 1.3 result: Cipher is TLS_AES_128_GCM_SHA256
+Protocol: TLSv1.3
+[0;32m[PASS][0m  IT-08: troubleshooting-panel correctly accepted TLS 1.3
+[0;32m[PASS][0m  IT-08: All plugins enforce Modern TLS profile (TLS 1.3 only)
+[0;36m[INFO][0m  Setting cluster TLS profile to: Intermediate
+[0;36m[INFO][0m  Waiting for all deployments to reflect TLS update (timeout: 240s)...
+[0;36m[INFO][0m  All deployments updated after 55s
+
+[1m--- IT-06: Custom Profile Propagates to All Plugins ---[0m
+[0;36m[INFO][0m  IT-06: Deployment generations before: 5 5 5 5 5
+[0;36m[INFO][0m  IT-06: Applying Custom TLS profile with ciphers: ECDHE-RSA-AES128-GCM-SHA256, ECDHE-RSA-AES256-GCM-SHA384
+[0;36m[INFO][0m  Setting cluster TLS profile to Custom
+[0;36m[INFO][0m  IT-06: $ oc get apiserver cluster -o jsonpath='{.spec.tlsSecurityProfile}'
+         {"custom":{"ciphers":["ECDHE-RSA-AES128-GCM-SHA256","ECDHE-RSA-AES256-GCM-SHA384"],"minTLSVersion":"VersionTLS12"},"type":"Custom"}
+[0;36m[INFO][0m  Waiting for all deployment generations to increase (timeout: 240s)...
+[0;36m[INFO][0m  All deployment generations increased after 80s
+[0;36m[INFO][0m  IT-06: Deployment generations after: 6 6 6 6 6
+[0;36m[INFO][0m  IT-06: logging current args:
+         ["-port=9443","-cert=/var/serving-cert/tls.crt","-key=/var/serving-cert/tls.key","-plugin-config-path=/etc/plugin/config/config.yaml","-features=dev-console,alerts,dev-alerts","-tls-min-version=VersionTLS12","-tls-cipher-suites=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384"]
+[0;32m[PASS][0m  IT-06: logging has expected cipher AES_128_GCM
+[0;32m[PASS][0m  IT-06: logging has expected cipher AES_256_GCM
+[0;36m[INFO][0m  IT-06: monitoring current args:
+         ["-port=9443","-cert=/var/serving-cert/tls.crt","-key=/var/serving-cert/tls.key","-config-path=/opt/app-root/config","-static-path=/opt/app-root/web/dist","-alertmanager=https://alertmanager.open-cluster-management-observability.svc:9095","-thanos-querier=https://rbac-query-proxy.open-cluster-management-observability.svc:8443","-features=acm-alerting,perses-dashboards,incidents","-tls-min-version=VersionTLS12","-tls-cipher-suites=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384"]
+[0;32m[PASS][0m  IT-06: monitoring has expected cipher AES_128_GCM
+[0;32m[PASS][0m  IT-06: monitoring has expected cipher AES_256_GCM
+[0;36m[INFO][0m  IT-06: observability-ui-dashboards current args:
+         ["-port=9443","-cert=/var/serving-cert/tls.crt","-key=/var/serving-cert/tls.key","-tls-min-version=VersionTLS12","-tls-cipher-suites=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384"]
+[0;32m[PASS][0m  IT-06: observability-ui-dashboards has expected cipher AES_128_GCM
+[0;32m[PASS][0m  IT-06: observability-ui-dashboards has expected cipher AES_256_GCM
+[0;36m[INFO][0m  IT-06: distributed-tracing current args:
+         ["-port=9443","-cert=/var/serving-cert/tls.crt","-key=/var/serving-cert/tls.key","-plugin-config-path=/etc/plugin/config/config.yaml","-tls-min-version=VersionTLS12","-tls-cipher-suites=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384"]
+[0;32m[PASS][0m  IT-06: distributed-tracing has expected cipher AES_128_GCM
+[0;32m[PASS][0m  IT-06: distributed-tracing has expected cipher AES_256_GCM
+[0;36m[INFO][0m  IT-06: troubleshooting-panel current args:
+         ["-port=9443","-cert=/var/serving-cert/tls.crt","-key=/var/serving-cert/tls.key","-plugin-config-path=/etc/plugin/config/config.yaml","-features=agent-navigation","-tls-min-version=VersionTLS12","-tls-cipher-suites=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384"]
+[0;32m[PASS][0m  IT-06: troubleshooting-panel has expected cipher AES_128_GCM
+[0;32m[PASS][0m  IT-06: troubleshooting-panel has expected cipher AES_256_GCM
+[0;32m[PASS][0m  IT-06: Custom profile with specific ciphers propagated to all plugins
+[0;36m[INFO][0m  Setting cluster TLS profile to: Intermediate
+[0;36m[INFO][0m  Waiting for all deployment generations to increase (timeout: 240s)...
+[0;36m[INFO][0m  All deployment generations increased after 160s
+
+[1m--- IT-09: Cipher Enforcement — All Plugins, Custom Profile ---[0m
+[0;36m[INFO][0m  IT-09: Deployment generations before: 7 7 7 7 7
+[0;36m[INFO][0m  Setting cluster TLS profile to Custom
+[0;36m[INFO][0m  Waiting for all deployment generations to increase (timeout: 240s)...
+[0;36m[INFO][0m  All deployment generations increased after 155s
+[0;36m[INFO][0m  IT-09: Deployment generations after: 8 8 8 8 8
+[0;36m[INFO][0m  IT-09: Scanning logging at 10.129.2.42:9443
+[0;36m[INFO][0m  IT-09: logging cipher args: -tls-cipher-suites=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+[0;36m[INFO][0m  IT-09: $ openssl s_client -connect 10.129.2.42:9443 -tls1_2 -cipher ECDHE-RSA-AES128-GCM-SHA256
+         Allowed cipher result: <connection failed>
+[0;31m[FAIL][0m  IT-09: logging rejected allowed cipher
+[0;36m[INFO][0m  IT-09: $ openssl s_client -connect 10.129.2.42:9443 -tls1_2 -cipher AES128-SHA
+         Disallowed cipher result: <connection refused>
+[0;32m[PASS][0m  IT-09: logging correctly rejected disallowed cipher
+[0;36m[INFO][0m  IT-09: Scanning monitoring at 10.128.2.191:9443
+[0;36m[INFO][0m  IT-09: monitoring cipher args: -tls-cipher-suites=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+[0;36m[INFO][0m  IT-09: $ openssl s_client -connect 10.128.2.191:9443 -tls1_2 -cipher ECDHE-RSA-AES128-GCM-SHA256
+         Allowed cipher result: <connection failed>
+[0;31m[FAIL][0m  IT-09: monitoring rejected allowed cipher
+[0;36m[INFO][0m  IT-09: $ openssl s_client -connect 10.128.2.191:9443 -tls1_2 -cipher AES128-SHA
+         Disallowed cipher result: <connection refused>
+[0;32m[PASS][0m  IT-09: monitoring correctly rejected disallowed cipher
+[0;36m[INFO][0m  IT-09: Scanning observability-ui-dashboards at 10.129.2.36:9443
+[0;36m[INFO][0m  IT-09: observability-ui-dashboards cipher args: -tls-cipher-suites=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+[0;36m[INFO][0m  IT-09: $ openssl s_client -connect 10.129.2.36:9443 -tls1_2 -cipher ECDHE-RSA-AES128-GCM-SHA256
+         Allowed cipher result: <connection failed>
+[0;31m[FAIL][0m  IT-09: observability-ui-dashboards rejected allowed cipher
+[0;36m[INFO][0m  IT-09: $ openssl s_client -connect 10.129.2.36:9443 -tls1_2 -cipher AES128-SHA
+         Disallowed cipher result: <connection refused>
+[0;32m[PASS][0m  IT-09: observability-ui-dashboards correctly rejected disallowed cipher
+[0;36m[INFO][0m  IT-09: Scanning distributed-tracing at 10.129.2.30:9443
+[0;36m[INFO][0m  IT-09: distributed-tracing cipher args: -tls-cipher-suites=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+[0;36m[INFO][0m  IT-09: $ openssl s_client -connect 10.129.2.30:9443 -tls1_2 -cipher ECDHE-RSA-AES128-GCM-SHA256
+         Allowed cipher result: <connection failed>
+[0;31m[FAIL][0m  IT-09: distributed-tracing rejected allowed cipher
+[0;36m[INFO][0m  IT-09: $ openssl s_client -connect 10.129.2.30:9443 -tls1_2 -cipher AES128-SHA
+         Disallowed cipher result: <connection refused>
+[0;32m[PASS][0m  IT-09: distributed-tracing correctly rejected disallowed cipher
+[0;36m[INFO][0m  IT-09: Scanning troubleshooting-panel at 10.129.2.44:9443
+[0;36m[INFO][0m  IT-09: troubleshooting-panel cipher args: -tls-cipher-suites=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+[0;36m[INFO][0m  IT-09: $ openssl s_client -connect 10.129.2.44:9443 -tls1_2 -cipher ECDHE-RSA-AES128-GCM-SHA256
+         Allowed cipher result: <connection failed>
+[0;31m[FAIL][0m  IT-09: troubleshooting-panel rejected allowed cipher
+[0;36m[INFO][0m  IT-09: $ openssl s_client -connect 10.129.2.44:9443 -tls1_2 -cipher AES128-SHA
+         Disallowed cipher result: <connection refused>
+[0;32m[PASS][0m  IT-09: troubleshooting-panel correctly rejected disallowed cipher
+[0;33m[WARN][0m  IT-09: First check failed — retrying after 30s reconciliation wait...
+[0;36m[INFO][0m  IT-09: Scanning logging at 10.129.2.42:9443
+[0;36m[INFO][0m  IT-09: logging cipher args: -tls-cipher-suites=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+[0;36m[INFO][0m  IT-09: $ openssl s_client -connect 10.129.2.42:9443 -tls1_2 -cipher ECDHE-RSA-AES128-GCM-SHA256
+         Allowed cipher result: <connection failed>
+[0;31m[FAIL][0m  IT-09: logging rejected allowed cipher
+[0;36m[INFO][0m  IT-09: $ openssl s_client -connect 10.129.2.42:9443 -tls1_2 -cipher AES128-SHA
+         Disallowed cipher result: <connection refused>
+[0;32m[PASS][0m  IT-09: logging correctly rejected disallowed cipher
+[0;36m[INFO][0m  IT-09: Scanning monitoring at 10.128.2.191:9443
+[0;36m[INFO][0m  IT-09: monitoring cipher args: -tls-cipher-suites=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+[0;36m[INFO][0m  IT-09: $ openssl s_client -connect 10.128.2.191:9443 -tls1_2 -cipher ECDHE-RSA-AES128-GCM-SHA256
+         Allowed cipher result: <connection failed>
+[0;31m[FAIL][0m  IT-09: monitoring rejected allowed cipher
+[0;36m[INFO][0m  IT-09: $ openssl s_client -connect 10.128.2.191:9443 -tls1_2 -cipher AES128-SHA
+         Disallowed cipher result: <connection refused>
+[0;32m[PASS][0m  IT-09: monitoring correctly rejected disallowed cipher
+[0;36m[INFO][0m  IT-09: Scanning observability-ui-dashboards at 10.129.2.36:9443
+[0;36m[INFO][0m  IT-09: observability-ui-dashboards cipher args: -tls-cipher-suites=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+[0;36m[INFO][0m  IT-09: $ openssl s_client -connect 10.129.2.36:9443 -tls1_2 -cipher ECDHE-RSA-AES128-GCM-SHA256
+         Allowed cipher result: <connection failed>
+[0;31m[FAIL][0m  IT-09: observability-ui-dashboards rejected allowed cipher
+[0;36m[INFO][0m  IT-09: $ openssl s_client -connect 10.129.2.36:9443 -tls1_2 -cipher AES128-SHA
+         Disallowed cipher result: <connection refused>
+[0;32m[PASS][0m  IT-09: observability-ui-dashboards correctly rejected disallowed cipher
+[0;36m[INFO][0m  IT-09: Scanning distributed-tracing at 10.129.2.30:9443
+[0;36m[INFO][0m  IT-09: distributed-tracing cipher args: -tls-cipher-suites=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+[0;36m[INFO][0m  IT-09: $ openssl s_client -connect 10.129.2.30:9443 -tls1_2 -cipher ECDHE-RSA-AES128-GCM-SHA256
+         Allowed cipher result: <connection failed>
+[0;31m[FAIL][0m  IT-09: distributed-tracing rejected allowed cipher
+[0;36m[INFO][0m  IT-09: $ openssl s_client -connect 10.129.2.30:9443 -tls1_2 -cipher AES128-SHA
+         Disallowed cipher result: <connection refused>
+[0;32m[PASS][0m  IT-09: distributed-tracing correctly rejected disallowed cipher
+[0;36m[INFO][0m  IT-09: Scanning troubleshooting-panel at 10.129.2.44:9443
+[0;36m[INFO][0m  IT-09: troubleshooting-panel cipher args: -tls-cipher-suites=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+[0;36m[INFO][0m  IT-09: $ openssl s_client -connect 10.129.2.44:9443 -tls1_2 -cipher ECDHE-RSA-AES128-GCM-SHA256
+         Allowed cipher result: <connection failed>
+[0;31m[FAIL][0m  IT-09: troubleshooting-panel rejected allowed cipher
+[0;36m[INFO][0m  IT-09: $ openssl s_client -connect 10.129.2.44:9443 -tls1_2 -cipher AES128-SHA
+         Disallowed cipher result: <connection refused>
+[0;32m[PASS][0m  IT-09: troubleshooting-panel correctly rejected disallowed cipher
+[0;31m[FAIL][0m  IT-09: Cipher enforcement issues detected
+[0;36m[INFO][0m  Setting cluster TLS profile to: Intermediate
+[0;36m[INFO][0m  Waiting for all deployment generations to increase (timeout: 240s)...
+[0;36m[INFO][0m  All deployment generations increased after 150s
+
+[1m--- IT-23: Korrel8r TLS Profile Propagation (Modern) ---[0m
+[0;36m[INFO][0m  IT-23: Korrel8r generation before: 9
+[0;36m[INFO][0m  Setting cluster TLS profile to: Modern
+[0;33m[WARN][0m  IT-23: Korrel8r generation unchanged (may have already been Modern)
+[0;31m[FAIL][0m  IT-23: Korrel8r missing VersionTLS13 after profile change
+[0;31m[FAIL][0m  IT-23: Modern profile not propagated to korrel8r
+[0;36m[INFO][0m  Setting cluster TLS profile to: Intermediate
+
+[1m--- IT-24: Korrel8r TLS Enforcement — Intermediate and Modern ---[0m
+[0;33m[WARN][0m  tls-scanner pod gone — recreating
+[0;36m[INFO][0m  Installing tls-scanner pod in openshift-cluster-observability-operator
+[0;36m[INFO][0m  Waiting for tls-scanner pod...
+[0;32m[PASS][0m  tls-scanner pod ready
+[0;36m[INFO][0m  IT-24: Phase 1 — Intermediate profile enforcement
+[0;36m[INFO][0m  Setting cluster TLS profile to: Intermediate
+[0;36m[INFO][0m  IT-24: Scanning korrel8r at 10.128.2.213:9443
+[0;36m[INFO][0m  IT-24: korrel8r command: --tls-min-version=VersionTLS12
+[0;36m[INFO][0m  IT-24: $ openssl s_client -connect 10.128.2.213:9443 -tls1_1
+         TLS 1.1 result: Cipher is (NONE)
+[0;32m[PASS][0m  IT-24: Korrel8r correctly rejected TLS 1.1
+[0;36m[INFO][0m  IT-24: $ openssl s_client -connect 10.128.2.213:9443 -tls1_2
+         TLS 1.2 result: Cipher is ECDHE-RSA-AES128-GCM-SHA256
+Protocol: TLSv1.2
+[0;32m[PASS][0m  IT-24: Korrel8r correctly accepted TLS 1.2
+[0;36m[INFO][0m  IT-24: $ openssl s_client -connect 10.128.2.213:9443 -tls1_3
+         TLS 1.3 result: Cipher is TLS_AES_128_GCM_SHA256
+Protocol: TLSv1.3
+[0;32m[PASS][0m  IT-24: Korrel8r correctly accepted TLS 1.3
+[0;36m[INFO][0m  IT-24: Phase 2 — Modern profile enforcement
+[0;36m[INFO][0m  Setting cluster TLS profile to: Modern
+[0;36m[INFO][0m  IT-24: korrel8r command: --tls-min-version=VersionTLS12
+[0;36m[INFO][0m  IT-24: $ openssl s_client -connect 10.128.2.213:9443 -tls1_2
+         TLS 1.2 result: Cipher is ECDHE-RSA-AES128-GCM-SHA256
+Protocol: TLSv1.2
+Protocol  : TLSv1.2
+[0;31m[FAIL][0m  IT-24: Korrel8r accepted TLS 1.2 under Modern (should reject)
+[0;36m[INFO][0m  IT-24: $ openssl s_client -connect 10.128.2.213:9443 -tls1_3
+         TLS 1.3 result: Cipher is TLS_AES_128_GCM_SHA256
+Protocol: TLSv1.3
+[0;32m[PASS][0m  IT-24: Korrel8r correctly accepted TLS 1.3 under Modern
+[0;31m[FAIL][0m  IT-24: Korrel8r TLS enforcement issues detected
+[0;36m[INFO][0m  Setting cluster TLS profile to: Intermediate
+
+[1m--- IT-13: Operator Restart Preserves TLS Across All Plugins ---[0m
+[0;36m[INFO][0m  IT-13: Deleting operator pod...
+[0;36m[INFO][0m  IT-13: Waiting for operator to restart...
+[0;36m[INFO][0m  IT-13: Operator running after 0s
+[0;32m[PASS][0m  IT-13: logging TLS args present after restart
+[0;32m[PASS][0m  IT-13: logging args unchanged after restart
+[0;32m[PASS][0m  IT-13: monitoring TLS args present after restart
+[0;32m[PASS][0m  IT-13: monitoring args unchanged after restart
+[0;32m[PASS][0m  IT-13: observability-ui-dashboards TLS args present after restart
+[0;32m[PASS][0m  IT-13: observability-ui-dashboards args unchanged after restart
+[0;32m[PASS][0m  IT-13: distributed-tracing TLS args present after restart
+[0;32m[PASS][0m  IT-13: distributed-tracing args unchanged after restart
+[0;32m[PASS][0m  IT-13: troubleshooting-panel TLS args present after restart
+[0;32m[PASS][0m  IT-13: troubleshooting-panel args unchanged after restart
+[0;32m[PASS][0m  IT-13: All plugins retain TLS config after operator restart
+
+[1m--- IT-14: Plugin Pod Restart Preserves TLS Config ---[0m
+[0;36m[INFO][0m  IT-14: Waiting for logging to stabilize before snapshot...
+[0;36m[INFO][0m  IT-14: logging baseline args: -tls-min-version=VersionTLS12
+[0;36m[INFO][0m  IT-14: Current pod: logging-6c86868889-mngq8
+[0;36m[INFO][0m  IT-14: $ oc delete pod -l app.kubernetes.io/instance=logging
+[0;36m[INFO][0m  IT-14: Waiting for replacement pod...
+[0;36m[INFO][0m  IT-14: Replacement pod: logging-6c86868889-4r7np
+[0;36m[INFO][0m  IT-14: Polling for TLS args on logging (timeout: 90s)...
+[0;36m[INFO][0m  IT-14: TLS args present after 0s
+[0;36m[INFO][0m  IT-14: logging post-restart args: -tls-min-version=VersionTLS12
+[0;32m[PASS][0m  IT-14: Deployment args unchanged after pod restart
+[0;32m[PASS][0m  IT-14: TLS args present on replacement pod
+[0;32m[PASS][0m  IT-14: Health endpoint responds after pod restart
+[0;32m[PASS][0m  IT-14: Plugin pod restart preserves TLS config
+
+[1m--- IT-15: Profile Change During Plugin Deployment ---[0m
+[0;36m[INFO][0m  Setting cluster TLS profile to: Intermediate
+[0;36m[INFO][0m  IT-15: Deleting dashboards UIPlugin CR...
+[0;36m[INFO][0m  IT-15: Setting Modern profile and re-deploying dashboards simultaneously...
+[0;36m[INFO][0m  Setting cluster TLS profile to: Modern
+[0;36m[INFO][0m  Waiting for all deployments to reflect TLS update (timeout: 240s)...
+[0;36m[INFO][0m  All deployments updated after 5s
+[0;32m[PASS][0m  IT-15: Newly deployed dashboards (observability-ui-dashboards) has Modern profile (VersionTLS13)
+[0;32m[PASS][0m  IT-15: logging also has Modern profile
+[0;32m[PASS][0m  IT-15: monitoring also has Modern profile
+[0;32m[PASS][0m  IT-15: distributed-tracing also has Modern profile
+[0;32m[PASS][0m  IT-15: troubleshooting-panel also has Modern profile
+[0;32m[PASS][0m  IT-15: Profile change during deployment handled correctly
+[0;36m[INFO][0m  Setting cluster TLS profile to: Intermediate
+[0;36m[INFO][0m  Waiting for all deployments to reflect TLS update (timeout: 240s)...
+[0;36m[INFO][0m  All deployments updated after 20s
+
+[1m--- IT-16: Certificate Validation Across All Plugins ---[0m
+[0;36m[INFO][0m  IT-16: logging certificate:
+[0;36m[INFO][0m    subject=CN=logging.openshift-cluster-observability-operator.svc
+[0;36m[INFO][0m    issuer=CN=openshift-service-serving-signer@1781526219
+[0;36m[INFO][0m    notBefore=Jun 15 14:09:13 2026 GMT
+[0;36m[INFO][0m    notAfter=Jun 14 14:09:14 2028 GMT
+[0;32m[PASS][0m  IT-16: logging has a valid subject
+[0;32m[PASS][0m  IT-16: logging certificate issued by service-ca
+[0;36m[INFO][0m  IT-16: logging cert validity: notAfter=Jun 14 14:09:14 2028 GMT
+[0;36m[INFO][0m  IT-16: monitoring certificate:
+[0;36m[INFO][0m    subject=CN=monitoring.openshift-cluster-observability-operator.svc
+[0;36m[INFO][0m    issuer=CN=openshift-service-serving-signer@1781526219
+[0;36m[INFO][0m    notBefore=Jun 15 14:06:27 2026 GMT
+[0;36m[INFO][0m    notAfter=Jun 14 14:06:28 2028 GMT
+[0;32m[PASS][0m  IT-16: monitoring has a valid subject
+[0;32m[PASS][0m  IT-16: monitoring certificate issued by service-ca
+[0;36m[INFO][0m  IT-16: monitoring cert validity: notAfter=Jun 14 14:06:28 2028 GMT
+[0;36m[INFO][0m  IT-16: observability-ui-dashboards certificate:
+[0;36m[INFO][0m    subject=CN=observability-ui-dashboards.openshift-cluster-observability-operator.svc
+[0;36m[INFO][0m    issuer=CN=openshift-service-serving-signer@1781526219
+[0;36m[INFO][0m    notBefore=Jun 15 15:17:38 2026 GMT
+[0;36m[INFO][0m    notAfter=Jun 14 15:17:39 2028 GMT
+[0;32m[PASS][0m  IT-16: observability-ui-dashboards has a valid subject
+[0;32m[PASS][0m  IT-16: observability-ui-dashboards certificate issued by service-ca
+[0;36m[INFO][0m  IT-16: observability-ui-dashboards cert validity: notAfter=Jun 14 15:17:39 2028 GMT
+[0;36m[INFO][0m  IT-16: distributed-tracing certificate:
+[0;36m[INFO][0m    subject=CN=distributed-tracing.openshift-cluster-observability-operator.svc
+[0;36m[INFO][0m    issuer=CN=openshift-service-serving-signer@1781526219
+[0;36m[INFO][0m    notBefore=Jun 15 14:13:54 2026 GMT
+[0;36m[INFO][0m    notAfter=Jun 14 14:13:55 2028 GMT
+[0;32m[PASS][0m  IT-16: distributed-tracing has a valid subject
+[0;32m[PASS][0m  IT-16: distributed-tracing certificate issued by service-ca
+[0;36m[INFO][0m  IT-16: distributed-tracing cert validity: notAfter=Jun 14 14:13:55 2028 GMT
+[0;36m[INFO][0m  IT-16: troubleshooting-panel certificate:
+[0;36m[INFO][0m    subject=CN=troubleshooting-panel.openshift-cluster-observability-operator.svc
+[0;36m[INFO][0m    issuer=CN=openshift-service-serving-signer@1781526219
+[0;36m[INFO][0m    notBefore=Jun 15 14:06:22 2026 GMT
+[0;36m[INFO][0m    notAfter=Jun 14 14:06:23 2028 GMT
+[0;32m[PASS][0m  IT-16: troubleshooting-panel has a valid subject
+[0;32m[PASS][0m  IT-16: troubleshooting-panel certificate issued by service-ca
+[0;36m[INFO][0m  IT-16: troubleshooting-panel cert validity: notAfter=Jun 14 14:06:23 2028 GMT
+[0;32m[PASS][0m  IT-16: All plugin certificates valid
+
+[1m--- IT-20: Certificate Rotation Across All Plugins ---[0m
+[0;36m[INFO][0m  IT-20: logging pre-rotation serial: serial=072344A9C3DEACFA
+[0;36m[INFO][0m  IT-20: logging pod: logging-6c86868889-4cr7m (created: 2026-06-15T15:18:12Z)
+[0;36m[INFO][0m  IT-20: monitoring pre-rotation serial: serial=6BCF1262E91BB74B
+[0;36m[INFO][0m  IT-20: monitoring pod: monitoring-56794f4fbb-8cc6b (created: 2026-06-15T15:18:09Z)
+[0;36m[INFO][0m  IT-20: observability-ui-dashboards pre-rotation serial: serial=0930898164C12636
+[0;36m[INFO][0m  IT-20: observability-ui-dashboards pod: observability-ui-dashboards-d8d886955-sczxr (created: 2026-06-15T15:18:09Z)
+[0;36m[INFO][0m  IT-20: distributed-tracing pre-rotation serial: serial=18D720CE97C04C83
+[0;36m[INFO][0m  IT-20: distributed-tracing pod: distributed-tracing-7bd5b4b95b-tgp2s (created: 2026-06-15T15:18:09Z)
+[0;36m[INFO][0m  IT-20: troubleshooting-panel pre-rotation serial: serial=0D96E79F954602C2
+[0;36m[INFO][0m  IT-20: troubleshooting-panel pod: troubleshooting-panel-7795fd64b8-fn6wx (created: 2026-06-15T15:18:10Z)
+[0;36m[INFO][0m  IT-20: Deleting serving-cert secrets for all plugins...
+[0;36m[INFO][0m  IT-20: Waiting for service-ca to regenerate secrets...
+[0;36m[INFO][0m  IT-20: All secrets regenerated after 0s
+[0;36m[INFO][0m  IT-20: Waiting for plugins to reload certificates (60s)...
+[0;32m[PASS][0m  IT-20: logging secret regenerated (type: kubernetes.io/tls)
+[0;36m[INFO][0m  IT-20: logging post-rotation serial: serial=4EE55E2DF371E2F4
+[0;32m[PASS][0m  IT-20: logging certificate rotated (serial=072344A9C3DEACFA → serial=4EE55E2DF371E2F4)
+[0;32m[PASS][0m  IT-20: logging pod not restarted (logging-6c86868889-4cr7m, created: 2026-06-15T15:18:12Z)
+[0;32m[PASS][0m  IT-20: logging /health responds after cert rotation
+[0;32m[PASS][0m  IT-20: monitoring secret regenerated (type: kubernetes.io/tls)
+[0;36m[INFO][0m  IT-20: monitoring post-rotation serial: serial=1F0DEB35AA3A6475
+[0;32m[PASS][0m  IT-20: monitoring certificate rotated (serial=6BCF1262E91BB74B → serial=1F0DEB35AA3A6475)
+[0;32m[PASS][0m  IT-20: monitoring pod not restarted (monitoring-56794f4fbb-8cc6b, created: 2026-06-15T15:18:09Z)
+[0;32m[PASS][0m  IT-20: monitoring /health responds after cert rotation
+[0;32m[PASS][0m  IT-20: observability-ui-dashboards secret regenerated (type: kubernetes.io/tls)
+[0;36m[INFO][0m  IT-20: observability-ui-dashboards post-rotation serial: serial=4FFA27D83B93DAF1
+[0;32m[PASS][0m  IT-20: observability-ui-dashboards certificate rotated (serial=0930898164C12636 → serial=4FFA27D83B93DAF1)
+[0;32m[PASS][0m  IT-20: observability-ui-dashboards pod not restarted (observability-ui-dashboards-d8d886955-sczxr, created: 2026-06-15T15:18:09Z)
+[0;32m[PASS][0m  IT-20: observability-ui-dashboards /health responds after cert rotation
+[0;32m[PASS][0m  IT-20: distributed-tracing secret regenerated (type: kubernetes.io/tls)
+[0;36m[INFO][0m  IT-20: distributed-tracing post-rotation serial: serial=18D720CE97C04C83
+[0;31m[FAIL][0m  IT-20: distributed-tracing certificate serial unchanged after rotation (serial=18D720CE97C04C83)
+[0;32m[PASS][0m  IT-20: distributed-tracing pod not restarted (distributed-tracing-7bd5b4b95b-tgp2s, created: 2026-06-15T15:18:09Z)
+[0;32m[PASS][0m  IT-20: distributed-tracing /health responds after cert rotation
+[0;32m[PASS][0m  IT-20: troubleshooting-panel secret regenerated (type: kubernetes.io/tls)
+[0;36m[INFO][0m  IT-20: troubleshooting-panel post-rotation serial: serial=75B6648EBA7895C1
+[0;32m[PASS][0m  IT-20: troubleshooting-panel certificate rotated (serial=0D96E79F954602C2 → serial=75B6648EBA7895C1)
+[0;32m[PASS][0m  IT-20: troubleshooting-panel pod not restarted (troubleshooting-panel-7795fd64b8-fn6wx, created: 2026-06-15T15:18:10Z)
+[0;32m[PASS][0m  IT-20: troubleshooting-panel /health responds after cert rotation
+[0;31m[FAIL][0m  IT-20: Certificate rotation issues detected
+
+[1m--- IT-17: Rapid Profile Toggling ---[0m
+[0;36m[INFO][0m  IT-17: Setting Modern...
+[0;36m[INFO][0m  Setting cluster TLS profile to: Modern
+[0;36m[INFO][0m  IT-17: Setting Intermediate...
+[0;36m[INFO][0m  Setting cluster TLS profile to: Intermediate
+[0;36m[INFO][0m  IT-17: Setting Modern...
+[0;36m[INFO][0m  Setting cluster TLS profile to: Modern
+[0;36m[INFO][0m  IT-17: Setting Intermediate...
+[0;36m[INFO][0m  Setting cluster TLS profile to: Intermediate
+[0;36m[INFO][0m  IT-17: Setting Modern...
+[0;36m[INFO][0m  Setting cluster TLS profile to: Modern
+[0;36m[INFO][0m  IT-17: Setting Intermediate...
+[0;36m[INFO][0m  Setting cluster TLS profile to: Intermediate
+[0;36m[INFO][0m  IT-17: Waiting 240s for final reconciliation...
+[0;36m[INFO][0m  Waiting for all deployments to reflect TLS update (timeout: 240s)...
+[0;36m[INFO][0m  All deployments updated after 35s
+[0;32m[PASS][0m  IT-17: logging settled on Intermediate profile
+[0;32m[PASS][0m  IT-17: monitoring settled on Intermediate profile
+[0;32m[PASS][0m  IT-17: observability-ui-dashboards settled on Intermediate profile
+[0;32m[PASS][0m  IT-17: distributed-tracing settled on Intermediate profile
+[0;32m[PASS][0m  IT-17: troubleshooting-panel settled on Intermediate profile
+[0;32m[PASS][0m  IT-17: No operator panics during rapid toggling
+[0;32m[PASS][0m  IT-17: Rapid profile toggling handled cleanly
+
+[1m--- IT-18: Plugin Deletion and Re-creation Under Modern Profile ---[0m
+[0;36m[INFO][0m  Setting cluster TLS profile to: Modern
+[0;36m[INFO][0m  Waiting for all deployments to reflect TLS update (timeout: 240s)...
+[0;36m[INFO][0m  All deployments updated after 70s
+[0;36m[INFO][0m  IT-18: Deleting logging UIPlugin CR...
+[0;36m[INFO][0m  IT-18: Waiting for deployment deletion...
+[0;36m[INFO][0m  IT-18: Deployment deleted after 0s
+[0;36m[INFO][0m  IT-18: Re-creating logging UIPlugin...
+[0;32m[PASS][0m  IT-18: Re-created logging plugin (logging) has Modern profile (VersionTLS13)
+[0;32m[PASS][0m  IT-18: Re-created plugin /health responds
+[0;32m[PASS][0m  IT-18: Plugin re-creation under Modern profile works
+[0;36m[INFO][0m  Setting cluster TLS profile to: Intermediate
+[0;36m[INFO][0m  Waiting for all deployments to reflect TLS update (timeout: 240s)...
+[0;33m[WARN][0m  Not all deployments updated within 240s
+
+[1m--- IT-19: Operator Logs — No TLS Errors ---[0m
+[0;33m[WARN][0m  IT-19: Found TLS-related log entries:
+[0;36m[INFO][0m    2026-06-15T15:28:17Z	ERROR	setup	failed to fetch TLS profile from cluster	{"error": "failed to get APIServer \"/cluster\": Get \"https://172.30.0.1:443/apis/config.openshift.io/v1/apiservers/cluster\": context canceled"}
+[0;33m[WARN][0m  IT-19: TLS-related errors found but no panics
+[0;32m[PASS][0m  IT-19: TLS errors in logs but no panics (acceptable)
+
+[1m[0;36m=== Test Summary ===[0m
+
+[1mResults:[0m
+  [0;32mPASSED:  23[0m
+  [0;31mFAILED:  4[0m
+  [0;33mSKIPPED: 0[0m
+  TOTAL:   27
+
+Duration: 54m:22s
+Report:   /Users/emurasak/workspace/harness/tasks/OU-1339-tls-e2e-testing/integration-results-20260615-113808.log
+
+[0;31m[1mOVERALL: FAIL[0m
+
+[1m[0;36m=== Cleanup ===[0m
+
+[0;36m[INFO][0m  Restoring TLS profile to default (removing spec)...
+[0;36m[INFO][0m  Removing tls-scanner pod and RBAC
+[0;36m[INFO][0m  Cleanup complete

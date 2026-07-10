@@ -1,0 +1,24 @@
+
+[1m[0;36m=== COO 1.5.0 Smoke Test — Resource Consumption + COO-1014 Validation ===[0m
+
+[0;36m[INFO][0m  Report: /Users/emurasak/workspace/harness/tasks/OU-1326-smoke-test-coo-1.5.0/smoke-results-20260609-092312.log
+[0;36m[INFO][0m  Started: Tue Jun  9 09:23:12 -03 2026
+
+[1m[0;36m=== Dry Run — Planned Actions ===[0m
+
+[0;36m[INFO][0m  1. Preflight: verify oc, COO CRD, operator pods, extract CSV requests+limits
+[0;36m[INFO][0m  2. Create 100 namespaces (prefix: smoke-test-ns) with 10 secrets each
+[0;36m[INFO][0m  3. Baseline: capture node + pod memory via oc adm top
+[0;36m[INFO][0m  4. Deploy UIPlugin/monitoring (type: Monitoring, Perses enabled)
+[0;36m[INFO][0m     Wait for monitoring + Perses deployments
+[0;36m[INFO][0m  5. [SKIPPED] Dashboard creation (--skip-dashboards or DASHBOARDS_DIR not set)
+[0;36m[INFO][0m  6. Measure pod memory in openshift-cluster-observability-operator
+[0;36m[INFO][0m  6b. [SKIPPED] Memory recovery check (no dashboards)
+[0;36m[INFO][0m  7. [COO-1014] Check for OOMKilled containers in openshift-cluster-observability-operator
+[0;36m[INFO][0m  8. [COO-1014] Verify memory limits >= 500Mi for operator + perses-operator
+[0;36m[INFO][0m  9. Compare actual vs declared resource requests and limits
+[0;36m[INFO][0m  10. Cleanup: delete UIPlugin, delete smoke-test-ns-* namespaces
+[0;36m[INFO][0m  
+[0;36m[INFO][0m  Config: NUM_NAMESPACES=100 SECRETS_PER_NS=10 NAMESPACE=openshift-cluster-observability-operator
+[0;36m[INFO][0m          DASHBOARDS_DIR=<not set> DASHBOARDS_PER_NS=50
+[0;36m[INFO][0m  COO-1014: min memory limit=500Mi

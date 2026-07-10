@@ -1,0 +1,107 @@
+# COO Integration TLS E2E Results — Mon May 25 16:01:23 -03 2026
+
+
+[1m[0;36m=== COO Integration TLS E2E Tests ===[0m
+
+[0;36m[INFO][0m  Namespace: openshift-cluster-observability-operator
+[0;36m[INFO][0m  Plugins:   Logging, Monitoring, Dashboards, Distributed Tracing, Troubleshooting Panel
+[0;36m[INFO][0m  Report:    /Users/emurasak/workspace/harness/tasks/OU-1339-tls-e2e-testing/integration-results-20260525-160123.log
+[0;36m[INFO][0m  Timestamp: Mon May 25 16:01:23 -03 2026
+
+[1m[0;36m=== Prerequisites ===[0m
+
+[0;32m[PASS][0m  oc CLI found
+[0;32m[PASS][0m  Logged in as: kube:admin
+[0;32m[PASS][0m  UIPlugin CRD exists
+[0;32m[PASS][0m  Observability Operator running
+[0;32m[PASS][0m  UIPlugin CR 'logging' exists
+[0;32m[PASS][0m  UIPlugin CR 'monitoring' exists
+[0;32m[PASS][0m  UIPlugin CR 'dashboards' exists
+[0;32m[PASS][0m  UIPlugin CR 'distributed-tracing' exists
+[0;32m[PASS][0m  UIPlugin CR 'troubleshooting-panel' exists
+[0;36m[INFO][0m  Cluster version: unknown
+[0;36m[INFO][0m  Original TLS profile saved: {"intermediate":{},"type":"Intermediate"}
+[0;36m[INFO][0m  Auto-detecting UIPlugin deployment names via ownerReferences...
+[0;36m[INFO][0m    logging → logging
+[0;36m[INFO][0m    monitoring → monitoring
+[0;36m[INFO][0m    dashboards → observability-ui-dashboards
+[0;36m[INFO][0m    distributed-tracing → distributed-tracing
+[0;36m[INFO][0m    troubleshooting-panel → korrel8r
+[0;36m[INFO][0m  Installing tls-scanner pod in openshift-cluster-observability-operator
+[0;36m[INFO][0m  Waiting for tls-scanner pod...
+[0;32m[PASS][0m  tls-scanner pod ready
+
+[1m[0;36m=== Running Tests ===[0m
+
+
+[1m--- IT-01: Verify All UIPlugins Have TLS Args (Intermediate) ---[0m
+[0;36m[INFO][0m  Setting cluster TLS profile to: Intermediate
+[0;36m[INFO][0m  Verifying pre-installed UIPlugin deployments...
+[0;32m[PASS][0m  Deployment logging exists
+[0;32m[PASS][0m  Deployment monitoring exists
+[0;32m[PASS][0m  Deployment observability-ui-dashboards exists
+[0;32m[PASS][0m  Deployment distributed-tracing exists
+[0;32m[PASS][0m  Deployment korrel8r exists
+[0;36m[INFO][0m  Waiting for all deployments to become ready...
+[0;32m[PASS][0m  All UIPlugin deployments verified
+[0;36m[INFO][0m  IT-01: logging args: ["-port=9443","-cert=/var/serving-cert/tls.crt","-key=/var/serving-cert/tls.key","-plugin-config-path=/etc/plugin/config/config.yaml","-features=dev-console,alerts,dev-alerts","-tls-min-version=VersionTLS12","-tls-cipher-suites=TLS_AES_128_GCM_SHA256,TLS_AES_256_GCM_SHA384,TLS_CHACHA20_POLY1305_SHA256,TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256,TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256"]
+[0;32m[PASS][0m  IT-01: logging has -tls-min-version
+[0;32m[PASS][0m  IT-01: logging has -tls-cipher-suites
+[0;36m[INFO][0m  IT-01: monitoring args: ["-port=9443","-cert=/var/serving-cert/tls.crt","-key=/var/serving-cert/tls.key","-config-path=/opt/app-root/config","-static-path=/opt/app-root/web/dist","-alertmanager=https://alertmanager.open-cluster-management-observability.svc:9095","-thanos-querier=https://rbac-query-proxy.open-cluster-management-observability.svc:8443","-features=acm-alerting,perses-dashboards,incidents","-tls-min-version=VersionTLS12","-tls-cipher-suites=TLS_AES_128_GCM_SHA256,TLS_AES_256_GCM_SHA384,TLS_CHACHA20_POLY1305_SHA256,TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256,TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256"]
+[0;32m[PASS][0m  IT-01: monitoring has -tls-min-version
+[0;32m[PASS][0m  IT-01: monitoring has -tls-cipher-suites
+[0;36m[INFO][0m  IT-01: observability-ui-dashboards args: ["-port=9443","-cert=/var/serving-cert/tls.crt","-key=/var/serving-cert/tls.key","-tls-min-version=VersionTLS12","-tls-cipher-suites=TLS_AES_128_GCM_SHA256,TLS_AES_256_GCM_SHA384,TLS_CHACHA20_POLY1305_SHA256,TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256,TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256"]
+[0;32m[PASS][0m  IT-01: observability-ui-dashboards has -tls-min-version
+[0;32m[PASS][0m  IT-01: observability-ui-dashboards has -tls-cipher-suites
+[0;36m[INFO][0m  IT-01: distributed-tracing args: ["-port=9443","-cert=/var/serving-cert/tls.crt","-key=/var/serving-cert/tls.key","-plugin-config-path=/etc/plugin/config/config.yaml","-tls-min-version=VersionTLS12","-tls-cipher-suites=TLS_AES_128_GCM_SHA256,TLS_AES_256_GCM_SHA384,TLS_CHACHA20_POLY1305_SHA256,TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256,TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256"]
+[0;32m[PASS][0m  IT-01: distributed-tracing has -tls-min-version
+[0;32m[PASS][0m  IT-01: distributed-tracing has -tls-cipher-suites
+[0;31m[FAIL][0m  IT-01: Deployment korrel8r not found or has no args
+[0;31m[FAIL][0m  IT-01: Not all plugins received TLS args
+
+[1m--- IT-02: Cross-Plugin TLS Arg Consistency ---[0m
+[0;36m[INFO][0m  IT-02: Reference (logging): -tls-min-version=VersionTLS12
+[0;32m[PASS][0m  IT-02: monitoring min version matches
+[0;32m[PASS][0m  IT-02: monitoring cipher list matches
+[0;32m[PASS][0m  IT-02: observability-ui-dashboards min version matches
+[0;32m[PASS][0m  IT-02: observability-ui-dashboards cipher list matches
+[0;32m[PASS][0m  IT-02: distributed-tracing min version matches
+[0;32m[PASS][0m  IT-02: distributed-tracing cipher list matches
+[0;33m[WARN][0m  IT-02: korrel8r has no args — skipping
+[0;32m[PASS][0m  IT-02: All plugins have identical TLS configuration
+
+[1m--- IT-03: All Plugin Endpoints Respond Over HTTPS ---[0m
+[0;32m[PASS][0m  IT-03: logging/health → HTTP 200
+[0;32m[PASS][0m  IT-03: logging/plugin-manifest.json → HTTP 200
+[0;32m[PASS][0m  IT-03: monitoring/health → HTTP 200
+[0;32m[PASS][0m  IT-03: monitoring/plugin-manifest.json → HTTP 200
+[0;32m[PASS][0m  IT-03: observability-ui-dashboards/health → HTTP 200
+[0;32m[PASS][0m  IT-03: observability-ui-dashboards/plugin-manifest.json → HTTP 200
+[0;32m[PASS][0m  IT-03: distributed-tracing/health → HTTP 200
+[0;32m[PASS][0m  IT-03: distributed-tracing/plugin-manifest.json → HTTP 200
+[0;31m[FAIL][0m  IT-03: korrel8r/health → HTTP  (expected 200)
+[0;31m[FAIL][0m  IT-03: korrel8r/plugin-manifest.json → HTTP  (expected 200)
+[0;33m[WARN][0m  IT-03: monitoring/features → HTTP 
+[0;31m[FAIL][0m  IT-03: Some plugin endpoints failed
+
+[1m--- IT-04: ConsolePlugin CRs Registered ---[0m
+[0;32m[PASS][0m  IT-04: ConsolePlugin 'logging-view-plugin' found for UIPlugin 'logging'
+[0;32m[PASS][0m  IT-04: ConsolePlugin 'monitoring-console-plugin' found for UIPlugin 'monitoring'
+[0;32m[PASS][0m  IT-04: ConsolePlugin 'console-dashboards-plugin' found for UIPlugin 'dashboards'
+[0;32m[PASS][0m  IT-04: ConsolePlugin 'distributed-tracing-console-plugin' found for UIPlugin 'distributed-tracing'
+[0;32m[PASS][0m  IT-04: ConsolePlugin 'troubleshooting-panel-console-plugin' found for UIPlugin 'troubleshooting-panel'
+[0;36m[INFO][0m  IT-04: Console operator plugins list: ["networking-console-plugin","monitoring-plugin","troubleshooting-panel-console-plugin","logging-view-plugin","monitoring-console-plugin","console-dashboards-plugin","distributed-tracing-console-plugin"]
+[0;32m[PASS][0m  IT-04: All ConsolePlugin CRs registered
+
+[1m--- IT-07: TLS Enforcement — All Plugins, Intermediate Profile ---[0m
+[0;33m[WARN][0m  tls-scanner pod gone — recreating
+[0;36m[INFO][0m  Installing tls-scanner pod in openshift-cluster-observability-operator
+[0;36m[INFO][0m  Waiting for tls-scanner pod...
+[0;32m[PASS][0m  tls-scanner pod ready
+[0;36m[INFO][0m  Setting cluster TLS profile to: Intermediate
+[0;36m[INFO][0m  Waiting for all deployments to reflect TLS update (timeout: 240s)...
+
+[1m[0;36m=== Cleanup ===[0m
+
+[0;36m[INFO][0m  Restoring original TLS profile...
+[0;36m[INFO][0m  Restoring UIPlugin logging (type: Logging)...

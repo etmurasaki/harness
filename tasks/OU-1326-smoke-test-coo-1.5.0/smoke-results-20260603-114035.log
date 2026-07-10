@@ -1,0 +1,153 @@
+
+[1m[0;36m=== COO 1.5.0 Smoke Test — Resource Consumption + COO-1014 Validation ===[0m
+
+[0;36m[INFO][0m  Report: /Users/emurasak/workspace/harness/tasks/OU-1326-smoke-test-coo-1.5.0/smoke-results-20260603-114035.log
+[0;36m[INFO][0m  Started: Wed Jun  3 11:40:35 -03 2026
+
+[1m[0;36m=== Preflight Checks ===[0m
+
+[0;36m[INFO][0m  Logged in as: kube:admin
+[0;36m[INFO][0m  COO CRD found
+[0;36m[INFO][0m  Operator pods running: 1
+[0;36m[INFO][0m  Extracting CSV resource requests ...
+[0;36m[INFO][0m  CSV: cluster-observability-operator.v1.5.0
+[0;36m[INFO][0m  CSV resource requests/limits (memory):
+  obo-prometheus-operator/prometheus-operator: request=150Mi limit=500Mi
+  obo-prometheus-operator-admission-webhook/prometheus-operator-admission-webhook: request=50Mi limit=200Mi
+  observability-operator/operator: request=256Mi limit=512Mi
+  perses-operator/perses-operator: request=128Mi limit=512Mi
+
+[1m[0;36m=== Phase 1: Create Cluster Load (100 namespaces, 10 secrets each) ===[0m
+
+[0;36m[INFO][0m  Progress: 10/100 namespaces created
+[0;36m[INFO][0m  Progress: 20/100 namespaces created
+[0;36m[INFO][0m  Progress: 30/100 namespaces created
+[0;36m[INFO][0m  Progress: 40/100 namespaces created
+[0;36m[INFO][0m  Progress: 50/100 namespaces created
+[0;36m[INFO][0m  Progress: 60/100 namespaces created
+[0;36m[INFO][0m  Progress: 70/100 namespaces created
+[0;36m[INFO][0m  Progress: 80/100 namespaces created
+[0;36m[INFO][0m  Progress: 90/100 namespaces created
+[0;36m[INFO][0m  Progress: 100/100 namespaces created
+[0;36m[INFO][0m  Load creation complete: 100 namespaces, 1000 secrets, 100 log-generator pods
+
+[1m[0;36m=== Phase 2: Baseline Measurement ===[0m
+
+[0;36m[INFO][0m  Node resource usage:
+NAME                                        CPU(cores)   CPU%   MEMORY(bytes)   MEMORY%   
+ip-10-0-25-120.us-east-2.compute.internal   155m         4%     2320Mi          15%       
+ip-10-0-25-66.us-east-2.compute.internal    1610m        46%    10626Mi         72%       
+ip-10-0-37-114.us-east-2.compute.internal   490m         14%    4200Mi          28%       
+ip-10-0-52-177.us-east-2.compute.internal   742m         21%    9526Mi          65%       
+ip-10-0-79-139.us-east-2.compute.internal   291m         8%     4232Mi          28%       
+ip-10-0-82-208.us-east-2.compute.internal   409m         11%    9667Mi          66%       
+
+[0;36m[INFO][0m  Pod resource usage in openshift-cluster-observability-operator (before UIPlugin):
+NAME                                                         CPU(cores)   MEMORY(bytes)   
+obo-prometheus-operator-645d4c879d-z6nkq                     1m           29Mi            
+obo-prometheus-operator-admission-webhook-76749748cf-4hqrw   1m           12Mi            
+obo-prometheus-operator-admission-webhook-76749748cf-fx2h7   1m           13Mi            
+observability-operator-6656bb479c-598kt                      2m           55Mi            
+perses-operator-586dc6b6d4-stdsg                             1m           17Mi            
+
+[1m[0;36m=== Phase 3: Deploy Monitoring UIPlugin (Perses enabled) ===[0m
+
+[0;36m[INFO][0m  UIPlugin/monitoring created
+[0;36m[INFO][0m  Waiting for deployment/monitoring in openshift-cluster-observability-operator (timeout: 300s)
+[0;36m[INFO][0m  deployment/monitoring is ready (0s)
+[0;36m[INFO][0m  Waiting for Perses pods ...
+[0;36m[INFO][0m  Perses deployment perses-operator is ready (0s)
+[0;36m[INFO][0m  Waiting 30s for resource usage to stabilize ...
+
+[1m[0;36m=== Phase 4: Create PersesDashboard Load ===[0m
+
+[0;36m[INFO][0m  Templates found: 4 (openshift-cluster-sample-dashboard perses-dashboard-sample prometheus-overview thanos-compact-overview )
+[0;36m[INFO][0m  Variants per template: 3 → 12 dashboards per namespace
+[0;36m[INFO][0m  Total dashboards: 12 × 100 = 1200
+[0;36m[INFO][0m  Progress: 10/100 namespaces (120 dashboards)
+[0;36m[INFO][0m  Progress: 20/100 namespaces (240 dashboards)
+[0;36m[INFO][0m  Progress: 30/100 namespaces (360 dashboards)
+[0;36m[INFO][0m  Progress: 40/100 namespaces (480 dashboards)
+[0;36m[INFO][0m  Progress: 50/100 namespaces (600 dashboards)
+[0;36m[INFO][0m  Progress: 60/100 namespaces (720 dashboards)
+[0;36m[INFO][0m  Progress: 70/100 namespaces (840 dashboards)
+[0;36m[INFO][0m  Progress: 80/100 namespaces (960 dashboards)
+[0;36m[INFO][0m  Progress: 90/100 namespaces (1080 dashboards)
+[0;36m[INFO][0m  Progress: 100/100 namespaces (1200 dashboards)
+[0;36m[INFO][0m  Dashboard creation complete: 100 namespaces × 12 = 1200 dashboards
+
+[1m[0;36m=== Phase 5: Resource Measurement (post-deployment) ===[0m
+
+[0;36m[INFO][0m  Node resource usage (after deployment):
+NAME                                        CPU(cores)   CPU%   MEMORY(bytes)   MEMORY%   
+ip-10-0-25-120.us-east-2.compute.internal   211m         6%     2737Mi          18%       
+ip-10-0-25-66.us-east-2.compute.internal    699m         19%    10904Mi         74%       
+ip-10-0-37-114.us-east-2.compute.internal   235m         6%     4472Mi          30%       
+ip-10-0-52-177.us-east-2.compute.internal   471m         13%    10921Mi         74%       
+ip-10-0-79-139.us-east-2.compute.internal   165m         4%     4249Mi          29%       
+ip-10-0-82-208.us-east-2.compute.internal   3887m        111%   9856Mi          67%       
+
+[0;36m[INFO][0m  Pod resource usage in openshift-cluster-observability-operator:
+NAME                                                         CPU(cores)   MEMORY(bytes)   
+monitoring-58d4998984-xp9c7                                  1m           8Mi             
+obo-prometheus-operator-645d4c879d-z6nkq                     1m           30Mi            
+obo-prometheus-operator-admission-webhook-76749748cf-4hqrw   1m           12Mi            
+obo-prometheus-operator-admission-webhook-76749748cf-fx2h7   1m           13Mi            
+observability-operator-6656bb479c-598kt                      1m           55Mi            
+perses-0                                                     78m          335Mi           
+perses-operator-586dc6b6d4-stdsg                             24m          476Mi           
+
+[0;36m[INFO][0m  Detailed pod resource breakdown:
+[0;36m[INFO][0m    Operator memory: 55Mi
+[0;36m[INFO][0m    Monitoring plugin memory: 8Mi
+[0;36m[INFO][0m    Perses server (perses-0) memory: 337Mi
+[0;36m[INFO][0m    Perses operator memory: 486Mi
+
+[1m[0;36m=== Phase 6: OOMKill Detection (COO-1014) ===[0m
+
+[0;36m[INFO][0m  Checking for OOMKilled containers in openshift-cluster-observability-operator ...
+[0;32m[PASS][0m  [COO-1014] No OOMKilled containers found in openshift-cluster-observability-operator
+
+[1m[0;36m=== Phase 7: Resource Comparison ===[0m
+
+[0;36m[INFO][0m  Fetching resource requests/limits from running deployments ...
+
+[1m[0;36m=== COO-1014: Memory Limit Adequacy Check (minimum 500Mi) ===[0m
+
+[0;32m[PASS][0m  [COO-1014] Observability Operator: memory limit 512Mi (512Mi) >= 500Mi
+[0;32m[PASS][0m  [COO-1014] Perses Operator: memory limit 512Mi (512Mi) >= 500Mi
+
+
+[1m[0;36m=== Resource Comparison (actual vs request vs limit) ===[0m
+
+[1mComponent                      Actual       Request      Limit        Status    [0m
+---                            ---          ---          ---          ---       
+Observability Operator         55Mi         256Mi        512Mi        [0;32mPASS      [0m
+Monitoring Console Plugin      8Mi          N/A          N/A          SKIP      
+Perses Server                  337Mi        N/A          N/A          SKIP      
+Perses Operator                486Mi        128Mi        512Mi        [0;31mFAIL      [0m
+
+
+[1m[0;36m=== Summary ===[0m
+
+[0;36m[INFO][0m  Pass: 4  Fail: 1
+[0;31m[FAIL][0m  SMOKE TEST FAILED — 1 check(s) failed
+
+[1m[0;36m=== Cleanup ===[0m
+
+[0;36m[INFO][0m  Cleaning up PersesDashboard CRs in smoke-test namespaces ...
+[0;36m[INFO][0m  Dashboard cleanup progress: 10 namespaces processed (120 dashboards deleted)
+[0;36m[INFO][0m  Dashboard cleanup progress: 20 namespaces processed (240 dashboards deleted)
+[0;36m[INFO][0m  Dashboard cleanup progress: 30 namespaces processed (360 dashboards deleted)
+[0;36m[INFO][0m  Dashboard cleanup progress: 40 namespaces processed (480 dashboards deleted)
+[0;36m[INFO][0m  Dashboard cleanup progress: 50 namespaces processed (600 dashboards deleted)
+[0;36m[INFO][0m  Dashboard cleanup progress: 60 namespaces processed (720 dashboards deleted)
+[0;36m[INFO][0m  Dashboard cleanup progress: 70 namespaces processed (840 dashboards deleted)
+[0;36m[INFO][0m  Dashboard cleanup progress: 80 namespaces processed (960 dashboards deleted)
+[0;36m[INFO][0m  Dashboard cleanup progress: 90 namespaces processed (1080 dashboards deleted)
+[0;36m[INFO][0m  Dashboard cleanup progress: 100 namespaces processed (1200 dashboards deleted)
+[0;36m[INFO][0m  Dashboard cleanup complete: 1200 PersesDashboard CRs deleted across 100 namespaces
+[0;36m[INFO][0m  Deleting UIPlugin/monitoring ...
+[0;36m[INFO][0m  Deleting smoke-test namespaces (prefix: smoke-test-ns) ...
+[0;36m[INFO][0m  Namespace deletion initiated for 100 namespaces
+[0;36m[INFO][0m  Total duration: 2774s

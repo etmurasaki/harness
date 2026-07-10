@@ -1,0 +1,114 @@
+
+[1m[0;36m=== COO 1.5.0 Smoke Test — Resource Consumption + COO-1014 Validation ===[0m
+
+[0;36m[INFO][0m  Report: /Users/emurasak/workspace/harness/tasks/OU-1326-smoke-test-coo-1.5.0/smoke-results-20260527-111913.log
+[0;36m[INFO][0m  Started: Wed May 27 11:19:13 -03 2026
+
+[1m[0;36m=== Preflight Checks ===[0m
+
+[0;36m[INFO][0m  Logged in as: kube:admin
+[0;36m[INFO][0m  COO CRD found
+[0;36m[INFO][0m  Operator pods running: 1
+[0;36m[INFO][0m  Extracting CSV resource requests ...
+[0;36m[INFO][0m  CSV: cluster-observability-operator.v1.5.0
+[0;36m[INFO][0m  CSV resource requests/limits (memory):
+  obo-prometheus-operator/prometheus-operator: request=150Mi limit=500Mi
+  obo-prometheus-operator-admission-webhook/prometheus-operator-admission-webhook: request=50Mi limit=200Mi
+  observability-operator/operator: request=256Mi limit=512Mi
+  perses-operator/perses-operator: request=128Mi limit=512Mi
+
+[1m[0;36m=== Phase 1: Create Cluster Load (100 namespaces, 10 secrets each) ===[0m
+
+[0;36m[INFO][0m  Skipping load creation (--skip-load)
+
+[1m[0;36m=== Phase 2: Baseline Measurement ===[0m
+
+[0;36m[INFO][0m  Node resource usage:
+NAME                                        CPU(cores)   CPU%   MEMORY(bytes)   MEMORY%   
+ip-10-0-10-223.us-east-2.compute.internal   336m         9%     9668Mi          66%       
+ip-10-0-26-171.us-east-2.compute.internal   252m         7%     4580Mi          31%       
+ip-10-0-32-107.us-east-2.compute.internal   1326m        37%    9811Mi          67%       
+ip-10-0-38-247.us-east-2.compute.internal   335m         9%     5476Mi          37%       
+ip-10-0-74-222.us-east-2.compute.internal   218m         6%     2941Mi          20%       
+ip-10-0-94-41.us-east-2.compute.internal    732m         20%    10239Mi         70%       
+
+[0;36m[INFO][0m  Pod resource usage in openshift-cluster-observability-operator (before UIPlugin):
+NAME                                                        CPU(cores)   MEMORY(bytes)   
+logging-7b44c9ccf8-zh7st                                    1m           7Mi             
+monitoring-5dc54fb8d-77kfz                                  1m           12Mi            
+obo-prometheus-operator-645d4c879d-bplwl                    1m           29Mi            
+obo-prometheus-operator-admission-webhook-857574474-crs8x   1m           12Mi            
+obo-prometheus-operator-admission-webhook-857574474-h2ht2   1m           13Mi            
+observability-operator-54b5d6c656-xb69r                     1m           35Mi            
+perses-0                                                    1m           62Mi            
+perses-operator-9cdcfb74c-frg7h                             1m           25Mi            
+
+[1m[0;36m=== Phase 3: Deploy Monitoring UIPlugin (Perses enabled) ===[0m
+
+[0;36m[INFO][0m  UIPlugin/monitoring created
+[0;36m[INFO][0m  Waiting for deployment/monitoring in openshift-cluster-observability-operator (timeout: 300s)
+[0;36m[INFO][0m  deployment/monitoring is ready (0s)
+[0;36m[INFO][0m  Waiting for Perses pods ...
+[0;36m[INFO][0m  Perses deployment perses-operator is ready (0s)
+[0;36m[INFO][0m  Waiting 30s for resource usage to stabilize ...
+
+[1m[0;36m=== Phase 4: Resource Measurement (post-deployment) ===[0m
+
+[0;36m[INFO][0m  Node resource usage (after deployment):
+NAME                                        CPU(cores)   CPU%   MEMORY(bytes)   MEMORY%   
+ip-10-0-10-223.us-east-2.compute.internal   550m         15%    9753Mi          66%       
+ip-10-0-26-171.us-east-2.compute.internal   252m         7%     4630Mi          31%       
+ip-10-0-32-107.us-east-2.compute.internal   923m         26%    9816Mi          67%       
+ip-10-0-38-247.us-east-2.compute.internal   449m         12%    5540Mi          37%       
+ip-10-0-74-222.us-east-2.compute.internal   212m         6%     2987Mi          20%       
+ip-10-0-94-41.us-east-2.compute.internal    654m         18%    10290Mi         70%       
+
+[0;36m[INFO][0m  Pod resource usage in openshift-cluster-observability-operator:
+NAME                                                        CPU(cores)   MEMORY(bytes)   
+logging-7b44c9ccf8-zh7st                                    1m           7Mi             
+obo-prometheus-operator-645d4c879d-bplwl                    1m           29Mi            
+obo-prometheus-operator-admission-webhook-857574474-crs8x   1m           12Mi            
+obo-prometheus-operator-admission-webhook-857574474-h2ht2   1m           13Mi            
+observability-operator-54b5d6c656-xb69r                     2m           38Mi            
+perses-0                                                    0m           62Mi            
+perses-operator-9cdcfb74c-frg7h                             1m           25Mi            
+
+[0;36m[INFO][0m  Detailed pod resource breakdown:
+[0;36m[INFO][0m    Operator memory: 38Mi
+[0;36m[INFO][0m    Monitoring plugin memory: N/A
+[0;36m[INFO][0m    Perses server (perses-0) memory: 62Mi
+[0;36m[INFO][0m    Perses operator memory: 25Mi
+
+[1m[0;36m=== Phase 5: OOMKill Detection (COO-1014) ===[0m
+
+[0;36m[INFO][0m  Checking for OOMKilled containers in openshift-cluster-observability-operator ...
+[0;32m[PASS][0m  [COO-1014] No OOMKilled containers found in openshift-cluster-observability-operator
+
+[1m[0;36m=== Phase 6: Resource Comparison ===[0m
+
+[0;36m[INFO][0m  Fetching resource requests/limits from running deployments ...
+
+[1m[0;36m=== COO-1014: Memory Limit Adequacy Check (minimum 500Mi) ===[0m
+
+[0;32m[PASS][0m  [COO-1014] Observability Operator: memory limit 512Mi (512Mi) >= 500Mi
+[0;32m[PASS][0m  [COO-1014] Perses Operator: memory limit 512Mi (512Mi) >= 500Mi
+
+
+[1m[0;36m=== Resource Comparison (actual vs request vs limit) ===[0m
+
+[1mComponent                      Actual       Request      Limit        Status    [0m
+---                            ---          ---          ---          ---       
+Observability Operator         38Mi         256Mi        512Mi        [0;32mPASS      [0m
+Monitoring Console Plugin      N/A          N/A          N/A          SKIP      
+Perses Server                  62Mi         N/A          N/A          SKIP      
+Perses Operator                25Mi         128Mi        512Mi        [0;32mPASS      [0m
+
+
+[1m[0;36m=== Summary ===[0m
+
+[0;36m[INFO][0m  Pass: 5  Fail: 0
+[0;32m[PASS][0m  SMOKE TEST PASSED — all checks passed
+
+[1m[0;36m=== Cleanup ===[0m
+
+[0;33m[WARN][0m  Skipping cleanup (--skip-cleanup). Resources remain on cluster.

@@ -1,0 +1,444 @@
+Logging to /Users/emurasak/workspace/harness/tasks/upstream-images/build-and-push-20260603-200023.log
+Fetching all branches for each repo...
+  Fetching console-dashboards-plugin...
+  Fetching distributed-tracing-console-plugin...
+  Fetching logging-view-plugin...
+  Fetching monitoring-plugin...
+From https://github.com/openshift/monitoring-plugin
+   225aade..78b916b  main         -> origin/main
+   225aade..78b916b  release-4.23 -> origin/release-4.23
+   225aade..78b916b  release-5.0  -> origin/release-5.0
+   225aade..78b916b  release-5.1  -> origin/release-5.1
+  Fetching troubleshooting-panel-console-plugin...
+Fetch complete.
+==========================================
+Building console-dashboards-plugin @ release-coo-ocp-4.12 with VERSION=v0.4.3 ORG=rh-ee-emurasak
+==========================================
+Already on 'release-coo-ocp-4.12'
+M	Makefile
+Your branch is up to date with 'origin/release-coo-ocp-4.12'.
+From https://github.com/openshift/console-dashboards-plugin
+ * branch            release-coo-ocp-4.12 -> FETCH_HEAD
+Already up to date.
+--- Attempt 1/3 ---
+podman manifest rm quay.io/rh-ee-emurasak/console-dashboards-plugin:v0.4.3 || true
+Error: quay.io/rh-ee-emurasak/console-dashboards-plugin:v0.4.3: image not known
+podman manifest create quay.io/rh-ee-emurasak/console-dashboards-plugin:v0.4.3
+2f6af57c810d5c3f69e538e7b2db7218e3f07d2f779c1be7f1cf82e38e76f5c9
+podman build --platform=linux/arm64,linux/amd64 --manifest quay.io/rh-ee-emurasak/console-dashboards-plugin:v0.4.3 -f Dockerfile
+[linux/amd64] [1/3] STEP 1/8: FROM registry.redhat.io/ubi8/nodejs-18:latest AS web-builder
+Trying to pull registry.redhat.io/ubi8/nodejs-18:latest...
+Getting image source signatures
+Checking if image destination supports signatures
+Copying blob sha256:43ddc3bd12b8691687c9f6c273331ca07e3a89b50a619e0db9b040a8a629386d
+Copying blob sha256:046eb6416170db2ab33e464d04c6f7c0c8c6cc8563597aca8e9fb7736dff00f9
+Copying blob sha256:b610fd6091ba2163b8943d2214e20665977bc8064dc769d47be9ae868e48a301
+Copying config sha256:ab55058334c5c32969b838cea2db23ee8c69c1b742006a75c031ed4f1b286bc5
+Writing manifest to image destination
+Storing signatures
+[linux/amd64] [1/3] STEP 2/8: WORKDIR /opt/app-root
+--> 301cea247955
+[linux/amd64] [1/3] STEP 3/8: USER 0
+--> c81fbd578cd0
+[linux/amd64] [1/3] STEP 4/8: COPY web/package*.json web/
+--> f37aedd44a63
+[linux/amd64] [1/3] STEP 5/8: COPY Makefile Makefile
+--> 289b8289f5bc
+[linux/amd64] [1/3] STEP 6/8: RUN make install-frontend-ci-clean
+cd web && npm ci --ignore-scripts
+
+added 703 packages, and audited 704 packages in 3m
+
+145 packages are looking for funding
+  run `npm fund` for details
+
+32 vulnerabilities (20 moderate, 12 high)
+
+To address issues that do not require attention, run:
+  npm audit fix
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+cd web && npm cache clean --force
+npm warn using --force Recommended protections disabled.
+--> 51686364ab04
+[linux/amd64] [1/3] STEP 7/8: COPY web/ web/
+--> fbdca2062ae6
+[linux/amd64] [1/3] STEP 8/8: RUN make build-frontend
+cd web && npm run build
+
+> console-dashboards-plugin@0.1.0 build
+> npm run clean && NODE_ENV=production npm run ts-node node_modules/.bin/webpack
+
+
+> console-dashboards-plugin@0.1.0 clean
+> rm -rf dist
+
+
+> console-dashboards-plugin@0.1.0 ts-node
+> ts-node -O '{"module":"commonjs"}' node_modules/.bin/webpack
+
+assets by info 19.5 KiB [immutable]
+  asset 763-chunk-85263579519beb4f771c.min.js 16.6 KiB [emitted] [immutable] [minimized] (id hint: vendors)
+  asset exposed-ProxyTestPage-chunk-2f9082ef890be2ba1e5e.min.js 2.35 KiB [emitted] [immutable] [minimized] (name: exposed-ProxyTestPage)
+  asset exposed-GetDatasource-chunk-71e85ff48850c9bbb80c.min.js 559 bytes [emitted] [immutable] [minimized] (name: exposed-GetDatasource)
+asset plugin-entry.js 5.64 KiB [emitted] [minimized] (name: console-dashboards-plugin)
+asset plugin-manifest.json 733 bytes [emitted]
+runtime modules 15.6 KiB 11 modules
+built modules 37.8 KiB (javascript) 42 bytes (consume-shared) [built]
+  cacheable modules 37.7 KiB
+    ./components/ProxyTestPage.tsx 3.73 KiB [built] [code generated]
+    ./getDatasource.tsx 878 bytes [built] [code generated]
+    ../node_modules/lru-cache/index.mjs 33.1 KiB [built] [code generated]
+  container entry 42 bytes [built] [code generated]
+  consume shared module (default) react@^17.0.1 (singleton) 42 bytes [built] [code generated]
+webpack 5.105.3 compiled successfully in 20522 ms
+--> 356895475000
+[linux/amd64] [2/3] STEP 1/11: FROM registry.ci.openshift.org/ocp/builder:rhel-8-golang-1.24-openshift-4.20 AS go-builder
+Trying to pull registry.ci.openshift.org/ocp/builder:rhel-8-golang-1.24-openshift-4.20...
+[linux/arm64] [1/3] STEP 1/8: FROM registry.redhat.io/ubi8/nodejs-18:latest AS web-builder
+Trying to pull registry.redhat.io/ubi8/nodejs-18:latest...
+Getting image source signatures
+Checking if image destination supports signatures
+Copying blob sha256:8fd64178c906794da03bc9b7d2d5e3b70073b47f8aa659230381d7fd897dc11b
+Copying blob sha256:6ad04be99c8f2547888de53fad691136f65cf5a11c7a2567ef29477c3413f587
+Copying blob sha256:c4fff77bc060c02d4f09680032367cb302e83402fc25b7c7ac001cb00238876f
+Copying config sha256:62a277f6499a7c210a1022190779f4387fc1294a28ea7696fc264248bf328a9b
+Writing manifest to image destination
+Storing signatures
+[linux/arm64] [1/3] STEP 2/8: WORKDIR /opt/app-root
+--> 0126c6bd1784
+[linux/arm64] [1/3] STEP 3/8: USER 0
+--> dc009a898acc
+[linux/arm64] [1/3] STEP 4/8: COPY web/package*.json web/
+--> f357aed545af
+[linux/arm64] [1/3] STEP 5/8: COPY Makefile Makefile
+--> 25d12a31990b
+[linux/arm64] [1/3] STEP 6/8: RUN make install-frontend-ci-clean
+cd web && npm ci --ignore-scripts
+
+added 703 packages, and audited 704 packages in 29s
+
+145 packages are looking for funding
+  run `npm fund` for details
+
+32 vulnerabilities (20 moderate, 12 high)
+
+To address issues that do not require attention, run:
+  npm audit fix
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+cd web && npm cache clean --force
+npm warn using --force Recommended protections disabled.
+--> 01d1c5292d05
+[linux/arm64] [1/3] STEP 7/8: COPY web/ web/
+--> 6aac3c07c7e1
+[linux/arm64] [1/3] STEP 8/8: RUN make build-frontend
+cd web && npm run build
+
+> console-dashboards-plugin@0.1.0 build
+> npm run clean && NODE_ENV=production npm run ts-node node_modules/.bin/webpack
+
+
+> console-dashboards-plugin@0.1.0 clean
+> rm -rf dist
+
+
+> console-dashboards-plugin@0.1.0 ts-node
+> ts-node -O '{"module":"commonjs"}' node_modules/.bin/webpack
+
+assets by info 19.5 KiB [immutable]
+  asset 763-chunk-85263579519beb4f771c.min.js 16.6 KiB [emitted] [immutable] [minimized] (id hint: vendors)
+  asset exposed-ProxyTestPage-chunk-2f9082ef890be2ba1e5e.min.js 2.35 KiB [emitted] [immutable] [minimized] (name: exposed-ProxyTestPage)
+  asset exposed-GetDatasource-chunk-71e85ff48850c9bbb80c.min.js 559 bytes [emitted] [immutable] [minimized] (name: exposed-GetDatasource)
+asset plugin-entry.js 5.64 KiB [emitted] [minimized] (name: console-dashboards-plugin)
+asset plugin-manifest.json 733 bytes [emitted]
+runtime modules 15.6 KiB 11 modules
+built modules 37.8 KiB (javascript) 42 bytes (consume-shared) [built]
+  cacheable modules 37.7 KiB
+    ./components/ProxyTestPage.tsx 3.73 KiB [built] [code generated]
+    ./getDatasource.tsx 878 bytes [built] [code generated]
+    ../node_modules/lru-cache/index.mjs 33.1 KiB [built] [code generated]
+  container entry 42 bytes [built] [code generated]
+  consume shared module (default) react@^17.0.1 (singleton) 42 bytes [built] [code generated]
+webpack 5.105.3 compiled successfully in 1920 ms
+--> e3984fdc4a93
+[linux/arm64] [2/3] STEP 1/11: FROM registry.ci.openshift.org/ocp/builder:rhel-8-golang-1.24-openshift-4.20 AS go-builder
+[linux/arm64] [2/3] STEP 2/11: WORKDIR /opt/app-root
+--> e46c396598e2
+[linux/arm64] [2/3] STEP 3/11: COPY Makefile Makefile
+--> 063aabda46b2
+[linux/arm64] [2/3] STEP 4/11: COPY go.mod go.mod
+--> 4992159b0a68
+[linux/arm64] [2/3] STEP 5/11: COPY go.sum go.sum
+--> e436d890c906
+[linux/arm64] [2/3] STEP 6/11: RUN go mod download
+--> 0081a942b8b0
+[linux/arm64] [2/3] STEP 7/11: COPY cmd/ cmd/
+--> 56f82247b289
+[linux/arm64] [2/3] STEP 8/11: COPY pkg/ pkg/
+--> d56b01fe0d51
+[linux/arm64] [2/3] STEP 9/11: ENV GOEXPERIMENT=strictfipsruntime
+--> 5ddb1bca9b18
+[linux/arm64] [2/3] STEP 10/11: ENV CGO_ENABLED=1
+--> 1f87b2ff38aa
+[linux/arm64] [2/3] STEP 11/11: RUN make build-backend BUILD_OPTS="-tags strictfipsruntime"
+go build -tags strictfipsruntime -o plugin-backend -mod=readonly cmd/plugin-backend.go
+--> 072a2557b528
+[linux/arm64] [3/3] STEP 1/4: FROM registry.access.redhat.com/ubi8/ubi
+[linux/arm64] [3/3] STEP 2/4: COPY --from=web-builder /opt/app-root/web/dist /opt/app-root/web/dist
+--> 2715e28c5e60
+[linux/arm64] [3/3] STEP 3/4: COPY --from=go-builder /opt/app-root/plugin-backend /opt/app-root
+--> 568895e9bdea
+[linux/arm64] [3/3] STEP 4/4: ENTRYPOINT ["/opt/app-root/plugin-backend", "-static-path", "/opt/app-root/web/dist"]
+[linux/arm64] [3/3] COMMIT
+--> 7196550bcb96
+7196550bcb9695f5aa8d8245c484ae51a05763b383f69dba8d91933bf5763e73
+Error: [linux/amd64]: creating build container: unable to copy from source docker://registry.ci.openshift.org/ocp/builder:rhel-8-golang-1.24-openshift-4.20: initializing source docker://registry.ci.openshift.org/ocp/builder:rhel-8-golang-1.24-openshift-4.20: reading manifest rhel-8-golang-1.24-openshift-4.20 in registry.ci.openshift.org/ocp/builder: authentication required
+
+make: *** [podman-cross-build] Error 125
+WARNING: Attempt 1 failed for console-dashboards-plugin @ release-coo-ocp-4.12 (exit code 2)
+--- Attempt 2/3 ---
+podman manifest rm quay.io/rh-ee-emurasak/console-dashboards-plugin:v0.4.3 || true
+Untagged: quay.io/rh-ee-emurasak/console-dashboards-plugin:v0.4.3
+Deleted: 2f6af57c810d5c3f69e538e7b2db7218e3f07d2f779c1be7f1cf82e38e76f5c9
+podman manifest create quay.io/rh-ee-emurasak/console-dashboards-plugin:v0.4.3
+38eca100a6282cfdcceeb9bbb288a7df97785b0627d49fae5b6f6a5ffc0420c7
+podman build --platform=linux/arm64,linux/amd64 --manifest quay.io/rh-ee-emurasak/console-dashboards-plugin:v0.4.3 -f Dockerfile
+[linux/arm64] [1/3] STEP 1/8: FROM registry.redhat.io/ubi8/nodejs-18:latest AS web-builder
+[linux/arm64] [1/3] STEP 2/8: WORKDIR /opt/app-root
+--> Using cache 0126c6bd1784f90825c8e1a0669381d40055569af8d15cae986504068b0e05ec
+--> 0126c6bd1784
+[linux/arm64] [1/3] STEP 3/8: USER 0
+--> Using cache dc009a898acc5b6fd38a3e1a7c36a59693513ad153f00a531311a99fa414fcf5
+--> dc009a898acc
+[linux/arm64] [1/3] STEP 4/8: COPY web/package*.json web/
+--> Using cache f357aed545af0c2bf791f6c98ef27f55b9e6377175bd7f187d78934061c35448
+--> f357aed545af
+[linux/arm64] [1/3] STEP 5/8: COPY Makefile Makefile
+--> Using cache 25d12a31990bde261cb3e0b532df19492188075b03d21b82f2f121291f5624d9
+--> 25d12a31990b
+[linux/arm64] [1/3] STEP 6/8: RUN make install-frontend-ci-clean
+--> Using cache 01d1c5292d0549ece74d04ccd48e7d6844c0584aab30521bb6cd89501f4d7d54
+--> 01d1c5292d05
+[linux/arm64] [1/3] STEP 7/8: COPY web/ web/
+--> Using cache 6aac3c07c7e1e4cee3513b5484157701d70ec657e74c517668735ecfdcf3af70
+--> 6aac3c07c7e1
+[linux/arm64] [1/3] STEP 8/8: RUN make build-frontend
+--> Using cache e3984fdc4a93db34fdd271d2a64d3836d4fce2d73294ff67007b614ac5f832e1
+--> e3984fdc4a93
+[linux/arm64] [2/3] STEP 1/11: FROM registry.ci.openshift.org/ocp/builder:rhel-8-golang-1.24-openshift-4.20 AS go-builder
+[linux/arm64] [2/3] STEP 2/11: WORKDIR /opt/app-root
+--> Using cache e46c396598e2e0f460c71044312bbc73b8c9a13533dff1210718b1d6e1e4f967
+--> e46c396598e2
+[linux/arm64] [2/3] STEP 3/11: COPY Makefile Makefile
+--> Using cache 063aabda46b2838e694a87c6b78dcfcd94857bd843f15ba4a1f0a0355715e53a
+--> 063aabda46b2
+[linux/arm64] [2/3] STEP 4/11: COPY go.mod go.mod
+--> Using cache 4992159b0a689806b71f4c650af698cd1a25e8323c855d3262e1206053bc76f8
+--> 4992159b0a68
+[linux/arm64] [2/3] STEP 5/11: COPY go.sum go.sum
+--> Using cache e436d890c906079aeeb7c4eaaa0274cc9b43ebdd18b9fea5eeea03525e742d43
+--> e436d890c906
+[linux/arm64] [2/3] STEP 6/11: RUN go mod download
+--> Using cache 0081a942b8b05c6e48ba078d2202d53efe800d1d3c01eabc396111fb23089a28
+--> 0081a942b8b0
+[linux/arm64] [2/3] STEP 7/11: COPY cmd/ cmd/
+--> Using cache 56f82247b28960a3fa8629855fb41485b5717cd7c4e020f848272a8157a13196
+--> 56f82247b289
+[linux/arm64] [2/3] STEP 8/11: COPY pkg/ pkg/
+--> Using cache d56b01fe0d51826e2e062f74986e50a5898f027187b524a9d7e8d334fc242004
+--> d56b01fe0d51
+[linux/arm64] [2/3] STEP 9/11: ENV GOEXPERIMENT=strictfipsruntime
+--> Using cache 5ddb1bca9b18ee0fb696caec41d5e352149f9a7413c8523e99739369113f9b3c
+--> 5ddb1bca9b18
+[linux/arm64] [2/3] STEP 10/11: ENV CGO_ENABLED=1
+--> Using cache 1f87b2ff38aa988b188e19d1153b9039f1ceabb6a530e7ae1bb5e78e67a44bf9
+--> 1f87b2ff38aa
+[linux/arm64] [2/3] STEP 11/11: RUN make build-backend BUILD_OPTS="-tags strictfipsruntime"
+--> Using cache 072a2557b5283d7f1b8c4ae8f2a66ae7ea574c09d45500615565f93ae8b35ce8
+--> 072a2557b528
+[linux/amd64] [1/3] STEP 1/8: FROM registry.redhat.io/ubi8/nodejs-18:latest AS web-builder
+Trying to pull registry.redhat.io/ubi8/nodejs-18:latest...
+Getting image source signatures
+Checking if image destination supports signatures
+Copying blob sha256:046eb6416170db2ab33e464d04c6f7c0c8c6cc8563597aca8e9fb7736dff00f9
+Copying blob sha256:43ddc3bd12b8691687c9f6c273331ca07e3a89b50a619e0db9b040a8a629386d
+Copying blob sha256:b610fd6091ba2163b8943d2214e20665977bc8064dc769d47be9ae868e48a301
+Copying config sha256:ab55058334c5c32969b838cea2db23ee8c69c1b742006a75c031ed4f1b286bc5
+Writing manifest to image destination
+Storing signatures
+[linux/amd64] [1/3] STEP 2/8: WORKDIR /opt/app-root
+--> Using cache 301cea24795501cc39a9ca6b217f16396f00eabb1fe88dab658b495860a1cbda
+--> 301cea247955
+[linux/amd64] [1/3] STEP 3/8: USER 0
+--> Using cache c81fbd578cd0c0c1030a15d103f74790bdd69dcd46084fb2fe768cf22f692140
+--> c81fbd578cd0
+[linux/amd64] [1/3] STEP 4/8: COPY web/package*.json web/
+--> Using cache f37aedd44a6324dfc18935b5cec320d5695f8159c7f6d236632f905af43a58e2
+--> f37aedd44a63
+[linux/amd64] [1/3] STEP 5/8: COPY Makefile Makefile
+--> Using cache 289b8289f5bc348f5c01044169a53de698ae1c7576dfc4a1cbfe08b230d00e6a
+--> 289b8289f5bc
+[linux/amd64] [1/3] STEP 6/8: RUN make install-frontend-ci-clean
+--> Using cache 51686364ab041a85596c3afe304ebf64dc8b996568fe936dc9e493cf1a5df39e
+--> 51686364ab04
+[linux/amd64] [1/3] STEP 7/8: COPY web/ web/
+--> Using cache fbdca2062ae6ec1c978ee0320906e8297195c2369deb75b404e04343ed54ff2c
+--> fbdca2062ae6
+[linux/amd64] [1/3] STEP 8/8: RUN make build-frontend
+--> Using cache 3568954750003bd2e42071c692137d840b4ae401f2417b8ddf0a65a9aaa86b43
+--> 356895475000
+[linux/arm64] [3/3] STEP 1/4: FROM registry.access.redhat.com/ubi8/ubi
+[linux/arm64] [3/3] STEP 2/4: COPY --from=web-builder /opt/app-root/web/dist /opt/app-root/web/dist
+--> Using cache 2715e28c5e603d6171e9e2dd0f81788485f30a8cc0f029534e65a06c40bf7c66
+--> 2715e28c5e60
+[linux/arm64] [3/3] STEP 3/4: COPY --from=go-builder /opt/app-root/plugin-backend /opt/app-root
+--> Using cache 568895e9bdeadbfbd837461925accec908963f7d9aded4d035f8b93a6344004b
+--> 568895e9bdea
+[linux/arm64] [3/3] STEP 4/4: ENTRYPOINT ["/opt/app-root/plugin-backend", "-static-path", "/opt/app-root/web/dist"]
+--> Using cache 7196550bcb9695f5aa8d8245c484ae51a05763b383f69dba8d91933bf5763e73
+--> 7196550bcb96
+[linux/amd64] [2/3] STEP 1/11: FROM registry.ci.openshift.org/ocp/builder:rhel-8-golang-1.24-openshift-4.20 AS go-builder
+Trying to pull registry.ci.openshift.org/ocp/builder:rhel-8-golang-1.24-openshift-4.20...
+7196550bcb9695f5aa8d8245c484ae51a05763b383f69dba8d91933bf5763e73
+Error: [linux/amd64]: creating build container: unable to copy from source docker://registry.ci.openshift.org/ocp/builder:rhel-8-golang-1.24-openshift-4.20: initializing source docker://registry.ci.openshift.org/ocp/builder:rhel-8-golang-1.24-openshift-4.20: reading manifest rhel-8-golang-1.24-openshift-4.20 in registry.ci.openshift.org/ocp/builder: authentication required
+
+make: *** [podman-cross-build] Error 125
+WARNING: Attempt 2 failed for console-dashboards-plugin @ release-coo-ocp-4.12 (exit code 2)
+--- Attempt 3/3 ---
+podman manifest rm quay.io/rh-ee-emurasak/console-dashboards-plugin:v0.4.3 || true
+Untagged: quay.io/rh-ee-emurasak/console-dashboards-plugin:v0.4.3
+Deleted: 38eca100a6282cfdcceeb9bbb288a7df97785b0627d49fae5b6f6a5ffc0420c7
+podman manifest create quay.io/rh-ee-emurasak/console-dashboards-plugin:v0.4.3
+09c63fb2e5568d54304a32f18dda8b65ff904e4809b3db92b5f161e7b7f1a5f6
+podman build --platform=linux/arm64,linux/amd64 --manifest quay.io/rh-ee-emurasak/console-dashboards-plugin:v0.4.3 -f Dockerfile
+[linux/amd64] [1/3] STEP 1/8: FROM registry.redhat.io/ubi8/nodejs-18:latest AS web-builder
+[linux/amd64] [1/3] STEP 2/8: WORKDIR /opt/app-root
+--> Using cache 301cea24795501cc39a9ca6b217f16396f00eabb1fe88dab658b495860a1cbda
+--> 301cea247955
+[linux/amd64] [1/3] STEP 3/8: USER 0
+--> Using cache c81fbd578cd0c0c1030a15d103f74790bdd69dcd46084fb2fe768cf22f692140
+--> c81fbd578cd0
+[linux/amd64] [1/3] STEP 4/8: COPY web/package*.json web/
+--> Using cache f37aedd44a6324dfc18935b5cec320d5695f8159c7f6d236632f905af43a58e2
+--> f37aedd44a63
+[linux/amd64] [1/3] STEP 5/8: COPY Makefile Makefile
+--> Using cache 289b8289f5bc348f5c01044169a53de698ae1c7576dfc4a1cbfe08b230d00e6a
+--> 289b8289f5bc
+[linux/amd64] [1/3] STEP 6/8: RUN make install-frontend-ci-clean
+--> Using cache 51686364ab041a85596c3afe304ebf64dc8b996568fe936dc9e493cf1a5df39e
+--> 51686364ab04
+[linux/amd64] [1/3] STEP 7/8: COPY web/ web/
+--> Using cache fbdca2062ae6ec1c978ee0320906e8297195c2369deb75b404e04343ed54ff2c
+--> fbdca2062ae6
+[linux/amd64] [1/3] STEP 8/8: RUN make build-frontend
+--> Using cache 3568954750003bd2e42071c692137d840b4ae401f2417b8ddf0a65a9aaa86b43
+--> 356895475000
+[linux/amd64] [2/3] STEP 1/11: FROM registry.ci.openshift.org/ocp/builder:rhel-8-golang-1.24-openshift-4.20 AS go-builder
+Trying to pull registry.ci.openshift.org/ocp/builder:rhel-8-golang-1.24-openshift-4.20...
+[linux/arm64] [1/3] STEP 1/8: FROM registry.redhat.io/ubi8/nodejs-18:latest AS web-builder
+Trying to pull registry.redhat.io/ubi8/nodejs-18:latest...
+Getting image source signatures
+Checking if image destination supports signatures
+Copying blob sha256:c4fff77bc060c02d4f09680032367cb302e83402fc25b7c7ac001cb00238876f
+Copying blob sha256:8fd64178c906794da03bc9b7d2d5e3b70073b47f8aa659230381d7fd897dc11b
+Copying blob sha256:6ad04be99c8f2547888de53fad691136f65cf5a11c7a2567ef29477c3413f587
+Copying config sha256:62a277f6499a7c210a1022190779f4387fc1294a28ea7696fc264248bf328a9b
+Writing manifest to image destination
+Storing signatures
+[linux/arm64] [1/3] STEP 2/8: WORKDIR /opt/app-root
+--> Using cache 0126c6bd1784f90825c8e1a0669381d40055569af8d15cae986504068b0e05ec
+--> 0126c6bd1784
+[linux/arm64] [1/3] STEP 3/8: USER 0
+--> Using cache dc009a898acc5b6fd38a3e1a7c36a59693513ad153f00a531311a99fa414fcf5
+--> dc009a898acc
+[linux/arm64] [1/3] STEP 4/8: COPY web/package*.json web/
+--> Using cache f357aed545af0c2bf791f6c98ef27f55b9e6377175bd7f187d78934061c35448
+--> f357aed545af
+[linux/arm64] [1/3] STEP 5/8: COPY Makefile Makefile
+--> Using cache 25d12a31990bde261cb3e0b532df19492188075b03d21b82f2f121291f5624d9
+--> 25d12a31990b
+[linux/arm64] [1/3] STEP 6/8: RUN make install-frontend-ci-clean
+--> Using cache 01d1c5292d0549ece74d04ccd48e7d6844c0584aab30521bb6cd89501f4d7d54
+--> 01d1c5292d05
+[linux/arm64] [1/3] STEP 7/8: COPY web/ web/
+--> Using cache 6aac3c07c7e1e4cee3513b5484157701d70ec657e74c517668735ecfdcf3af70
+--> 6aac3c07c7e1
+[linux/arm64] [1/3] STEP 8/8: RUN make build-frontend
+--> Using cache e3984fdc4a93db34fdd271d2a64d3836d4fce2d73294ff67007b614ac5f832e1
+--> e3984fdc4a93
+[linux/arm64] [2/3] STEP 1/11: FROM registry.ci.openshift.org/ocp/builder:rhel-8-golang-1.24-openshift-4.20 AS go-builder
+[linux/arm64] [2/3] STEP 2/11: WORKDIR /opt/app-root
+--> Using cache e46c396598e2e0f460c71044312bbc73b8c9a13533dff1210718b1d6e1e4f967
+--> e46c396598e2
+[linux/arm64] [2/3] STEP 3/11: COPY Makefile Makefile
+--> Using cache 063aabda46b2838e694a87c6b78dcfcd94857bd843f15ba4a1f0a0355715e53a
+--> 063aabda46b2
+[linux/arm64] [2/3] STEP 4/11: COPY go.mod go.mod
+--> Using cache 4992159b0a689806b71f4c650af698cd1a25e8323c855d3262e1206053bc76f8
+--> 4992159b0a68
+[linux/arm64] [2/3] STEP 5/11: COPY go.sum go.sum
+--> Using cache e436d890c906079aeeb7c4eaaa0274cc9b43ebdd18b9fea5eeea03525e742d43
+--> e436d890c906
+[linux/arm64] [2/3] STEP 6/11: RUN go mod download
+--> Using cache 0081a942b8b05c6e48ba078d2202d53efe800d1d3c01eabc396111fb23089a28
+--> 0081a942b8b0
+[linux/arm64] [2/3] STEP 7/11: COPY cmd/ cmd/
+--> Using cache 56f82247b28960a3fa8629855fb41485b5717cd7c4e020f848272a8157a13196
+--> 56f82247b289
+[linux/arm64] [2/3] STEP 8/11: COPY pkg/ pkg/
+--> Using cache d56b01fe0d51826e2e062f74986e50a5898f027187b524a9d7e8d334fc242004
+--> d56b01fe0d51
+[linux/arm64] [2/3] STEP 9/11: ENV GOEXPERIMENT=strictfipsruntime
+--> Using cache 5ddb1bca9b18ee0fb696caec41d5e352149f9a7413c8523e99739369113f9b3c
+--> 5ddb1bca9b18
+[linux/arm64] [2/3] STEP 10/11: ENV CGO_ENABLED=1
+--> Using cache 1f87b2ff38aa988b188e19d1153b9039f1ceabb6a530e7ae1bb5e78e67a44bf9
+--> 1f87b2ff38aa
+[linux/arm64] [2/3] STEP 11/11: RUN make build-backend BUILD_OPTS="-tags strictfipsruntime"
+--> Using cache 072a2557b5283d7f1b8c4ae8f2a66ae7ea574c09d45500615565f93ae8b35ce8
+--> 072a2557b528
+[linux/arm64] [3/3] STEP 1/4: FROM registry.access.redhat.com/ubi8/ubi
+[linux/arm64] [3/3] STEP 2/4: COPY --from=web-builder /opt/app-root/web/dist /opt/app-root/web/dist
+--> Using cache 2715e28c5e603d6171e9e2dd0f81788485f30a8cc0f029534e65a06c40bf7c66
+--> 2715e28c5e60
+[linux/arm64] [3/3] STEP 3/4: COPY --from=go-builder /opt/app-root/plugin-backend /opt/app-root
+--> Using cache 568895e9bdeadbfbd837461925accec908963f7d9aded4d035f8b93a6344004b
+--> 568895e9bdea
+[linux/arm64] [3/3] STEP 4/4: ENTRYPOINT ["/opt/app-root/plugin-backend", "-static-path", "/opt/app-root/web/dist"]
+--> Using cache 7196550bcb9695f5aa8d8245c484ae51a05763b383f69dba8d91933bf5763e73
+--> 7196550bcb96
+7196550bcb9695f5aa8d8245c484ae51a05763b383f69dba8d91933bf5763e73
+Error: [linux/amd64]: creating build container: unable to copy from source docker://registry.ci.openshift.org/ocp/builder:rhel-8-golang-1.24-openshift-4.20: initializing source docker://registry.ci.openshift.org/ocp/builder:rhel-8-golang-1.24-openshift-4.20: reading manifest rhel-8-golang-1.24-openshift-4.20 in registry.ci.openshift.org/ocp/builder: authentication required
+
+make: *** [podman-cross-build] Error 125
+WARNING: Attempt 3 failed for console-dashboards-plugin @ release-coo-ocp-4.12 (exit code 2)
+WARNING: Build failed for console-dashboards-plugin @ release-coo-ocp-4.12 after 3 attempts, continuing...
+==========================================
+Building distributed-tracing-console-plugin @ release-coo-ocp-4.12 with VERSION=v0.3.3 ORG=rh-ee-emurasak
+==========================================
+Already on 'release-coo-ocp-4.12'
+M	Makefile
+Your branch is up to date with 'origin/release-coo-ocp-4.12'.
+From https://github.com/openshift/distributed-tracing-console-plugin
+ * branch            release-coo-ocp-4.12 -> FETCH_HEAD
+Already up to date.
+--- Attempt 1/3 ---
+podman manifest rm quay.io/rh-ee-emurasak/distributed-tracing-console-plugin:v0.3.3 || true
+Error: quay.io/rh-ee-emurasak/distributed-tracing-console-plugin:v0.3.3: image not known
+podman manifest create quay.io/rh-ee-emurasak/distributed-tracing-console-plugin:v0.3.3
+ecc7214a386f954ef22f7f5968092039dc3da253ed5f40e9946633c48103c31a
+podman build --platform=linux/arm64,linux/amd64 --manifest quay.io/rh-ee-emurasak/distributed-tracing-console-plugin:v0.3.3 -f Dockerfile
+[linux/amd64] [1/3] STEP 1/8: FROM registry.redhat.io/ubi8/nodejs-22:latest AS web-builder
+Trying to pull registry.redhat.io/ubi8/nodejs-22:latest...
+Getting image source signatures
+Checking if image destination supports signatures
+Copying blob sha256:b659079ce01565873eb67c4d47f0a94a60731d09351f7acfef987e5a525230aa
+Copying blob sha256:21534294e787fc96343978989fe438bd9c6b835220e7ab6102d5b3909e617005
+Copying blob sha256:e114f3bf44fdb152acae3e98961a32b080cc92a8b1274947ef95777f65996518

@@ -1,0 +1,2235 @@
+Logging to /Users/emurasak/workspace/harness/tasks/upstream-images/build-and-push-20260630-143654.log
+Fetching all branches for each repo...
+  Fetching console-dashboards-plugin...
+  Fetching distributed-tracing-console-plugin...
+  Fetching logging-view-plugin...
+  Fetching monitoring-plugin...
+  Fetching troubleshooting-panel-console-plugin...
+Fetch complete.
+==========================================
+Building console-dashboards-plugin @ release-coo-ocp-4.12 with VERSION=v0.4.3 ORG=rh-ee-emurasak
+==========================================
+Already on 'release-coo-ocp-4.12'
+Your branch is up to date with 'origin/release-coo-ocp-4.12'.
+From https://github.com/openshift/console-dashboards-plugin
+ * branch            release-coo-ocp-4.12 -> FETCH_HEAD
+Already up to date.
+--- Attempt 1/3 ---
+podman manifest rm quay.io/rh-ee-emurasak/console-dashboards-plugin:v0.4.3 || true
+Untagged: quay.io/rh-ee-emurasak/console-dashboards-plugin:v0.4.3
+Deleted: f64f875d6955fbb59f98f03672ceba6c75e6e0d096322bae74d18cb44d230b5a
+podman manifest create quay.io/rh-ee-emurasak/console-dashboards-plugin:v0.4.3
+cb9100cbedc65b5a6de26f7389307968b1646a0f5297627eeb1cc61fde35f3e7
+podman build --platform=linux/arm64,linux/amd64 --manifest quay.io/rh-ee-emurasak/console-dashboards-plugin:v0.4.3 -f Dockerfile
+[linux/arm64] [1/3] STEP 1/8: FROM registry.redhat.io/ubi8/nodejs-18:latest AS web-builder
+Trying to pull registry.redhat.io/ubi8/nodejs-18:latest...
+Getting image source signatures
+Checking if image destination supports signatures
+Copying blob sha256:8fd64178c906794da03bc9b7d2d5e3b70073b47f8aa659230381d7fd897dc11b
+Copying blob sha256:c4fff77bc060c02d4f09680032367cb302e83402fc25b7c7ac001cb00238876f
+Copying blob sha256:6ad04be99c8f2547888de53fad691136f65cf5a11c7a2567ef29477c3413f587
+Copying config sha256:62a277f6499a7c210a1022190779f4387fc1294a28ea7696fc264248bf328a9b
+Writing manifest to image destination
+Storing signatures
+[linux/arm64] [1/3] STEP 2/8: WORKDIR /opt/app-root
+--> 3a04ce32e7bc
+[linux/arm64] [1/3] STEP 3/8: USER 0
+--> 5612b35b38e0
+[linux/arm64] [1/3] STEP 4/8: COPY web/package*.json web/
+--> 7fad47df41fb
+[linux/arm64] [1/3] STEP 5/8: COPY Makefile Makefile
+--> 289147822189
+[linux/arm64] [1/3] STEP 6/8: RUN make install-frontend-ci-clean
+cd web && npm ci --ignore-scripts
+npm warn deprecated uuid@8.3.2: uuid@10 and below is no longer supported.  For ESM codebases, update to uuid@latest.  For CommonJS codebases, use uuid@11 (but be aware this version will likely be deprecated in 2028).
+
+added 701 packages, and audited 702 packages in 23s
+
+146 packages are looking for funding
+  run `npm fund` for details
+
+13 vulnerabilities (10 moderate, 3 high)
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+cd web && npm cache clean --force
+npm warn using --force Recommended protections disabled.
+--> 7d907c8ee3ea
+[linux/arm64] [1/3] STEP 7/8: COPY web/ web/
+--> b7bc209bc825
+[linux/arm64] [1/3] STEP 8/8: RUN make build-frontend
+cd web && npm run build
+
+> console-dashboards-plugin@0.1.0 build
+> npm run clean && NODE_ENV=production npm run ts-node node_modules/.bin/webpack
+
+
+> console-dashboards-plugin@0.1.0 clean
+> rm -rf dist
+
+
+> console-dashboards-plugin@0.1.0 ts-node
+> ts-node -O '{"module":"commonjs"}' node_modules/.bin/webpack
+
+assets by info 19.5 KiB [immutable]
+  asset 763-chunk-85263579519beb4f771c.min.js 16.6 KiB [emitted] [immutable] [minimized] (id hint: vendors)
+  asset exposed-ProxyTestPage-chunk-2f9082ef890be2ba1e5e.min.js 2.35 KiB [emitted] [immutable] [minimized] (name: exposed-ProxyTestPage)
+  asset exposed-GetDatasource-chunk-71e85ff48850c9bbb80c.min.js 559 bytes [emitted] [immutable] [minimized] (name: exposed-GetDatasource)
+asset plugin-entry.js 5.64 KiB [emitted] [minimized] (name: console-dashboards-plugin)
+asset plugin-manifest.json 733 bytes [emitted]
+runtime modules 15.6 KiB 11 modules
+built modules 37.8 KiB (javascript) 42 bytes (consume-shared) [built]
+  cacheable modules 37.7 KiB
+    ./components/ProxyTestPage.tsx 3.73 KiB [built] [code generated]
+    ./getDatasource.tsx 878 bytes [built] [code generated]
+    ../node_modules/lru-cache/index.mjs 33.1 KiB [built] [code generated]
+  container entry 42 bytes [built] [code generated]
+  consume shared module (default) react@^17.0.1 (singleton) 42 bytes [built] [code generated]
+webpack 5.105.3 compiled successfully in 2090 ms
+--> d37afecf0110
+[linux/amd64] [1/3] STEP 1/8: FROM registry.redhat.io/ubi8/nodejs-18:latest AS web-builder
+Trying to pull registry.redhat.io/ubi8/nodejs-18:latest...
+Getting image source signatures
+Checking if image destination supports signatures
+Copying blob sha256:046eb6416170db2ab33e464d04c6f7c0c8c6cc8563597aca8e9fb7736dff00f9
+Copying blob sha256:43ddc3bd12b8691687c9f6c273331ca07e3a89b50a619e0db9b040a8a629386d
+Copying blob sha256:b610fd6091ba2163b8943d2214e20665977bc8064dc769d47be9ae868e48a301
+Copying config sha256:ab55058334c5c32969b838cea2db23ee8c69c1b742006a75c031ed4f1b286bc5
+Writing manifest to image destination
+Storing signatures
+[linux/amd64] [1/3] STEP 2/8: WORKDIR /opt/app-root
+--> 3e6c8fef9f0d
+[linux/amd64] [1/3] STEP 3/8: USER 0
+--> 74db39ef4329
+[linux/amd64] [1/3] STEP 4/8: COPY web/package*.json web/
+--> 73eef413178b
+[linux/amd64] [1/3] STEP 5/8: COPY Makefile Makefile
+--> af1a4c6af546
+[linux/amd64] [1/3] STEP 6/8: RUN make install-frontend-ci-clean
+cd web && npm ci --ignore-scripts
+npm warn deprecated uuid@8.3.2: uuid@10 and below is no longer supported.  For ESM codebases, update to uuid@latest.  For CommonJS codebases, use uuid@11 (but be aware this version will likely be deprecated in 2028).
+
+added 701 packages, and audited 702 packages in 34s
+
+146 packages are looking for funding
+  run `npm fund` for details
+
+13 vulnerabilities (10 moderate, 3 high)
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+cd web && npm cache clean --force
+npm warn using --force Recommended protections disabled.
+--> 718268d5473e
+[linux/amd64] [1/3] STEP 7/8: COPY web/ web/
+--> 1bcbfe35cd8a
+[linux/amd64] [1/3] STEP 8/8: RUN make build-frontend
+cd web && npm run build
+
+> console-dashboards-plugin@0.1.0 build
+> npm run clean && NODE_ENV=production npm run ts-node node_modules/.bin/webpack
+
+
+> console-dashboards-plugin@0.1.0 clean
+> rm -rf dist
+
+
+> console-dashboards-plugin@0.1.0 ts-node
+> ts-node -O '{"module":"commonjs"}' node_modules/.bin/webpack
+
+assets by info 19.5 KiB [immutable]
+  asset 763-chunk-85263579519beb4f771c.min.js 16.6 KiB [emitted] [immutable] [minimized] (id hint: vendors)
+  asset exposed-ProxyTestPage-chunk-2f9082ef890be2ba1e5e.min.js 2.35 KiB [emitted] [immutable] [minimized] (name: exposed-ProxyTestPage)
+  asset exposed-GetDatasource-chunk-71e85ff48850c9bbb80c.min.js 559 bytes [emitted] [immutable] [minimized] (name: exposed-GetDatasource)
+asset plugin-entry.js 5.64 KiB [emitted] [minimized] (name: console-dashboards-plugin)
+asset plugin-manifest.json 733 bytes [emitted]
+runtime modules 15.6 KiB 11 modules
+built modules 37.8 KiB (javascript) 42 bytes (consume-shared) [built]
+  cacheable modules 37.7 KiB
+    ./components/ProxyTestPage.tsx 3.73 KiB [built] [code generated]
+    ./getDatasource.tsx 878 bytes [built] [code generated]
+    ../node_modules/lru-cache/index.mjs 33.1 KiB [built] [code generated]
+  container entry 42 bytes [built] [code generated]
+  consume shared module (default) react@^17.0.1 (singleton) 42 bytes [built] [code generated]
+webpack 5.105.3 compiled successfully in 3732 ms
+--> a46c8b267cf6
+[linux/arm64] [2/3] STEP 1/11: FROM registry.ci.openshift.org/ocp/builder:rhel-8-golang-1.24-openshift-4.20 AS go-builder
+Trying to pull registry.ci.openshift.org/ocp/builder:rhel-8-golang-1.24-openshift-4.20...
+[linux/amd64] [2/3] STEP 1/11: FROM registry.ci.openshift.org/ocp/builder:rhel-8-golang-1.24-openshift-4.20 AS go-builder
+Trying to pull registry.ci.openshift.org/ocp/builder:rhel-8-golang-1.24-openshift-4.20...
+Error: 2 errors occurred:
+	* [linux/arm64]: creating build container: internal error: unable to copy from source docker://registry.ci.openshift.org/ocp/builder:rhel-8-golang-1.24-openshift-4.20: initializing source docker://registry.ci.openshift.org/ocp/builder:rhel-8-golang-1.24-openshift-4.20: reading manifest rhel-8-golang-1.24-openshift-4.20 in registry.ci.openshift.org/ocp/builder: manifest unknown
+	* [linux/amd64]: creating build container: internal error: unable to copy from source docker://registry.ci.openshift.org/ocp/builder:rhel-8-golang-1.24-openshift-4.20: initializing source docker://registry.ci.openshift.org/ocp/builder:rhel-8-golang-1.24-openshift-4.20: reading manifest rhel-8-golang-1.24-openshift-4.20 in registry.ci.openshift.org/ocp/builder: manifest unknown
+
+
+
+make: *** [podman-cross-build] Error 125
+WARNING: Attempt 1 failed for console-dashboards-plugin @ release-coo-ocp-4.12 (exit code 2)
+--- Attempt 2/3 ---
+podman manifest rm quay.io/rh-ee-emurasak/console-dashboards-plugin:v0.4.3 || true
+Untagged: quay.io/rh-ee-emurasak/console-dashboards-plugin:v0.4.3
+Deleted: cb9100cbedc65b5a6de26f7389307968b1646a0f5297627eeb1cc61fde35f3e7
+podman manifest create quay.io/rh-ee-emurasak/console-dashboards-plugin:v0.4.3
+6104c29355d6dda74ce9acb73f426da6b93738b0aa357a8a4e796235610f1214
+podman build --platform=linux/arm64,linux/amd64 --manifest quay.io/rh-ee-emurasak/console-dashboards-plugin:v0.4.3 -f Dockerfile
+[linux/arm64] [1/3] STEP 1/8: FROM registry.redhat.io/ubi8/nodejs-18:latest AS web-builder
+Trying to pull registry.redhat.io/ubi8/nodejs-18:latest...
+Getting image source signatures
+Checking if image destination supports signatures
+Copying blob sha256:c4fff77bc060c02d4f09680032367cb302e83402fc25b7c7ac001cb00238876f
+Copying blob sha256:8fd64178c906794da03bc9b7d2d5e3b70073b47f8aa659230381d7fd897dc11b
+Copying blob sha256:6ad04be99c8f2547888de53fad691136f65cf5a11c7a2567ef29477c3413f587
+Copying config sha256:62a277f6499a7c210a1022190779f4387fc1294a28ea7696fc264248bf328a9b
+Writing manifest to image destination
+Storing signatures
+[linux/arm64] [1/3] STEP 2/8: WORKDIR /opt/app-root
+--> Using cache 3a04ce32e7bc50cb84da7cd07dc4c7d6ab5eab63f0dc9d77b097f4a793bce657
+--> 3a04ce32e7bc
+[linux/arm64] [1/3] STEP 3/8: USER 0
+--> Using cache 5612b35b38e026cb55402b3cbca1b44760992030a2263662076d090e1ff44049
+--> 5612b35b38e0
+[linux/arm64] [1/3] STEP 4/8: COPY web/package*.json web/
+--> Using cache 7fad47df41fb0416aae629027b46d8cd5032bad3093cb1ed40b3e5742383f77c
+--> 7fad47df41fb
+[linux/arm64] [1/3] STEP 5/8: COPY Makefile Makefile
+--> Using cache 289147822189771057028fb887acc57536022a1c51dae85b9ee3086456465d71
+--> 289147822189
+[linux/arm64] [1/3] STEP 6/8: RUN make install-frontend-ci-clean
+--> Using cache 7d907c8ee3ea04af5e68357f3c02ab219c2e796ed1f0ef0a9c685620595065c4
+--> 7d907c8ee3ea
+[linux/arm64] [1/3] STEP 7/8: COPY web/ web/
+--> Using cache b7bc209bc825b3561e3fc31ce045db7d1347948ec4697510217c3d8cab4bfbe3
+--> b7bc209bc825
+[linux/arm64] [1/3] STEP 8/8: RUN make build-frontend
+--> Using cache d37afecf01105b74608d939d645aaa9ceff3c7cba5e93b7c92c930430d0597c4
+--> d37afecf0110
+[linux/amd64] [1/3] STEP 1/8: FROM registry.redhat.io/ubi8/nodejs-18:latest AS web-builder
+Trying to pull registry.redhat.io/ubi8/nodejs-18:latest...
+Getting image source signatures
+Checking if image destination supports signatures
+Copying blob sha256:046eb6416170db2ab33e464d04c6f7c0c8c6cc8563597aca8e9fb7736dff00f9
+Copying blob sha256:43ddc3bd12b8691687c9f6c273331ca07e3a89b50a619e0db9b040a8a629386d
+Copying blob sha256:b610fd6091ba2163b8943d2214e20665977bc8064dc769d47be9ae868e48a301
+Copying config sha256:ab55058334c5c32969b838cea2db23ee8c69c1b742006a75c031ed4f1b286bc5
+Writing manifest to image destination
+Storing signatures
+[linux/amd64] [1/3] STEP 2/8: WORKDIR /opt/app-root
+--> Using cache 3e6c8fef9f0db81f076f7c17f99adfad90d540dbfad328d4d108a3a1d21cf92e
+--> 3e6c8fef9f0d
+[linux/amd64] [1/3] STEP 3/8: USER 0
+--> Using cache 74db39ef43293c846556d3d8aaafeef2ad2cab22e2dd02605273426e0c50fda6
+--> 74db39ef4329
+[linux/amd64] [1/3] STEP 4/8: COPY web/package*.json web/
+--> Using cache 73eef413178b69264fc91b4cbe383a50706790e1b0b9091bfc7a931d4e4b1abe
+--> 73eef413178b
+[linux/amd64] [1/3] STEP 5/8: COPY Makefile Makefile
+--> Using cache af1a4c6af546abdac94cbfb723406ba6aea572fd1795d14c7a47b02585860ac3
+--> af1a4c6af546
+[linux/amd64] [1/3] STEP 6/8: RUN make install-frontend-ci-clean
+--> Using cache 718268d5473eb480b1f143205712bae3145d1b9d864903281cd33e73d4eb5ede
+--> 718268d5473e
+[linux/amd64] [1/3] STEP 7/8: COPY web/ web/
+--> Using cache 1bcbfe35cd8a0c28d998bd2d325b91bcb12d144a401520f7ffb533fa9b66efc9
+--> 1bcbfe35cd8a
+[linux/amd64] [1/3] STEP 8/8: RUN make build-frontend
+--> Using cache a46c8b267cf62fbd97141aa9cd3392584c19471f93ddcdf73564fcbf13e6672d
+--> a46c8b267cf6
+[linux/arm64] [2/3] STEP 1/11: FROM registry.ci.openshift.org/ocp/builder:rhel-8-golang-1.24-openshift-4.20 AS go-builder
+Trying to pull registry.ci.openshift.org/ocp/builder:rhel-8-golang-1.24-openshift-4.20...
+[linux/amd64] [2/3] STEP 1/11: FROM registry.ci.openshift.org/ocp/builder:rhel-8-golang-1.24-openshift-4.20 AS go-builder
+Trying to pull registry.ci.openshift.org/ocp/builder:rhel-8-golang-1.24-openshift-4.20...
+Error: 2 errors occurred:
+	* [linux/arm64]: creating build container: internal error: unable to copy from source docker://registry.ci.openshift.org/ocp/builder:rhel-8-golang-1.24-openshift-4.20: initializing source docker://registry.ci.openshift.org/ocp/builder:rhel-8-golang-1.24-openshift-4.20: reading manifest rhel-8-golang-1.24-openshift-4.20 in registry.ci.openshift.org/ocp/builder: manifest unknown
+	* [linux/amd64]: creating build container: internal error: unable to copy from source docker://registry.ci.openshift.org/ocp/builder:rhel-8-golang-1.24-openshift-4.20: initializing source docker://registry.ci.openshift.org/ocp/builder:rhel-8-golang-1.24-openshift-4.20: reading manifest rhel-8-golang-1.24-openshift-4.20 in registry.ci.openshift.org/ocp/builder: manifest unknown
+
+
+
+make: *** [podman-cross-build] Error 125
+WARNING: Attempt 2 failed for console-dashboards-plugin @ release-coo-ocp-4.12 (exit code 2)
+--- Attempt 3/3 ---
+podman manifest rm quay.io/rh-ee-emurasak/console-dashboards-plugin:v0.4.3 || true
+Untagged: quay.io/rh-ee-emurasak/console-dashboards-plugin:v0.4.3
+Deleted: 6104c29355d6dda74ce9acb73f426da6b93738b0aa357a8a4e796235610f1214
+podman manifest create quay.io/rh-ee-emurasak/console-dashboards-plugin:v0.4.3
+8ffd73ca5259c10143eaaaffb62e62f538d00e9da5b3735ad3e4f257a97cf662
+podman build --platform=linux/arm64,linux/amd64 --manifest quay.io/rh-ee-emurasak/console-dashboards-plugin:v0.4.3 -f Dockerfile
+[linux/amd64] [1/3] STEP 1/8: FROM registry.redhat.io/ubi8/nodejs-18:latest AS web-builder
+[linux/amd64] [1/3] STEP 2/8: WORKDIR /opt/app-root
+--> Using cache 3e6c8fef9f0db81f076f7c17f99adfad90d540dbfad328d4d108a3a1d21cf92e
+--> 3e6c8fef9f0d
+[linux/amd64] [1/3] STEP 3/8: USER 0
+--> Using cache 74db39ef43293c846556d3d8aaafeef2ad2cab22e2dd02605273426e0c50fda6
+--> 74db39ef4329
+[linux/amd64] [1/3] STEP 4/8: COPY web/package*.json web/
+--> Using cache 73eef413178b69264fc91b4cbe383a50706790e1b0b9091bfc7a931d4e4b1abe
+--> 73eef413178b
+[linux/amd64] [1/3] STEP 5/8: COPY Makefile Makefile
+--> Using cache af1a4c6af546abdac94cbfb723406ba6aea572fd1795d14c7a47b02585860ac3
+--> af1a4c6af546
+[linux/amd64] [1/3] STEP 6/8: RUN make install-frontend-ci-clean
+--> Using cache 718268d5473eb480b1f143205712bae3145d1b9d864903281cd33e73d4eb5ede
+--> 718268d5473e
+[linux/amd64] [1/3] STEP 7/8: COPY web/ web/
+--> Using cache 1bcbfe35cd8a0c28d998bd2d325b91bcb12d144a401520f7ffb533fa9b66efc9
+--> 1bcbfe35cd8a
+[linux/amd64] [1/3] STEP 8/8: RUN make build-frontend
+--> Using cache a46c8b267cf62fbd97141aa9cd3392584c19471f93ddcdf73564fcbf13e6672d
+--> a46c8b267cf6
+[linux/arm64] [1/3] STEP 1/8: FROM registry.redhat.io/ubi8/nodejs-18:latest AS web-builder
+Trying to pull registry.redhat.io/ubi8/nodejs-18:latest...
+Getting image source signatures
+Checking if image destination supports signatures
+Copying blob sha256:c4fff77bc060c02d4f09680032367cb302e83402fc25b7c7ac001cb00238876f
+Copying blob sha256:8fd64178c906794da03bc9b7d2d5e3b70073b47f8aa659230381d7fd897dc11b
+Copying blob sha256:6ad04be99c8f2547888de53fad691136f65cf5a11c7a2567ef29477c3413f587
+Copying config sha256:62a277f6499a7c210a1022190779f4387fc1294a28ea7696fc264248bf328a9b
+Writing manifest to image destination
+Storing signatures
+[linux/arm64] [1/3] STEP 2/8: WORKDIR /opt/app-root
+--> Using cache 3a04ce32e7bc50cb84da7cd07dc4c7d6ab5eab63f0dc9d77b097f4a793bce657
+--> 3a04ce32e7bc
+[linux/arm64] [1/3] STEP 3/8: USER 0
+--> Using cache 5612b35b38e026cb55402b3cbca1b44760992030a2263662076d090e1ff44049
+--> 5612b35b38e0
+[linux/arm64] [1/3] STEP 4/8: COPY web/package*.json web/
+--> Using cache 7fad47df41fb0416aae629027b46d8cd5032bad3093cb1ed40b3e5742383f77c
+--> 7fad47df41fb
+[linux/arm64] [1/3] STEP 5/8: COPY Makefile Makefile
+--> Using cache 289147822189771057028fb887acc57536022a1c51dae85b9ee3086456465d71
+--> 289147822189
+[linux/arm64] [1/3] STEP 6/8: RUN make install-frontend-ci-clean
+--> Using cache 7d907c8ee3ea04af5e68357f3c02ab219c2e796ed1f0ef0a9c685620595065c4
+--> 7d907c8ee3ea
+[linux/arm64] [1/3] STEP 7/8: COPY web/ web/
+--> Using cache b7bc209bc825b3561e3fc31ce045db7d1347948ec4697510217c3d8cab4bfbe3
+--> b7bc209bc825
+[linux/arm64] [1/3] STEP 8/8: RUN make build-frontend
+--> Using cache d37afecf01105b74608d939d645aaa9ceff3c7cba5e93b7c92c930430d0597c4
+--> d37afecf0110
+[linux/amd64] [2/3] STEP 1/11: FROM registry.ci.openshift.org/ocp/builder:rhel-8-golang-1.24-openshift-4.20 AS go-builder
+Trying to pull registry.ci.openshift.org/ocp/builder:rhel-8-golang-1.24-openshift-4.20...
+[linux/arm64] [2/3] STEP 1/11: FROM registry.ci.openshift.org/ocp/builder:rhel-8-golang-1.24-openshift-4.20 AS go-builder
+Trying to pull registry.ci.openshift.org/ocp/builder:rhel-8-golang-1.24-openshift-4.20...
+Error: 2 errors occurred:
+	* [linux/amd64]: creating build container: internal error: unable to copy from source docker://registry.ci.openshift.org/ocp/builder:rhel-8-golang-1.24-openshift-4.20: initializing source docker://registry.ci.openshift.org/ocp/builder:rhel-8-golang-1.24-openshift-4.20: reading manifest rhel-8-golang-1.24-openshift-4.20 in registry.ci.openshift.org/ocp/builder: manifest unknown
+	* [linux/arm64]: creating build container: internal error: unable to copy from source docker://registry.ci.openshift.org/ocp/builder:rhel-8-golang-1.24-openshift-4.20: initializing source docker://registry.ci.openshift.org/ocp/builder:rhel-8-golang-1.24-openshift-4.20: reading manifest rhel-8-golang-1.24-openshift-4.20 in registry.ci.openshift.org/ocp/builder: manifest unknown
+
+
+
+make: *** [podman-cross-build] Error 125
+WARNING: Attempt 3 failed for console-dashboards-plugin @ release-coo-ocp-4.12 (exit code 2)
+WARNING: Build failed for console-dashboards-plugin @ release-coo-ocp-4.12 after 3 attempts, continuing...
+==========================================
+Building distributed-tracing-console-plugin @ release-coo-ocp-4.12 with VERSION=v0.3.3 ORG=rh-ee-emurasak
+==========================================
+Already on 'release-coo-ocp-4.12'
+Your branch is behind 'origin/release-coo-ocp-4.12' by 2 commits, and can be fast-forwarded.
+  (use "git pull" to update your local branch)
+From https://github.com/openshift/distributed-tracing-console-plugin
+ * branch            release-coo-ocp-4.12 -> FETCH_HEAD
+Updating 96ba973..82b87f6
+Fast-forward
+ Dockerfile            |    4 +-
+ Dockerfile.dev        |    3 +-
+ go.mod                |   10 +-
+ go.sum                |   24 +-
+ web/package-lock.json | 5547 ++++++++-----------------------------------------
+ web/package.json      |   11 +-
+ 6 files changed, 922 insertions(+), 4677 deletions(-)
+--- Attempt 1/3 ---
+podman manifest rm quay.io/rh-ee-emurasak/distributed-tracing-console-plugin:v0.3.3 || true
+Error: quay.io/rh-ee-emurasak/distributed-tracing-console-plugin:v0.3.3: image not known
+podman manifest create quay.io/rh-ee-emurasak/distributed-tracing-console-plugin:v0.3.3
+6b5367c8c83e4442e392e6063a4685887c7b2a05592e2cf1de3382778bd35af6
+podman build --platform=linux/arm64,linux/amd64 --manifest quay.io/rh-ee-emurasak/distributed-tracing-console-plugin:v0.3.3 -f Dockerfile
+[linux/amd64] [1/3] STEP 1/8: FROM registry.redhat.io/ubi9/nodejs-22:latest AS web-builder
+Trying to pull registry.redhat.io/ubi9/nodejs-22:latest...
+Getting image source signatures
+Checking if image destination supports signatures
+Copying blob sha256:282d0d24d7fbf867c5fcf0074ef814120603d793df3c6b07803f4fe4f13e8364
+Copying blob sha256:a65b1d5fa71f2275b83830542c74d937ba4151138631910bd375d577f8ceeed8
+Copying blob sha256:7e1f79224b0668cff86172f85305621504ef2f1a15768b9ed272ea1f1a0e4e4d
+Copying config sha256:0ccc4acadf8fe652aee3bd1e9b848aa1ddb72cc4db9269dc719a72a71892e157
+Writing manifest to image destination
+Storing signatures
+[linux/amd64] [1/3] STEP 2/8: WORKDIR /opt/app-root
+--> 25f952364c18
+[linux/amd64] [1/3] STEP 3/8: USER 0
+--> 7b8705aab315
+[linux/amd64] [1/3] STEP 4/8: COPY web/package*.json web/
+--> 31b2906b7c1e
+[linux/amd64] [1/3] STEP 5/8: COPY Makefile Makefile
+--> 8f7f981d9d3f
+[linux/amd64] [1/3] STEP 6/8: RUN make install-frontend-ci-clean
+cd web && npm ci --ignore-scripts --omit=optional
+npm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+npm warn deprecated mini-create-react-context@0.4.1: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
+npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+npm warn deprecated i18next-parser@9.4.0: Project is deprecated, use i18next-cli instead
+npm warn deprecated popper.js@1.16.1: You can find the new Popper v2 at @popperjs/core, this package is dedicated to the legacy v1
+npm warn deprecated @humanwhocodes/object-schema@2.0.3: Use @eslint/object-schema instead
+npm warn deprecated @humanwhocodes/config-array@0.13.0: Use @eslint/config-array instead
+npm warn deprecated rimraf@2.7.1: Rimraf versions prior to v4 are no longer supported
+npm warn deprecated eslint@8.57.1: This version is no longer supported. Please see https://eslint.org/version-support for other options.
+npm warn deprecated core-js@2.6.12: core-js@<3.23.3 is no longer maintained and not recommended for usage due to the number of issues. Because of the V8 engine whims, feature detection in old core-js versions could cause a slowdown up to 100x even if nothing is polyfilled. Some versions have web compatibility issues. Please, upgrade your dependencies to the actual version of core-js.
+
+added 1775 packages, and audited 1776 packages in 59s
+
+291 packages are looking for funding
+  run `npm fund` for details
+
+30 vulnerabilities (1 low, 25 moderate, 4 high)
+
+To address issues that do not require attention, run:
+  npm audit fix
+
+To address all issues possible (including breaking changes), run:
+  npm audit fix --force
+
+Some issues need review, and may require choosing
+a different dependency.
+
+Run `npm audit` for details.
+cd web && npm cache clean --force
+npm warn using --force Recommended protections disabled.
+--> 22307e39d92a
+[linux/amd64] [1/3] STEP 7/8: COPY web/ web/
+--> f4c42c055846
+[linux/amd64] [1/3] STEP 8/8: RUN make build-frontend
+cd web && npm run build
+
+> distributed-tracing-console-plugin@0.3.0 build
+> npm run clean && NODE_ENV=production npm run webpack
+
+
+> distributed-tracing-console-plugin@0.3.0 clean
+> rm -rf dist
+
+
+> distributed-tracing-console-plugin@0.3.0 webpack
+> node -r ts-node/register ./node_modules/.bin/webpack
+
+assets by path assets/ 1.27 MiB
+  assets by path assets/*.woff 740 KiB 42 assets
+  assets by path assets/*.woff2 565 KiB
+    asset assets/inter-latin-ext-600-normal..woff2 35.4 KiB [emitted] [from: ../node_modules/@fontsource/inter/files/inter-latin-ext-600-normal.woff2] (auxiliary id hint: vendors)
+    asset assets/inter-latin-ext-700-normal..woff2 35.4 KiB [emitted] [from: ../node_modules/@fontsource/inter/files/inter-latin-ext-700-normal.woff2] (auxiliary id hint: vendors)
+    + 40 assets
+assets by path *.js 2.91 MiB
+  assets by chunk 2.85 MiB (id hint: vendors)
+    asset 231-chunk-f6f04aea9cd53f0eebdb.min.js 2.71 MiB [emitted] [immutable] [minimized] [big] (id hint: vendors) 1 related asset
+    + 2 assets
+  + 4 assets
+asset locales/en/plugin__distributed-tracing-console-plugin.json 4.06 KiB [emitted] [from: ../locales/en/plugin__distributed-tracing-console-plugin.json] [copied]
+asset plugin-manifest.json 951 bytes [emitted]
+orphan modules 23.6 MiB (javascript) 168 bytes (consume-shared) [orphan] 14918 modules
+runtime modules 18.8 KiB 14 modules
+built modules 9.82 MiB (javascript) 1.27 MiB (asset) 1010 bytes (consume-shared) 42 bytes (share-init) [built]
+  javascript modules 9.82 MiB
+    modules by path ../node_modules/ 9.72 MiB 654 modules
+    modules by path ./ 104 KiB 15 modules
+    container entry 42 bytes [built] [code generated]
+  asset modules 1.27 MiB (asset) 3.45 KiB (javascript)
+    modules by path ../node_modules/@fontsource/inter/files/*.woff2 565 KiB (asset) 1.72 KiB (javascript) 42 modules
+    modules by path ../node_modules/@fontsource/inter/files/*.woff 740 KiB (asset) 1.72 KiB (javascript) 42 modules
+  consume-shared-module modules 1010 bytes
+    modules by path *.0 (singleton) 378 bytes 9 modules
+    modules by path *.1 (singleton) 84 bytes 2 modules
+    + 13 modules
+  provide shared module (default) react-helmet@6.1.0 = ../node_modules/react-helme...(truncated) 42 bytes [built] [code generated]
+
+WARNING in asset size limit: The following asset(s) exceed the recommended size limit (244 KiB).
+This can impact web performance.
+Assets: 
+  231-chunk-f6f04aea9cd53f0eebdb.min.js (2.71 MiB)
+
+webpack 5.105.3 compiled with 1 warning in 62119 ms
+--> cb43d07acc92
+[linux/amd64] [2/3] STEP 1/11: FROM registry.access.redhat.com/ubi9/go-toolset:1.26 AS go-builder
+[linux/amd64] [2/3] STEP 2/11: WORKDIR /opt/app-root
+--> Using cache af1cfc364e02bbbe152a266e3b4e766d012ba8761df2219b036428533bcaa1d1
+--> af1cfc364e02
+[linux/amd64] [2/3] STEP 3/11: COPY Makefile Makefile
+--> 4e9cce7ee01f
+[linux/amd64] [2/3] STEP 4/11: COPY go.mod go.mod
+--> 52339c115421
+[linux/amd64] [2/3] STEP 5/11: COPY go.sum go.sum
+--> c480e11b5335
+[linux/amd64] [2/3] STEP 6/11: RUN go mod download
+--> fbec6c310078
+[linux/amd64] [2/3] STEP 7/11: COPY cmd/ cmd/
+--> 5d2c43084b81
+[linux/amd64] [2/3] STEP 8/11: COPY pkg/ pkg/
+--> 736c82aa8afe
+[linux/amd64] [2/3] STEP 9/11: ENV GOEXPERIMENT=strictfipsruntime
+--> 3dae812623d9
+[linux/amd64] [2/3] STEP 10/11: ENV CGO_ENABLED=1
+--> 3a3d0c9a96b1
+[linux/amd64] [2/3] STEP 11/11: RUN make build-backend BUILD_OPTS="-tags strictfipsruntime"
+go build -tags strictfipsruntime -o plugin-backend -mod=readonly cmd/plugin-backend.go
+--> 72c223377cc1
+[linux/arm64] [1/3] STEP 1/8: FROM registry.redhat.io/ubi9/nodejs-22:latest AS web-builder
+Trying to pull registry.redhat.io/ubi9/nodejs-22:latest...
+Getting image source signatures
+Checking if image destination supports signatures
+Copying blob sha256:f00a3ea30fea862d594c88740f011c234eb0b745138910c83abb92b28517593d
+Copying blob sha256:9646992efe070a3bd6c556d5bfd825b8ffbc51f371288f7eb152d2d852939056
+Copying blob sha256:9f54e374b06db8429b62d91af166f6a7caa34095b474b38a6853f75e9501072e
+Copying config sha256:404bfb706f719cb0fdb063441e6c5404e5ce5228389a38c0ab4dda7570ece9f6
+Writing manifest to image destination
+Storing signatures
+[linux/arm64] [1/3] STEP 2/8: WORKDIR /opt/app-root
+--> 8d7f4d666d8b
+[linux/arm64] [1/3] STEP 3/8: USER 0
+--> ab40718f6d3d
+[linux/arm64] [1/3] STEP 4/8: COPY web/package*.json web/
+--> 0181054d4bc4
+[linux/arm64] [1/3] STEP 5/8: COPY Makefile Makefile
+--> 0140fb817469
+[linux/arm64] [1/3] STEP 6/8: RUN make install-frontend-ci-clean
+cd web && npm ci --ignore-scripts --omit=optional
+npm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+npm warn deprecated mini-create-react-context@0.4.1: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
+npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+npm warn deprecated i18next-parser@9.4.0: Project is deprecated, use i18next-cli instead
+npm warn deprecated popper.js@1.16.1: You can find the new Popper v2 at @popperjs/core, this package is dedicated to the legacy v1
+npm warn deprecated @humanwhocodes/object-schema@2.0.3: Use @eslint/object-schema instead
+npm warn deprecated @humanwhocodes/config-array@0.13.0: Use @eslint/config-array instead
+npm warn deprecated rimraf@2.7.1: Rimraf versions prior to v4 are no longer supported
+npm warn deprecated eslint@8.57.1: This version is no longer supported. Please see https://eslint.org/version-support for other options.
+npm warn deprecated core-js@2.6.12: core-js@<3.23.3 is no longer maintained and not recommended for usage due to the number of issues. Because of the V8 engine whims, feature detection in old core-js versions could cause a slowdown up to 100x even if nothing is polyfilled. Some versions have web compatibility issues. Please, upgrade your dependencies to the actual version of core-js.
+
+added 1775 packages, and audited 1776 packages in 37s
+
+291 packages are looking for funding
+  run `npm fund` for details
+
+30 vulnerabilities (1 low, 25 moderate, 4 high)
+
+To address issues that do not require attention, run:
+  npm audit fix
+
+To address all issues possible (including breaking changes), run:
+  npm audit fix --force
+
+Some issues need review, and may require choosing
+a different dependency.
+
+Run `npm audit` for details.
+cd web && npm cache clean --force
+npm warn using --force Recommended protections disabled.
+--> 25ef410cbd4a
+[linux/arm64] [1/3] STEP 7/8: COPY web/ web/
+--> e21eb07a2f5d
+[linux/arm64] [1/3] STEP 8/8: RUN make build-frontend
+cd web && npm run build
+
+> distributed-tracing-console-plugin@0.3.0 build
+> npm run clean && NODE_ENV=production npm run webpack
+
+
+> distributed-tracing-console-plugin@0.3.0 clean
+> rm -rf dist
+
+
+> distributed-tracing-console-plugin@0.3.0 webpack
+> node -r ts-node/register ./node_modules/.bin/webpack
+
+assets by path assets/ 1.27 MiB
+  assets by path assets/*.woff 740 KiB 42 assets
+  assets by path assets/*.woff2 565 KiB
+    asset assets/inter-latin-ext-600-normal..woff2 35.4 KiB [emitted] [from: ../node_modules/@fontsource/inter/files/inter-latin-ext-600-normal.woff2] (auxiliary id hint: vendors)
+    asset assets/inter-latin-ext-700-normal..woff2 35.4 KiB [emitted] [from: ../node_modules/@fontsource/inter/files/inter-latin-ext-700-normal.woff2] (auxiliary id hint: vendors)
+    + 40 assets
+assets by path *.js 2.91 MiB
+  assets by chunk 2.85 MiB (id hint: vendors)
+    asset 231-chunk-f6f04aea9cd53f0eebdb.min.js 2.71 MiB [emitted] [immutable] [minimized] [big] (id hint: vendors) 1 related asset
+    + 2 assets
+  + 4 assets
+asset locales/en/plugin__distributed-tracing-console-plugin.json 4.06 KiB [emitted] [from: ../locales/en/plugin__distributed-tracing-console-plugin.json] [copied]
+asset plugin-manifest.json 951 bytes [emitted]
+orphan modules 23.6 MiB (javascript) 168 bytes (consume-shared) [orphan] 14918 modules
+runtime modules 18.8 KiB 14 modules
+built modules 9.82 MiB (javascript) 1.27 MiB (asset) 1010 bytes (consume-shared) 42 bytes (share-init) [built]
+  javascript modules 9.82 MiB
+    modules by path ../node_modules/ 9.72 MiB 654 modules
+    modules by path ./ 104 KiB 15 modules
+    container entry 42 bytes [built] [code generated]
+  asset modules 1.27 MiB (asset) 3.45 KiB (javascript)
+    modules by path ../node_modules/@fontsource/inter/files/*.woff2 565 KiB (asset) 1.72 KiB (javascript) 42 modules
+    modules by path ../node_modules/@fontsource/inter/files/*.woff 740 KiB (asset) 1.72 KiB (javascript) 42 modules
+  consume-shared-module modules 1010 bytes
+    modules by path *.0 (singleton) 378 bytes 9 modules
+    modules by path *.1 (singleton) 84 bytes 2 modules
+    + 13 modules
+  provide shared module (default) react-helmet@6.1.0 = ../node_modules/react-helme...(truncated) 42 bytes [built] [code generated]
+
+WARNING in asset size limit: The following asset(s) exceed the recommended size limit (244 KiB).
+This can impact web performance.
+Assets: 
+  231-chunk-f6f04aea9cd53f0eebdb.min.js (2.71 MiB)
+
+webpack 5.105.3 compiled with 1 warning in 49440 ms
+--> 5327997cadc0
+[linux/amd64] [3/3] STEP 1/4: FROM registry.access.redhat.com/ubi9/ubi-minimal
+Trying to pull registry.access.redhat.com/ubi9/ubi-minimal:latest...
+Getting image source signatures
+Checking if image destination supports signatures
+Copying blob sha256:8af57f051b373375a1be8f892172089259ad624ed8452291226c539055e60228
+Copying config sha256:659f819f47f8e8d2348bd9243d2ef17f39a9cc97ee1964b1cf1f83d428090213
+Writing manifest to image destination
+Storing signatures
+[linux/amd64] [3/3] STEP 2/4: COPY --from=web-builder /opt/app-root/web/dist /opt/app-root/web/dist
+--> 5e4d6b5dd292
+[linux/amd64] [3/3] STEP 3/4: COPY --from=go-builder /opt/app-root/plugin-backend /opt/app-root
+--> 662e75137b70
+[linux/amd64] [3/3] STEP 4/4: ENTRYPOINT ["/opt/app-root/plugin-backend", "-static-path", "/opt/app-root/web/dist", "-config-path", "/opt/app-root/web/dist"]
+[linux/amd64] [3/3] COMMIT
+--> 4896fae83ac7
+[linux/arm64] [2/3] STEP 1/11: FROM registry.access.redhat.com/ubi9/go-toolset:1.26 AS go-builder
+4896fae83ac70d8fe3f26cef2d55b3272b4736fe48a276306ac65a6b67bad287
+Trying to pull registry.access.redhat.com/ubi9/go-toolset:1.26...
+Getting image source signatures
+Checking if image destination supports signatures
+Copying blob sha256:45930d601c4202f8f62b21cd0a99019c00cd0af6e243187962defb645a49ab77
+Copying blob sha256:f00a3ea30fea862d594c88740f011c234eb0b745138910c83abb92b28517593d
+Copying blob sha256:9f54e374b06db8429b62d91af166f6a7caa34095b474b38a6853f75e9501072e
+Copying blob sha256:45e8f34021ec53e3f4034c0aa42f88f43d2c6a70db6bcbe4da9c885fec121ca7
+Copying config sha256:1b04da50b8a1a4d73cbc62e9438485bbb1219c003b0fef077d227b77d3fa7fb5
+Writing manifest to image destination
+Storing signatures
+[linux/arm64] [2/3] STEP 2/11: WORKDIR /opt/app-root
+--> a05232a4028f
+[linux/arm64] [2/3] STEP 3/11: COPY Makefile Makefile
+--> 35cc516cd1e2
+[linux/arm64] [2/3] STEP 4/11: COPY go.mod go.mod
+--> f27e92f34149
+[linux/arm64] [2/3] STEP 5/11: COPY go.sum go.sum
+--> 0647718e5d08
+[linux/arm64] [2/3] STEP 6/11: RUN go mod download
+--> c1980880e2ea
+[linux/arm64] [2/3] STEP 7/11: COPY cmd/ cmd/
+--> b7fc973b58bb
+[linux/arm64] [2/3] STEP 8/11: COPY pkg/ pkg/
+--> 47805762c53f
+[linux/arm64] [2/3] STEP 9/11: ENV GOEXPERIMENT=strictfipsruntime
+--> 718811ccbc37
+[linux/arm64] [2/3] STEP 10/11: ENV CGO_ENABLED=1
+--> df6f0ded78a7
+[linux/arm64] [2/3] STEP 11/11: RUN make build-backend BUILD_OPTS="-tags strictfipsruntime"
+go build -tags strictfipsruntime -o plugin-backend -mod=readonly cmd/plugin-backend.go
+--> 1097d2ad5607
+[linux/arm64] [3/3] STEP 1/4: FROM registry.access.redhat.com/ubi9/ubi-minimal
+Trying to pull registry.access.redhat.com/ubi9/ubi-minimal:latest...
+Getting image source signatures
+Checking if image destination supports signatures
+Copying blob sha256:96c16ad0505847764761c5c4d0a82cd8a619f3e93c57f6a4b081cb9d4d0dd3e7
+Copying config sha256:dc66a34eca2d77aebb3d6349e06bbb118c0571f172e297eea776d8aa352899e7
+Writing manifest to image destination
+Storing signatures
+[linux/arm64] [3/3] STEP 2/4: COPY --from=web-builder /opt/app-root/web/dist /opt/app-root/web/dist
+--> 9c7bd144d6dd
+[linux/arm64] [3/3] STEP 3/4: COPY --from=go-builder /opt/app-root/plugin-backend /opt/app-root
+--> 5ecd1a379cb7
+[linux/arm64] [3/3] STEP 4/4: ENTRYPOINT ["/opt/app-root/plugin-backend", "-static-path", "/opt/app-root/web/dist", "-config-path", "/opt/app-root/web/dist"]
+[linux/arm64] [3/3] COMMIT
+--> 39a8fb8845f4
+39a8fb8845f41f45a1acfc4a6de90b4649699946c3c8ac07bf27824fc41ee08f
+podman manifest push quay.io/rh-ee-emurasak/distributed-tracing-console-plugin:v0.3.3
+Getting image list signatures
+Copying 2 images generated from 2 images in list
+Copying image sha256:4d8258363653d7b06726ae4ec3685dd04da436b3445399601e8056b9d88290f6 (1/2)
+Getting image source signatures
+Copying blob sha256:99967028dd504c0d65aabceb91553812e1a88a65a4224edd279acf657a6c708a
+Copying blob sha256:eb31fffb4653a560fe98f0cdf1563599483471410f682eef43f925913573d867
+Copying blob sha256:10b0b77a07519aa28df766977fb2c5701cd53b8dc1891c43630f45679581c3f4
+Copying config sha256:4896fae83ac70d8fe3f26cef2d55b3272b4736fe48a276306ac65a6b67bad287
+Writing manifest to image destination
+Copying image sha256:64c256df60b169c8cb8a7739e9f3302678fdc1729d12a0df9df40a17b548818b (2/2)
+Getting image source signatures
+Copying blob sha256:c71503c1156d30a62dc9ef83dc22fc996417d2dbc2dc0bf62033862f7cd62853
+Copying blob sha256:228d3d093b243661f2bbd4be6cc0e4a91af886b882ca37d67a2522d8dc67af93
+Copying blob sha256:6bb0225cc193fc2687af07cbb5182e5efd2a3e9512fcaa3a40e8b9b502410e5f
+Copying config sha256:39a8fb8845f41f45a1acfc4a6de90b4649699946c3c8ac07bf27824fc41ee08f
+Writing manifest to image destination
+Writing manifest list to image destination
+Storing list signatures
+==========================================
+Building logging-view-plugin @ release-coo-ocp-4.12 with VERSION=v6.0.5 ORG=rh-ee-emurasak
+==========================================
+Switched to branch 'release-coo-ocp-4.12'
+Your branch is behind 'origin/release-coo-ocp-4.12' by 6 commits, and can be fast-forwarded.
+  (use "git pull" to update your local branch)
+From https://github.com/openshift/logging-view-plugin
+ * branch            release-coo-ocp-4.12 -> FETCH_HEAD
+Updating f1264b9..5d3f32f
+Fast-forward
+ Dockerfile                                         |     4 +-
+ Dockerfile.ci                                      |    32 +-
+ Dockerfile.cypress                                 |     2 +-
+ Dockerfile.dev                                     |     9 +-
+ go.mod                                             |    14 +-
+ go.sum                                             |    28 +-
+ web/cypress/e2e/integration/logs-detail-page.cy.ts |    21 +-
+ web/cypress/e2e/integration/logs-page.cy.ts        |    22 +-
+ web/locales/en/plugin__logging-view-plugin.json    |     1 -
+ web/package-lock.json                              | 18451 +++----------------
+ web/package.json                                   |    14 +-
+ web/src/__tests__/value-utils.spec.ts              |    10 +
+ web/src/components/logs-table.tsx                  |     5 +-
+ web/src/hooks/useLogs.ts                           |    45 +-
+ web/src/logs.types.ts                              |     1 +
+ web/src/loki-client.ts                             |    80 +-
+ web/src/pages/logs-detail-page.tsx                 |    10 +-
+ web/src/pages/logs-dev-page.tsx                    |     4 +-
+ web/src/pages/logs-page.tsx                        |     4 +-
+ web/src/value-utils.ts                             |     2 +
+ 20 files changed, 2873 insertions(+), 15886 deletions(-)
+--- Attempt 1/3 ---
+podman manifest rm quay.io/rh-ee-emurasak/logging-view-plugin:v6.0.5 || true
+Error: quay.io/rh-ee-emurasak/logging-view-plugin:v6.0.5: image not known
+podman manifest create quay.io/rh-ee-emurasak/logging-view-plugin:v6.0.5
+26b3a911031c35a4f365b25d031df4b71897dd6db822d230b79d6d528fb9d1db
+podman build --platform=linux/arm64,linux/amd64 --manifest quay.io/rh-ee-emurasak/logging-view-plugin:v6.0.5 -f Dockerfile
+[linux/arm64] [1/3] STEP 1/9: FROM registry.redhat.io/ubi9/nodejs-18:latest AS web-builder
+Trying to pull registry.redhat.io/ubi9/nodejs-18:latest...
+Getting image source signatures
+Checking if image destination supports signatures
+Copying blob sha256:d2d4277551d19aaf448f46617629ba5ce8decceacdd7a9e3f6d43a7763294f84
+Copying blob sha256:c0c6f119f250bcd571815218a238bf91fcd968aa4bfe95c224309ec367df747e
+Copying blob sha256:d92b30fd88841f53962ad35d9c474465d043b096524bdc2ef18640daf2e51e82
+Copying config sha256:d561cbadf704f121dc19b5ca23115d808580ccff537c4def93fff467e1723872
+Writing manifest to image destination
+Storing signatures
+[linux/arm64] [1/3] STEP 2/9: WORKDIR /opt/app-root
+--> dfa7ac49c2dc
+[linux/arm64] [1/3] STEP 3/9: USER 0
+--> 2320e81a48b7
+[linux/arm64] [1/3] STEP 4/9: ENV HUSKY=0
+--> e7d32f84af41
+[linux/arm64] [1/3] STEP 5/9: COPY web/package*.json web/
+--> 40309120bad5
+[linux/arm64] [1/3] STEP 6/9: COPY Makefile Makefile
+--> d68d3e1b603e
+[linux/arm64] [1/3] STEP 7/9: RUN make install-frontend-ci-clean
+cd web && npm ci --omit=optional --ignore-scripts
+npm warn EBADENGINE Unsupported engine {
+npm warn EBADENGINE   package: '@cypress/code-coverage@4.0.3',
+npm warn EBADENGINE   required: { node: '>=20' },
+npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+npm warn EBADENGINE }
+npm warn EBADENGINE Unsupported engine {
+npm warn EBADENGINE   package: '@peculiar/x509@1.14.3',
+npm warn EBADENGINE   required: { node: '>=20.0.0' },
+npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+npm warn EBADENGINE }
+npm warn EBADENGINE Unsupported engine {
+npm warn EBADENGINE   package: 'cheerio@1.2.0',
+npm warn EBADENGINE   required: { node: '>=20.18.1' },
+npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+npm warn EBADENGINE }
+npm warn EBADENGINE Unsupported engine {
+npm warn EBADENGINE   package: 'cli-truncate@5.2.0',
+npm warn EBADENGINE   required: { node: '>=20' },
+npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+npm warn EBADENGINE }
+npm warn EBADENGINE Unsupported engine {
+npm warn EBADENGINE   package: 'string-width@8.2.1',
+npm warn EBADENGINE   required: { node: '>=20' },
+npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+npm warn EBADENGINE }
+npm warn EBADENGINE Unsupported engine {
+npm warn EBADENGINE   package: 'copy-webpack-plugin@14.0.0',
+npm warn EBADENGINE   required: { node: '>= 20.9.0' },
+npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+npm warn EBADENGINE }
+npm warn EBADENGINE Unsupported engine {
+npm warn EBADENGINE   package: 'cypress@15.18.0',
+npm warn EBADENGINE   required: { node: '^20.1.0 || ^22.0.0 || >=24.0.0' },
+npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+npm warn EBADENGINE }
+npm warn EBADENGINE Unsupported engine {
+npm warn EBADENGINE   package: 'istanbul-lib-processinfo@3.0.1',
+npm warn EBADENGINE   required: { node: '20 || >=22' },
+npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+npm warn EBADENGINE }
+npm warn EBADENGINE Unsupported engine {
+npm warn EBADENGINE   package: 'lru-cache@11.5.1',
+npm warn EBADENGINE   required: { node: '20 || >=22' },
+npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+npm warn EBADENGINE }
+npm warn EBADENGINE Unsupported engine {
+npm warn EBADENGINE   package: 'rimraf@6.1.3',
+npm warn EBADENGINE   required: { node: '20 || >=22' },
+npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+npm warn EBADENGINE }
+npm warn EBADENGINE Unsupported engine {
+npm warn EBADENGINE   package: 'listr2@9.0.5',
+npm warn EBADENGINE   required: { node: '>=20.0.0' },
+npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+npm warn EBADENGINE }
+npm warn EBADENGINE Unsupported engine {
+npm warn EBADENGINE   package: 'mktemp@2.0.3',
+npm warn EBADENGINE   required: { node: '20 || 22 || 24' },
+npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+npm warn EBADENGINE }
+npm warn EBADENGINE Unsupported engine {
+npm warn EBADENGINE   package: 'nyc@18.0.0',
+npm warn EBADENGINE   required: { node: '20 || >=22' },
+npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+npm warn EBADENGINE }
+npm warn EBADENGINE Unsupported engine {
+npm warn EBADENGINE   package: 'lru-cache@11.5.1',
+npm warn EBADENGINE   required: { node: '20 || >=22' },
+npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+npm warn EBADENGINE }
+npm warn EBADENGINE Unsupported engine {
+npm warn EBADENGINE   package: 'rimraf@6.1.3',
+npm warn EBADENGINE   required: { node: '20 || >=22' },
+npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+npm warn EBADENGINE }
+npm warn EBADENGINE Unsupported engine {
+npm warn EBADENGINE   package: 'test-exclude@8.0.0',
+npm warn EBADENGINE   required: { node: '20 || >=22' },
+npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+npm warn EBADENGINE }
+npm warn EBADENGINE Unsupported engine {
+npm warn EBADENGINE   package: 'serialize-javascript@7.0.6',
+npm warn EBADENGINE   required: { node: '>=20.0.0' },
+npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+npm warn EBADENGINE }
+npm warn EBADENGINE Unsupported engine {
+npm warn EBADENGINE   package: 'slice-ansi@8.0.0',
+npm warn EBADENGINE   required: { node: '>=20' },
+npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+npm warn EBADENGINE }
+npm warn EBADENGINE Unsupported engine {
+npm warn EBADENGINE   package: 'lru-cache@11.5.1',
+npm warn EBADENGINE   required: { node: '20 || >=22' },
+npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+npm warn EBADENGINE }
+npm warn EBADENGINE Unsupported engine {
+npm warn EBADENGINE   package: 'rimraf@6.1.3',
+npm warn EBADENGINE   required: { node: '20 || >=22' },
+npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+npm warn EBADENGINE }
+npm warn EBADENGINE Unsupported engine {
+npm warn EBADENGINE   package: 'undici@7.28.0',
+npm warn EBADENGINE   required: { node: '>=20.18.1' },
+npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+npm warn EBADENGINE }
+npm warn deprecated whatwg-encoding@3.1.1: Use @exodus/bytes instead for a more spec-conformant and faster implementation
+npm warn deprecated i18next-parser@9.3.0: Project is deprecated, use i18next-cli instead
+npm warn deprecated glob@10.5.0: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+npm warn deprecated glob@10.5.0: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+npm warn deprecated glob@10.5.0: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+npm warn deprecated glob@10.5.0: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+
+added 1483 packages, and audited 1484 packages in 37s
+
+285 packages are looking for funding
+  run `npm fund` for details
+
+3 moderate severity vulnerabilities
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+cd web && npm cache clean --force
+npm warn using --force Recommended protections disabled.
+--> 7b97e15d6203
+[linux/arm64] [1/3] STEP 8/9: COPY web/ web/
+--> 8e755a5dd3bb
+[linux/arm64] [1/3] STEP 9/9: RUN make build-frontend
+cd web && npm run build
+
+> logging-view-plugin@6.0.0 build
+> npm run clean && NODE_ENV=production npm run ts-node node_modules/.bin/webpack
+
+
+> logging-view-plugin@6.0.0 clean
+> rm -rf dist
+
+
+> logging-view-plugin@6.0.0 ts-node
+> ts-node -O '{"module":"commonjs"}' node_modules/.bin/webpack
+
+TypeError: [(...copiedResultMap.entries(...))].toSorted is not a function
+    at /opt/app-root/web/node_modules/copy-webpack-plugin/dist/index.js:747:61
+make: *** [Makefile:41: build-frontend] Error 1
+[linux/amd64] [1/3] STEP 1/9: FROM registry.redhat.io/ubi9/nodejs-18:latest AS web-builder
+Trying to pull registry.redhat.io/ubi9/nodejs-18:latest...
+Getting image source signatures
+Checking if image destination supports signatures
+Copying blob sha256:bd74b94f9d783929640d82362c5b1af55b0b7bea9405c379251f405c9c94f690
+Copying blob sha256:97971704aef24e8b1129c4f1b2e2241c7800b8bb89a14e77a7efebccd4193661
+Copying blob sha256:ce1770dcb97c2c062c80efe0edf0d512923b8ac34444b4f56733f446ea06ca95
+Copying config sha256:dc791d1b00fc164bb81bc99a7ddadc9eef02d0042878fe62c5fd468df91b2140
+Writing manifest to image destination
+Storing signatures
+[linux/amd64] [1/3] STEP 2/9: WORKDIR /opt/app-root
+--> 21284eb9bf8c
+[linux/amd64] [1/3] STEP 3/9: USER 0
+--> e4607401235d
+[linux/amd64] [1/3] STEP 4/9: ENV HUSKY=0
+--> b520a56d39c0
+[linux/amd64] [1/3] STEP 5/9: COPY web/package*.json web/
+--> ab362fa4ed33
+[linux/amd64] [1/3] STEP 6/9: COPY Makefile Makefile
+--> 87a502bb09fe
+[linux/amd64] [1/3] STEP 7/9: RUN make install-frontend-ci-clean
+cd web && npm ci --omit=optional --ignore-scripts
+npm warn EBADENGINE Unsupported engine {
+npm warn EBADENGINE   package: '@cypress/code-coverage@4.0.3',
+npm warn EBADENGINE   required: { node: '>=20' },
+npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+npm warn EBADENGINE }
+npm warn EBADENGINE Unsupported engine {
+npm warn EBADENGINE   package: '@peculiar/x509@1.14.3',
+npm warn EBADENGINE   required: { node: '>=20.0.0' },
+npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+npm warn EBADENGINE }
+npm warn EBADENGINE Unsupported engine {
+npm warn EBADENGINE   package: 'cheerio@1.2.0',
+npm warn EBADENGINE   required: { node: '>=20.18.1' },
+npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+npm warn EBADENGINE }
+npm warn EBADENGINE Unsupported engine {
+npm warn EBADENGINE   package: 'cli-truncate@5.2.0',
+npm warn EBADENGINE   required: { node: '>=20' },
+npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+npm warn EBADENGINE }
+npm warn EBADENGINE Unsupported engine {
+npm warn EBADENGINE   package: 'string-width@8.2.1',
+npm warn EBADENGINE   required: { node: '>=20' },
+npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+npm warn EBADENGINE }
+npm warn EBADENGINE Unsupported engine {
+npm warn EBADENGINE   package: 'copy-webpack-plugin@14.0.0',
+npm warn EBADENGINE   required: { node: '>= 20.9.0' },
+npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+npm warn EBADENGINE }
+npm warn EBADENGINE Unsupported engine {
+npm warn EBADENGINE   package: 'cypress@15.18.0',
+npm warn EBADENGINE   required: { node: '^20.1.0 || ^22.0.0 || >=24.0.0' },
+npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+npm warn EBADENGINE }
+npm warn EBADENGINE Unsupported engine {
+npm warn EBADENGINE   package: 'istanbul-lib-processinfo@3.0.1',
+npm warn EBADENGINE   required: { node: '20 || >=22' },
+npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+npm warn EBADENGINE }
+npm warn EBADENGINE Unsupported engine {
+npm warn EBADENGINE   package: 'lru-cache@11.5.1',
+npm warn EBADENGINE   required: { node: '20 || >=22' },
+npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+npm warn EBADENGINE }
+npm warn EBADENGINE Unsupported engine {
+npm warn EBADENGINE   package: 'rimraf@6.1.3',
+npm warn EBADENGINE   required: { node: '20 || >=22' },
+npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+npm warn EBADENGINE }
+npm warn EBADENGINE Unsupported engine {
+npm warn EBADENGINE   package: 'listr2@9.0.5',
+npm warn EBADENGINE   required: { node: '>=20.0.0' },
+npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+npm warn EBADENGINE }
+npm warn EBADENGINE Unsupported engine {
+npm warn EBADENGINE   package: 'mktemp@2.0.3',
+npm warn EBADENGINE   required: { node: '20 || 22 || 24' },
+npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+npm warn EBADENGINE }
+npm warn EBADENGINE Unsupported engine {
+npm warn EBADENGINE   package: 'nyc@18.0.0',
+npm warn EBADENGINE   required: { node: '20 || >=22' },
+npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+npm warn EBADENGINE }
+npm warn EBADENGINE Unsupported engine {
+npm warn EBADENGINE   package: 'lru-cache@11.5.1',
+npm warn EBADENGINE   required: { node: '20 || >=22' },
+npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+npm warn EBADENGINE }
+npm warn EBADENGINE Unsupported engine {
+npm warn EBADENGINE   package: 'rimraf@6.1.3',
+npm warn EBADENGINE   required: { node: '20 || >=22' },
+npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+npm warn EBADENGINE }
+npm warn EBADENGINE Unsupported engine {
+npm warn EBADENGINE   package: 'test-exclude@8.0.0',
+npm warn EBADENGINE   required: { node: '20 || >=22' },
+npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+npm warn EBADENGINE }
+npm warn EBADENGINE Unsupported engine {
+npm warn EBADENGINE   package: 'serialize-javascript@7.0.6',
+npm warn EBADENGINE   required: { node: '>=20.0.0' },
+npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+npm warn EBADENGINE }
+npm warn EBADENGINE Unsupported engine {
+npm warn EBADENGINE   package: 'slice-ansi@8.0.0',
+npm warn EBADENGINE   required: { node: '>=20' },
+npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+npm warn EBADENGINE }
+npm warn EBADENGINE Unsupported engine {
+npm warn EBADENGINE   package: 'lru-cache@11.5.1',
+npm warn EBADENGINE   required: { node: '20 || >=22' },
+npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+npm warn EBADENGINE }
+npm warn EBADENGINE Unsupported engine {
+npm warn EBADENGINE   package: 'rimraf@6.1.3',
+npm warn EBADENGINE   required: { node: '20 || >=22' },
+npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+npm warn EBADENGINE }
+npm warn EBADENGINE Unsupported engine {
+npm warn EBADENGINE   package: 'undici@7.28.0',
+npm warn EBADENGINE   required: { node: '>=20.18.1' },
+npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+npm warn EBADENGINE }
+npm warn deprecated whatwg-encoding@3.1.1: Use @exodus/bytes instead for a more spec-conformant and faster implementation
+npm warn deprecated i18next-parser@9.3.0: Project is deprecated, use i18next-cli instead
+npm warn deprecated glob@10.5.0: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+npm warn deprecated glob@10.5.0: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+npm warn deprecated glob@10.5.0: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+npm warn deprecated glob@10.5.0: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+
+added 1483 packages, and audited 1484 packages in 52s
+
+285 packages are looking for funding
+  run `npm fund` for details
+
+3 moderate severity vulnerabilities
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+cd web && npm cache clean --force
+npm warn using --force Recommended protections disabled.
+--> 25dcc0f4a40b
+[linux/amd64] [1/3] STEP 8/9: COPY web/ web/
+--> 6967b3033d20
+[linux/amd64] [1/3] STEP 9/9: RUN make build-frontend
+cd web && npm run build
+
+> logging-view-plugin@6.0.0 build
+> npm run clean && NODE_ENV=production npm run ts-node node_modules/.bin/webpack
+
+
+> logging-view-plugin@6.0.0 clean
+> rm -rf dist
+
+
+> logging-view-plugin@6.0.0 ts-node
+> ts-node -O '{"module":"commonjs"}' node_modules/.bin/webpack
+
+TypeError: [(...copiedResultMap.entries(...))].toSorted is not a function
+    at /opt/app-root/web/node_modules/copy-webpack-plugin/dist/index.js:747:61
+make: *** [Makefile:41: build-frontend] Error 1
+Error: 2 errors occurred:
+	* [linux/arm64]: building at STEP "RUN make build-frontend": while running runtime: exit status 2
+	* [linux/amd64]: building at STEP "RUN make build-frontend": while running runtime: exit status 2
+
+
+
+make: *** [podman-cross-build] Error 2
+WARNING: Attempt 1 failed for logging-view-plugin @ release-coo-ocp-4.12 (exit code 2)
+--- Attempt 2/3 ---
+podman manifest rm quay.io/rh-ee-emurasak/logging-view-plugin:v6.0.5 || true
+Untagged: quay.io/rh-ee-emurasak/logging-view-plugin:v6.0.5
+Deleted: 26b3a911031c35a4f365b25d031df4b71897dd6db822d230b79d6d528fb9d1db
+podman manifest create quay.io/rh-ee-emurasak/logging-view-plugin:v6.0.5
+22337bdb88581fccd64673c193c08368cf93a5755c3680dcd6883a0c1e311543
+podman build --platform=linux/arm64,linux/amd64 --manifest quay.io/rh-ee-emurasak/logging-view-plugin:v6.0.5 -f Dockerfile
+[linux/amd64] [1/3] STEP 1/9: FROM registry.redhat.io/ubi9/nodejs-18:latest AS web-builder
+[linux/amd64] [1/3] STEP 2/9: WORKDIR /opt/app-root
+--> Using cache 21284eb9bf8c29bd9fd2c14ad913f4ce724bf799d1b7aed0b791ee22b54cd741
+--> 21284eb9bf8c
+[linux/amd64] [1/3] STEP 3/9: USER 0
+--> Using cache e4607401235d2219f41aedae14a2b91f057afcedfe75b452e81d5ea8dfff35ec
+--> e4607401235d
+[linux/amd64] [1/3] STEP 4/9: ENV HUSKY=0
+--> Using cache b520a56d39c09f98aca73aa48de3be3727f47c123ad337137250ba143690f780
+--> b520a56d39c0
+[linux/amd64] [1/3] STEP 5/9: COPY web/package*.json web/
+--> Using cache ab362fa4ed33ae09d41c92d4d3277f50801918593d1152185896d5a97457a4c2
+--> ab362fa4ed33
+[linux/amd64] [1/3] STEP 6/9: COPY Makefile Makefile
+--> Using cache 87a502bb09fe859a5a30e5590fb4b70f0e0247e83d9d599bd76c7f23ca5882c5
+--> 87a502bb09fe
+[linux/amd64] [1/3] STEP 7/9: RUN make install-frontend-ci-clean
+--> Using cache 25dcc0f4a40bb0b4b77ac16d26e5a547b65e5f87f41ef7bd1651f1595f878823
+--> 25dcc0f4a40b
+[linux/amd64] [1/3] STEP 8/9: COPY web/ web/
+--> Using cache 6967b3033d20e7f357b675a835814f039bba3e25d9c0ebed6615e1bc2ef38901
+--> 6967b3033d20
+[linux/amd64] [1/3] STEP 9/9: RUN make build-frontend
+cd web && npm run build
+
+> logging-view-plugin@6.0.0 build
+> npm run clean && NODE_ENV=production npm run ts-node node_modules/.bin/webpack
+
+
+> logging-view-plugin@6.0.0 clean
+> rm -rf dist
+
+
+> logging-view-plugin@6.0.0 ts-node
+> ts-node -O '{"module":"commonjs"}' node_modules/.bin/webpack
+
+TypeError: [(...copiedResultMap.entries(...))].toSorted is not a function
+    at /opt/app-root/web/node_modules/copy-webpack-plugin/dist/index.js:747:61
+make: *** [Makefile:41: build-frontend] Error 1
+[linux/arm64] [1/3] STEP 1/9: FROM registry.redhat.io/ubi9/nodejs-18:latest AS web-builder
+Trying to pull registry.redhat.io/ubi9/nodejs-18:latest...
+Getting image source signatures
+Checking if image destination supports signatures
+Copying blob sha256:d2d4277551d19aaf448f46617629ba5ce8decceacdd7a9e3f6d43a7763294f84
+Copying blob sha256:c0c6f119f250bcd571815218a238bf91fcd968aa4bfe95c224309ec367df747e
+Copying blob sha256:d92b30fd88841f53962ad35d9c474465d043b096524bdc2ef18640daf2e51e82
+Copying config sha256:d561cbadf704f121dc19b5ca23115d808580ccff537c4def93fff467e1723872
+Writing manifest to image destination
+Storing signatures
+[linux/arm64] [1/3] STEP 2/9: WORKDIR /opt/app-root
+--> Using cache dfa7ac49c2dc872eb22a00ffa7e4fe3e0d6f88784e4c23092347d0a33595306f
+--> dfa7ac49c2dc
+[linux/arm64] [1/3] STEP 3/9: USER 0
+--> Using cache 2320e81a48b79caa878a481cac213ec5e1a6178add248503955987764eb42558
+--> 2320e81a48b7
+[linux/arm64] [1/3] STEP 4/9: ENV HUSKY=0
+--> Using cache e7d32f84af4126829711c35cf6b59f75033d56bc14f5cbbd5b0f6b01fb813676
+--> e7d32f84af41
+[linux/arm64] [1/3] STEP 5/9: COPY web/package*.json web/
+--> Using cache 40309120bad57e3c40fddea0f81c03bf2ca55a0a378fc91efb55cce85c4b6eb8
+--> 40309120bad5
+[linux/arm64] [1/3] STEP 6/9: COPY Makefile Makefile
+--> Using cache d68d3e1b603ecb1649e997605d29f0a567c8edeecb852e9463d4eb6ab7c005bf
+--> d68d3e1b603e
+[linux/arm64] [1/3] STEP 7/9: RUN make install-frontend-ci-clean
+--> Using cache 7b97e15d6203239170c35befdf5635883272a93f33e7a9f851a505ae709f7488
+--> 7b97e15d6203
+[linux/arm64] [1/3] STEP 8/9: COPY web/ web/
+--> Using cache 8e755a5dd3bbe50d229f6b9b8a3a807b238e4dcb091c99acabb932a61e470c32
+--> 8e755a5dd3bb
+[linux/arm64] [1/3] STEP 9/9: RUN make build-frontend
+cd web && npm run build
+
+> logging-view-plugin@6.0.0 build
+> npm run clean && NODE_ENV=production npm run ts-node node_modules/.bin/webpack
+
+
+> logging-view-plugin@6.0.0 clean
+> rm -rf dist
+
+
+> logging-view-plugin@6.0.0 ts-node
+> ts-node -O '{"module":"commonjs"}' node_modules/.bin/webpack
+
+TypeError: [(...copiedResultMap.entries(...))].toSorted is not a function
+    at /opt/app-root/web/node_modules/copy-webpack-plugin/dist/index.js:747:61
+make: *** [Makefile:41: build-frontend] Error 1
+Error: 2 errors occurred:
+	* [linux/amd64]: building at STEP "RUN make build-frontend": while running runtime: exit status 2
+	* [linux/arm64]: building at STEP "RUN make build-frontend": while running runtime: exit status 2
+
+
+
+make: *** [podman-cross-build] Error 2
+WARNING: Attempt 2 failed for logging-view-plugin @ release-coo-ocp-4.12 (exit code 2)
+--- Attempt 3/3 ---
+podman manifest rm quay.io/rh-ee-emurasak/logging-view-plugin:v6.0.5 || true
+Untagged: quay.io/rh-ee-emurasak/logging-view-plugin:v6.0.5
+Deleted: 22337bdb88581fccd64673c193c08368cf93a5755c3680dcd6883a0c1e311543
+podman manifest create quay.io/rh-ee-emurasak/logging-view-plugin:v6.0.5
+1c922fc8631ef609be8864d0b0d85ece9e89d7c5c8d3311f15771f98a309355b
+podman build --platform=linux/arm64,linux/amd64 --manifest quay.io/rh-ee-emurasak/logging-view-plugin:v6.0.5 -f Dockerfile
+[linux/amd64] [1/3] STEP 1/9: FROM registry.redhat.io/ubi9/nodejs-18:latest AS web-builder
+Trying to pull registry.redhat.io/ubi9/nodejs-18:latest...
+Getting image source signatures
+Checking if image destination supports signatures
+Copying blob sha256:bd74b94f9d783929640d82362c5b1af55b0b7bea9405c379251f405c9c94f690
+Copying blob sha256:97971704aef24e8b1129c4f1b2e2241c7800b8bb89a14e77a7efebccd4193661
+Copying blob sha256:ce1770dcb97c2c062c80efe0edf0d512923b8ac34444b4f56733f446ea06ca95
+Copying config sha256:dc791d1b00fc164bb81bc99a7ddadc9eef02d0042878fe62c5fd468df91b2140
+Writing manifest to image destination
+Storing signatures
+[linux/amd64] [1/3] STEP 2/9: WORKDIR /opt/app-root
+--> Using cache 21284eb9bf8c29bd9fd2c14ad913f4ce724bf799d1b7aed0b791ee22b54cd741
+--> 21284eb9bf8c
+[linux/amd64] [1/3] STEP 3/9: USER 0
+--> Using cache e4607401235d2219f41aedae14a2b91f057afcedfe75b452e81d5ea8dfff35ec
+--> e4607401235d
+[linux/amd64] [1/3] STEP 4/9: ENV HUSKY=0
+--> Using cache b520a56d39c09f98aca73aa48de3be3727f47c123ad337137250ba143690f780
+--> b520a56d39c0
+[linux/amd64] [1/3] STEP 5/9: COPY web/package*.json web/
+--> Using cache ab362fa4ed33ae09d41c92d4d3277f50801918593d1152185896d5a97457a4c2
+--> ab362fa4ed33
+[linux/amd64] [1/3] STEP 6/9: COPY Makefile Makefile
+--> Using cache 87a502bb09fe859a5a30e5590fb4b70f0e0247e83d9d599bd76c7f23ca5882c5
+--> 87a502bb09fe
+[linux/amd64] [1/3] STEP 7/9: RUN make install-frontend-ci-clean
+--> Using cache 25dcc0f4a40bb0b4b77ac16d26e5a547b65e5f87f41ef7bd1651f1595f878823
+--> 25dcc0f4a40b
+[linux/amd64] [1/3] STEP 8/9: COPY web/ web/
+--> Using cache 6967b3033d20e7f357b675a835814f039bba3e25d9c0ebed6615e1bc2ef38901
+--> 6967b3033d20
+[linux/amd64] [1/3] STEP 9/9: RUN make build-frontend
+cd web && npm run build
+
+> logging-view-plugin@6.0.0 build
+> npm run clean && NODE_ENV=production npm run ts-node node_modules/.bin/webpack
+
+
+> logging-view-plugin@6.0.0 clean
+> rm -rf dist
+
+
+> logging-view-plugin@6.0.0 ts-node
+> ts-node -O '{"module":"commonjs"}' node_modules/.bin/webpack
+
+TypeError: [(...copiedResultMap.entries(...))].toSorted is not a function
+    at /opt/app-root/web/node_modules/copy-webpack-plugin/dist/index.js:747:61
+make: *** [Makefile:41: build-frontend] Error 1
+[linux/arm64] [1/3] STEP 1/9: FROM registry.redhat.io/ubi9/nodejs-18:latest AS web-builder
+Trying to pull registry.redhat.io/ubi9/nodejs-18:latest...
+Getting image source signatures
+Checking if image destination supports signatures
+Copying blob sha256:d2d4277551d19aaf448f46617629ba5ce8decceacdd7a9e3f6d43a7763294f84
+Copying blob sha256:c0c6f119f250bcd571815218a238bf91fcd968aa4bfe95c224309ec367df747e
+Copying blob sha256:d92b30fd88841f53962ad35d9c474465d043b096524bdc2ef18640daf2e51e82
+Copying config sha256:d561cbadf704f121dc19b5ca23115d808580ccff537c4def93fff467e1723872
+Writing manifest to image destination
+Storing signatures
+[linux/arm64] [1/3] STEP 2/9: WORKDIR /opt/app-root
+--> Using cache dfa7ac49c2dc872eb22a00ffa7e4fe3e0d6f88784e4c23092347d0a33595306f
+--> dfa7ac49c2dc
+[linux/arm64] [1/3] STEP 3/9: USER 0
+--> Using cache 2320e81a48b79caa878a481cac213ec5e1a6178add248503955987764eb42558
+--> 2320e81a48b7
+[linux/arm64] [1/3] STEP 4/9: ENV HUSKY=0
+--> Using cache e7d32f84af4126829711c35cf6b59f75033d56bc14f5cbbd5b0f6b01fb813676
+--> e7d32f84af41
+[linux/arm64] [1/3] STEP 5/9: COPY web/package*.json web/
+--> Using cache 40309120bad57e3c40fddea0f81c03bf2ca55a0a378fc91efb55cce85c4b6eb8
+--> 40309120bad5
+[linux/arm64] [1/3] STEP 6/9: COPY Makefile Makefile
+--> Using cache d68d3e1b603ecb1649e997605d29f0a567c8edeecb852e9463d4eb6ab7c005bf
+--> d68d3e1b603e
+[linux/arm64] [1/3] STEP 7/9: RUN make install-frontend-ci-clean
+--> Using cache 7b97e15d6203239170c35befdf5635883272a93f33e7a9f851a505ae709f7488
+--> 7b97e15d6203
+[linux/arm64] [1/3] STEP 8/9: COPY web/ web/
+--> Using cache 8e755a5dd3bbe50d229f6b9b8a3a807b238e4dcb091c99acabb932a61e470c32
+--> 8e755a5dd3bb
+[linux/arm64] [1/3] STEP 9/9: RUN make build-frontend
+cd web && npm run build
+
+> logging-view-plugin@6.0.0 build
+> npm run clean && NODE_ENV=production npm run ts-node node_modules/.bin/webpack
+
+
+> logging-view-plugin@6.0.0 clean
+> rm -rf dist
+
+
+> logging-view-plugin@6.0.0 ts-node
+> ts-node -O '{"module":"commonjs"}' node_modules/.bin/webpack
+
+TypeError: [(...copiedResultMap.entries(...))].toSorted is not a function
+    at /opt/app-root/web/node_modules/copy-webpack-plugin/dist/index.js:747:61
+make: *** [Makefile:41: build-frontend] Error 1
+Error: 2 errors occurred:
+	* [linux/amd64]: building at STEP "RUN make build-frontend": while running runtime: exit status 2
+	* [linux/arm64]: building at STEP "RUN make build-frontend": while running runtime: exit status 2
+
+
+
+make: *** [podman-cross-build] Error 2
+WARNING: Attempt 3 failed for logging-view-plugin @ release-coo-ocp-4.12 (exit code 2)
+WARNING: Build failed for logging-view-plugin @ release-coo-ocp-4.12 after 3 attempts, continuing...
+==========================================
+Building distributed-tracing-console-plugin @ release-coo-ocp-4.15 with VERSION=v0.4.3 ORG=rh-ee-emurasak
+==========================================
+Switched to branch 'release-coo-ocp-4.15'
+Your branch is behind 'origin/release-coo-ocp-4.15' by 2 commits, and can be fast-forwarded.
+  (use "git pull" to update your local branch)
+From https://github.com/openshift/distributed-tracing-console-plugin
+ * branch            release-coo-ocp-4.15 -> FETCH_HEAD
+Updating ee610cc..a695d12
+Fast-forward
+ Dockerfile            |    4 +-
+ Dockerfile.dev        |    4 +-
+ go.mod                |   10 +-
+ go.sum                |   28 +-
+ web/package-lock.json | 1516 ++++++++++++++++++++-----------------------------
+ web/package.json      |   12 +-
+ 6 files changed, 634 insertions(+), 940 deletions(-)
+--- Attempt 1/3 ---
+podman manifest rm quay.io/rh-ee-emurasak/distributed-tracing-console-plugin:v0.4.3 || true
+Error: quay.io/rh-ee-emurasak/distributed-tracing-console-plugin:v0.4.3: image not known
+podman manifest create quay.io/rh-ee-emurasak/distributed-tracing-console-plugin:v0.4.3
+6185f6eb74b3e5dda00373db5653ffaf6f7db1e2d61668aac7174e674ea24524
+podman build --platform=linux/arm64,linux/amd64 --manifest quay.io/rh-ee-emurasak/distributed-tracing-console-plugin:v0.4.3 -f Dockerfile
+[linux/arm64] [1/3] STEP 1/8: FROM registry.redhat.io/ubi9/nodejs-22:latest AS web-builder
+[linux/arm64] [1/3] STEP 2/8: WORKDIR /opt/app-root
+--> Using cache 8d7f4d666d8b2966000dfdbddaf0f201f102b80d182b42918646bca008497d32
+--> 8d7f4d666d8b
+[linux/arm64] [1/3] STEP 3/8: USER 0
+--> Using cache ab40718f6d3d3469511e8bdb5e14133d0b8570fbf01d414c2b0398600f6e9b81
+--> ab40718f6d3d
+[linux/arm64] [1/3] STEP 4/8: COPY web/package*.json web/
+--> 22931396cfef
+[linux/arm64] [1/3] STEP 5/8: COPY Makefile Makefile
+--> 7d1eba04884b
+[linux/arm64] [1/3] STEP 6/8: RUN make install-frontend-ci-clean
+cd web && npm ci --ignore-scripts --omit=optional
+npm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+npm warn deprecated popper.js@1.16.1: You can find the new Popper v2 at @popperjs/core, this package is dedicated to the legacy v1
+npm warn deprecated @humanwhocodes/config-array@0.13.0: Use @eslint/config-array instead
+npm warn deprecated @humanwhocodes/object-schema@2.0.3: Use @eslint/object-schema instead
+npm warn deprecated rimraf@2.7.1: Rimraf versions prior to v4 are no longer supported
+npm warn deprecated eslint@8.57.1: This version is no longer supported. Please see https://eslint.org/version-support for other options.
+
+added 1815 packages, and audited 1816 packages in 38s
+
+312 packages are looking for funding
+  run `npm fund` for details
+
+20 vulnerabilities (1 low, 18 moderate, 1 high)
+
+To address issues that do not require attention, run:
+  npm audit fix
+
+To address all issues possible (including breaking changes), run:
+  npm audit fix --force
+
+Some issues need review, and may require choosing
+a different dependency.
+
+Run `npm audit` for details.
+cd web && npm cache clean --force
+npm warn using --force Recommended protections disabled.
+--> 3ba6fd836bce
+[linux/arm64] [1/3] STEP 7/8: COPY web/ web/
+--> bf96163841bb
+[linux/arm64] [1/3] STEP 8/8: RUN make build-frontend
+cd web && npm run build
+
+> distributed-tracing-console-plugin@0.4.0 build
+> npm run clean && NODE_ENV=production npm run webpack
+
+
+> distributed-tracing-console-plugin@0.4.0 clean
+> rm -rf dist
+
+
+> distributed-tracing-console-plugin@0.4.0 webpack
+> node -r ts-node/register ./node_modules/.bin/webpack
+
+assets by path assets/ 1.27 MiB
+  assets by path assets/*.woff 740 KiB 42 assets
+  assets by path assets/*.woff2 565 KiB
+    asset assets/inter-latin-ext-600-normal..woff2 35.4 KiB [emitted] [from: ../node_modules/@fontsource/inter/files/inter-latin-ext-600-normal.woff2] (auxiliary id hint: vendors)
+    + 41 assets
+assets by path *.js 3.85 MiB
+  assets by chunk 3.4 MiB (id hint: vendors)
+    asset 1907-chunk-0d22a5aa10d0bc99f3d0.min.js 2.6 MiB [emitted] [immutable] [minimized] [big] (id hint: vendors) 1 related asset
+    asset 6127-chunk-e59d7258fd384804d704.min.js 124 KiB [emitted] [immutable] [minimized] (id hint: vendors) 1 related asset
+    asset 5607-chunk-fcc671a213ca68550d43.min.js 121 KiB [emitted] [immutable] [minimized] (id hint: vendors)
+    + 14 assets
+  + 61 assets
+asset locales/en/plugin__distributed-tracing-console-plugin.json 4.29 KiB [emitted] [from: ../locales/en/plugin__distributed-tracing-console-plugin.json] [copied]
+asset plugin-manifest.json 895 bytes [emitted]
+orphan modules 21.9 MiB [orphan] 13315 modules
+runtime modules 35.2 KiB 14 modules
+built modules 10.7 MiB (javascript) 1.27 MiB (asset) 1.6 KiB (consume-shared) 1.39 KiB (share-init) [built]
+  javascript modules 10.7 MiB 745 modules
+  asset modules 1.27 MiB (asset) 3.45 KiB (javascript)
+    modules by path ../node_modules/@fontsource/inter/files/*.woff2 565 KiB (asset) 1.72 KiB (javascript) 42 modules
+    modules by path ../node_modules/@fontsource/inter/files/*.woff 740 KiB (asset) 1.72 KiB (javascript) 42 modules
+  consume-shared-module modules 1.6 KiB
+    modules by path consume shared module (default) @patternfly/ 1.39 KiB 34 modules
+    + 5 modules
+  provide-module modules 1.39 KiB
+    modules by path provide shared module (default) @patternfly/react-core/dist/dynamic/ 924 bytes 22 modules
+    modules by path provide shared module (default) @patternfly/react-icons/dist/dynamic/icons/ 504 bytes 12 modules
+
+WARNING in asset size limit: The following asset(s) exceed the recommended size limit (244 KiB).
+This can impact web performance.
+Assets: 
+  1907-chunk-0d22a5aa10d0bc99f3d0.min.js (2.6 MiB)
+
+webpack 5.105.3 compiled with 1 warning in 73657 ms
+--> 36c0192d130f
+[linux/arm64] [2/3] STEP 1/11: FROM registry.access.redhat.com/ubi9/go-toolset:1.26 AS go-builder
+[linux/arm64] [2/3] STEP 2/11: WORKDIR /opt/app-root
+--> Using cache a05232a4028fedcbdc5858a48a003ce3f0eaa6f7f55bf759968c0186ab9fecd0
+--> a05232a4028f
+[linux/arm64] [2/3] STEP 3/11: COPY Makefile Makefile
+--> Using cache 35cc516cd1e235a66ef91e01b28dc9486da5f5666aa9729546034de8a103113b
+--> 35cc516cd1e2
+[linux/arm64] [2/3] STEP 4/11: COPY go.mod go.mod
+--> 4f85b1f3084a
+[linux/arm64] [2/3] STEP 5/11: COPY go.sum go.sum
+--> 737cb39293f8
+[linux/arm64] [2/3] STEP 6/11: RUN go mod download
+--> a97f566bc332
+[linux/arm64] [2/3] STEP 7/11: COPY cmd/ cmd/
+--> 4ee89d202814
+[linux/arm64] [2/3] STEP 8/11: COPY pkg/ pkg/
+--> 79820c6814aa
+[linux/arm64] [2/3] STEP 9/11: ENV GOEXPERIMENT=strictfipsruntime
+--> 923bac05c77e
+[linux/arm64] [2/3] STEP 10/11: ENV CGO_ENABLED=1
+--> 83cdd3939f27
+[linux/arm64] [2/3] STEP 11/11: RUN make build-backend BUILD_OPTS="-tags strictfipsruntime"
+go build -tags strictfipsruntime -o plugin-backend -mod=readonly cmd/plugin-backend.go
+--> 88b68cc4da15
+[linux/amd64] [1/3] STEP 1/8: FROM registry.redhat.io/ubi9/nodejs-22:latest AS web-builder
+Trying to pull registry.redhat.io/ubi9/nodejs-22:latest...
+Getting image source signatures
+Checking if image destination supports signatures
+Copying blob sha256:282d0d24d7fbf867c5fcf0074ef814120603d793df3c6b07803f4fe4f13e8364
+Copying blob sha256:a65b1d5fa71f2275b83830542c74d937ba4151138631910bd375d577f8ceeed8
+Copying blob sha256:7e1f79224b0668cff86172f85305621504ef2f1a15768b9ed272ea1f1a0e4e4d
+Copying config sha256:0ccc4acadf8fe652aee3bd1e9b848aa1ddb72cc4db9269dc719a72a71892e157
+Writing manifest to image destination
+Storing signatures
+[linux/amd64] [1/3] STEP 2/8: WORKDIR /opt/app-root
+--> Using cache 25f952364c18dec697621ccdf03fe10655339de2dbbbf27c4486edb5a1c24341
+--> 25f952364c18
+[linux/amd64] [1/3] STEP 3/8: USER 0
+--> Using cache 7b8705aab315b50a437e2e7c2f502baa54d72938a85870d51e91af51dabda800
+--> 7b8705aab315
+[linux/amd64] [1/3] STEP 4/8: COPY web/package*.json web/
+--> d23cef284ff5
+[linux/amd64] [1/3] STEP 5/8: COPY Makefile Makefile
+--> b48abb5d80c7
+[linux/amd64] [1/3] STEP 6/8: RUN make install-frontend-ci-clean
+cd web && npm ci --ignore-scripts --omit=optional
+npm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+npm warn deprecated @humanwhocodes/config-array@0.13.0: Use @eslint/config-array instead
+npm warn deprecated @humanwhocodes/object-schema@2.0.3: Use @eslint/object-schema instead
+npm warn deprecated rimraf@2.7.1: Rimraf versions prior to v4 are no longer supported
+npm warn deprecated popper.js@1.16.1: You can find the new Popper v2 at @popperjs/core, this package is dedicated to the legacy v1
+npm warn deprecated eslint@8.57.1: This version is no longer supported. Please see https://eslint.org/version-support for other options.
+
+added 1815 packages, and audited 1816 packages in 55s
+
+312 packages are looking for funding
+  run `npm fund` for details
+
+20 vulnerabilities (1 low, 18 moderate, 1 high)
+
+To address issues that do not require attention, run:
+  npm audit fix
+
+To address all issues possible (including breaking changes), run:
+  npm audit fix --force
+
+Some issues need review, and may require choosing
+a different dependency.
+
+Run `npm audit` for details.
+cd web && npm cache clean --force
+npm warn using --force Recommended protections disabled.
+--> 2d6de247cc64
+[linux/amd64] [1/3] STEP 7/8: COPY web/ web/
+--> a97d591fe0aa
+[linux/amd64] [1/3] STEP 8/8: RUN make build-frontend
+cd web && npm run build
+
+> distributed-tracing-console-plugin@0.4.0 build
+> npm run clean && NODE_ENV=production npm run webpack
+
+
+> distributed-tracing-console-plugin@0.4.0 clean
+> rm -rf dist
+
+
+> distributed-tracing-console-plugin@0.4.0 webpack
+> node -r ts-node/register ./node_modules/.bin/webpack
+
+assets by path assets/ 1.27 MiB
+  assets by path assets/*.woff 740 KiB 42 assets
+  assets by path assets/*.woff2 565 KiB
+    asset assets/inter-latin-ext-600-normal..woff2 35.4 KiB [emitted] [from: ../node_modules/@fontsource/inter/files/inter-latin-ext-600-normal.woff2] (auxiliary id hint: vendors)
+    + 41 assets
+assets by path *.js 3.85 MiB
+  assets by chunk 3.4 MiB (id hint: vendors)
+    asset 1907-chunk-0d22a5aa10d0bc99f3d0.min.js 2.6 MiB [emitted] [immutable] [minimized] [big] (id hint: vendors) 1 related asset
+    asset 6127-chunk-e59d7258fd384804d704.min.js 124 KiB [emitted] [immutable] [minimized] (id hint: vendors) 1 related asset
+    asset 5607-chunk-fcc671a213ca68550d43.min.js 121 KiB [emitted] [immutable] [minimized] (id hint: vendors)
+    + 14 assets
+  + 61 assets
+asset locales/en/plugin__distributed-tracing-console-plugin.json 4.29 KiB [emitted] [from: ../locales/en/plugin__distributed-tracing-console-plugin.json] [copied]
+asset plugin-manifest.json 895 bytes [emitted]
+orphan modules 21.9 MiB [orphan] 13315 modules
+runtime modules 35.2 KiB 14 modules
+built modules 10.7 MiB (javascript) 1.27 MiB (asset) 1.6 KiB (consume-shared) 1.39 KiB (share-init) [built]
+  javascript modules 10.7 MiB 745 modules
+  asset modules 1.27 MiB (asset) 3.45 KiB (javascript)
+    modules by path ../node_modules/@fontsource/inter/files/*.woff2 565 KiB (asset) 1.72 KiB (javascript) 42 modules
+    modules by path ../node_modules/@fontsource/inter/files/*.woff 740 KiB (asset) 1.72 KiB (javascript) 42 modules
+  consume-shared-module modules 1.6 KiB
+    modules by path consume shared module (default) @patternfly/ 1.39 KiB 34 modules
+    + 5 modules
+  provide-module modules 1.39 KiB
+    modules by path provide shared module (default) @patternfly/react-core/dist/dynamic/ 924 bytes 22 modules
+    modules by path provide shared module (default) @patternfly/react-icons/dist/dynamic/icons/ 504 bytes 12 modules
+
+WARNING in asset size limit: The following asset(s) exceed the recommended size limit (244 KiB).
+This can impact web performance.
+Assets: 
+  1907-chunk-0d22a5aa10d0bc99f3d0.min.js (2.6 MiB)
+
+webpack 5.105.3 compiled with 1 warning in 117906 ms
+--> 3cae1831188d
+[linux/arm64] [3/3] STEP 1/4: FROM registry.access.redhat.com/ubi9/ubi-minimal
+[linux/arm64] [3/3] STEP 2/4: COPY --from=web-builder /opt/app-root/web/dist /opt/app-root/web/dist
+--> 469328150925
+[linux/arm64] [3/3] STEP 3/4: COPY --from=go-builder /opt/app-root/plugin-backend /opt/app-root
+--> 71cfa5a8e555
+[linux/arm64] [3/3] STEP 4/4: ENTRYPOINT ["/opt/app-root/plugin-backend", "-static-path", "/opt/app-root/web/dist", "-config-path", "/opt/app-root/web/dist"]
+[linux/arm64] [3/3] COMMIT
+--> d7fcf5681612
+[linux/amd64] [2/3] STEP 1/11: FROM registry.access.redhat.com/ubi9/go-toolset:1.26 AS go-builder
+d7fcf5681612b30326e1effa23b100dd1ac8663d4416e295d190f46ba70eb2a9
+Trying to pull registry.access.redhat.com/ubi9/go-toolset:1.26...
+Getting image source signatures
+Checking if image destination supports signatures
+Copying blob sha256:d42ebadf4fab39879420f670effc5339dbb3a965f10cfc9e893812a82359ca96
+Copying blob sha256:a65b1d5fa71f2275b83830542c74d937ba4151138631910bd375d577f8ceeed8
+Copying blob sha256:7e1f79224b0668cff86172f85305621504ef2f1a15768b9ed272ea1f1a0e4e4d
+Copying blob sha256:e9032009b40b3fd04712dfd72a34308c80cfcbc96e34411b01d746a758eb327f
+Copying config sha256:4503554399b4b9c5265bafc26dfb5eea1cce8ae46cc8d424457c10ecfa1814df
+Writing manifest to image destination
+Storing signatures
+[linux/amd64] [2/3] STEP 2/11: WORKDIR /opt/app-root
+--> Using cache af1cfc364e02bbbe152a266e3b4e766d012ba8761df2219b036428533bcaa1d1
+--> af1cfc364e02
+[linux/amd64] [2/3] STEP 3/11: COPY Makefile Makefile
+--> Using cache 4e9cce7ee01fa7c70afb2d7feeebfe323d30672cd190195818dbe76c523f4178
+--> 4e9cce7ee01f
+[linux/amd64] [2/3] STEP 4/11: COPY go.mod go.mod
+--> 947606859b19
+[linux/amd64] [2/3] STEP 5/11: COPY go.sum go.sum
+--> 0bdbe3d92a9c
+[linux/amd64] [2/3] STEP 6/11: RUN go mod download
+--> fa011af35065
+[linux/amd64] [2/3] STEP 7/11: COPY cmd/ cmd/
+--> c5aa9f5fe114
+[linux/amd64] [2/3] STEP 8/11: COPY pkg/ pkg/
+--> 0ed69e243a62
+[linux/amd64] [2/3] STEP 9/11: ENV GOEXPERIMENT=strictfipsruntime
+--> f15df9faf5d1
+[linux/amd64] [2/3] STEP 10/11: ENV CGO_ENABLED=1
+--> 9773104c81d7
+[linux/amd64] [2/3] STEP 11/11: RUN make build-backend BUILD_OPTS="-tags strictfipsruntime"
+go build -tags strictfipsruntime -o plugin-backend -mod=readonly cmd/plugin-backend.go
+--> 276b4604f062
+[linux/amd64] [3/3] STEP 1/4: FROM registry.access.redhat.com/ubi9/ubi-minimal
+Trying to pull registry.access.redhat.com/ubi9/ubi-minimal:latest...
+Getting image source signatures
+Checking if image destination supports signatures
+Copying blob sha256:8af57f051b373375a1be8f892172089259ad624ed8452291226c539055e60228
+Copying config sha256:659f819f47f8e8d2348bd9243d2ef17f39a9cc97ee1964b1cf1f83d428090213
+Writing manifest to image destination
+Storing signatures
+[linux/amd64] [3/3] STEP 2/4: COPY --from=web-builder /opt/app-root/web/dist /opt/app-root/web/dist
+--> f8385b6642c1
+[linux/amd64] [3/3] STEP 3/4: COPY --from=go-builder /opt/app-root/plugin-backend /opt/app-root
+--> 3bf93c24b61f
+[linux/amd64] [3/3] STEP 4/4: ENTRYPOINT ["/opt/app-root/plugin-backend", "-static-path", "/opt/app-root/web/dist", "-config-path", "/opt/app-root/web/dist"]
+[linux/amd64] [3/3] COMMIT
+--> ce1ee52361c5
+ce1ee52361c5f8003e03489d580ef7eb938f4837aae0c00311097e446ae756fe
+podman manifest push quay.io/rh-ee-emurasak/distributed-tracing-console-plugin:v0.4.3
+Getting image list signatures
+Copying 2 images generated from 2 images in list
+Copying image sha256:296033d1387675753198f62603dea68ac56d69c099dc418a0e6991b0fee85437 (1/2)
+Getting image source signatures
+Copying blob sha256:228d3d093b243661f2bbd4be6cc0e4a91af886b882ca37d67a2522d8dc67af93
+Copying blob sha256:c5c547b47399abb4c246be7224d995b466efab863ff3ec51f13f94eeddafa802
+Copying blob sha256:642fb54e8eadc39df95bd3a3b1ca23bfe965300a09e2e366a9a942a83dac2815
+Copying config sha256:d7fcf5681612b30326e1effa23b100dd1ac8663d4416e295d190f46ba70eb2a9
+Writing manifest to image destination
+Copying image sha256:0c407f9974d4eb0906dc10873130343cff8e91192889c0db2170153760411bfa (2/2)
+Getting image source signatures
+Copying blob sha256:2fd670574d6e9562249ae5f21bafee71514419560c83718fbf98975fc570cf21
+Copying blob sha256:eb31fffb4653a560fe98f0cdf1563599483471410f682eef43f925913573d867
+Copying blob sha256:690880d4f742eea745937d9635fc54b88f491025707237aef0b626fe7d221d54
+Copying config sha256:ce1ee52361c5f8003e03489d580ef7eb938f4837aae0c00311097e446ae756fe
+Writing manifest to image destination
+Writing manifest list to image destination
+Storing list signatures
+==========================================
+Building logging-view-plugin @ release-coo-ocp-4.15 with VERSION=v6.1.6 ORG=rh-ee-emurasak
+==========================================
+Switched to branch 'release-coo-ocp-4.15'
+Your branch is behind 'origin/release-coo-ocp-4.15' by 6 commits, and can be fast-forwarded.
+  (use "git pull" to update your local branch)
+From https://github.com/openshift/logging-view-plugin
+ * branch            release-coo-ocp-4.15 -> FETCH_HEAD
+Updating 3b46bba..65042b0
+Fast-forward
+ Dockerfile                                         |    4 +-
+ Dockerfile.ci                                      |   32 +-
+ Dockerfile.cypress                                 |    2 +-
+ Dockerfile.dev                                     |    9 +-
+ go.mod                                             |   12 +-
+ go.sum                                             |   24 +-
+ web/cypress/e2e/integration/logs-detail-page.cy.ts |   21 +-
+ web/cypress/e2e/integration/logs-page.cy.ts        |   22 +-
+ web/locales/en/plugin__logging-view-plugin.json    |    2 +-
+ web/package-lock.json                              | 8104 ++++++++++----------
+ web/package.json                                   |   12 +-
+ web/src/__tests__/value-utils.spec.ts              |   10 +
+ web/src/components/logs-table.tsx                  |    5 +-
+ web/src/hooks/useLogs.ts                           |   45 +-
+ web/src/logs.types.ts                              |    1 +
+ web/src/loki-client.ts                             |   73 +-
+ web/src/pages/logs-detail-page.tsx                 |   10 +-
+ web/src/pages/logs-dev-page.tsx                    |    4 +-
+ web/src/pages/logs-page.tsx                        |    4 +-
+ web/src/value-utils.ts                             |    2 +
+ 20 files changed, 4263 insertions(+), 4135 deletions(-)
+--- Attempt 1/3 ---
+podman manifest rm quay.io/rh-ee-emurasak/logging-view-plugin:v6.1.6 || true
+Error: quay.io/rh-ee-emurasak/logging-view-plugin:v6.1.6: image not known
+podman manifest create quay.io/rh-ee-emurasak/logging-view-plugin:v6.1.6
+17a3fcce3305c95dd8122fe68fe8e7330644274d91a994097ec095640120a795
+podman build --platform=linux/arm64,linux/amd64 --manifest quay.io/rh-ee-emurasak/logging-view-plugin:v6.1.6 -f Dockerfile
+[linux/amd64] [1/3] STEP 1/9: FROM registry.redhat.io/ubi9/nodejs-22:latest AS web-builder
+[linux/amd64] [1/3] STEP 2/9: WORKDIR /opt/app-root
+--> Using cache 25f952364c18dec697621ccdf03fe10655339de2dbbbf27c4486edb5a1c24341
+--> 25f952364c18
+[linux/amd64] [1/3] STEP 3/9: USER 0
+--> Using cache 7b8705aab315b50a437e2e7c2f502baa54d72938a85870d51e91af51dabda800
+--> 7b8705aab315
+[linux/amd64] [1/3] STEP 4/9: ENV HUSKY=0
+--> 480c099274ea
+[linux/amd64] [1/3] STEP 5/9: COPY web/package*.json web/
+--> 8ae0ac41198e
+[linux/amd64] [1/3] STEP 6/9: COPY Makefile Makefile
+--> 2cbf3546e8aa
+[linux/amd64] [1/3] STEP 7/9: RUN make install-frontend-ci-clean
+make: Warning: File 'Makefile' has modification time 2206 s in the future
+cd web && npm ci --omit=optional --ignore-scripts
+npm warn deprecated popper.js@1.16.1: You can find the new Popper v2 at @popperjs/core, this package is dedicated to the legacy v1
+npm warn deprecated glob@10.5.0: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+npm warn deprecated glob@10.5.0: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+npm warn deprecated glob@10.5.0: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+
+added 1531 packages, and audited 1532 packages in 45s
+
+273 packages are looking for funding
+  run `npm fund` for details
+
+10 moderate severity vulnerabilities
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+cd web && npm cache clean --force
+npm warn using --force Recommended protections disabled.
+make: warning:  Clock skew detected.  Your build may be incomplete.
+--> c398219df741
+[linux/amd64] [1/3] STEP 8/9: COPY web/ web/
+--> 5ccaf9943504
+[linux/amd64] [1/3] STEP 9/9: RUN make build-frontend
+make: Warning: File 'Makefile' has modification time 2133 s in the future
+cd web && npm run build
+
+> logging-view-plugin@6.1.0 build
+> npm run clean && NODE_ENV=production npm run ts-node node_modules/.bin/webpack
+
+
+> logging-view-plugin@6.1.0 clean
+> rm -rf dist
+
+
+> logging-view-plugin@6.1.0 ts-node
+> ts-node -O '{"module":"commonjs"}' node_modules/.bin/webpack
+
+assets by path *.js 4.83 MiB
+  assets by chunk 2.69 MiB (id hint: vendors)
+    assets by status 1.83 MiB [big]
+      asset 9012-chunk-c30d86991a43474bcd20.min.js 1.12 MiB [emitted] [immutable] [big] (id hint: vendors) 1 related asset
+      asset 573-chunk-6751882185f4ace03f14.min.js 462 KiB [emitted] [immutable] [big] (id hint: vendors) 1 related asset
+      asset 9123-chunk-7c59f766bf5aed38d7e4.min.js 266 KiB [emitted] [immutable] [big] (id hint: vendors) 1 related asset
+    + 9 assets
+  + 81 assets
+asset locales/en/plugin__logging-view-plugin.json 10.4 KiB [emitted] [from: ../locales/en/plugin__logging-view-plugin.json] [copied]
+asset plugin-manifest.json 1.92 KiB [emitted]
+orphan modules 2.72 MiB [orphan] 1566 modules
+runtime modules 37.2 KiB 14 modules
+built modules 2.95 MiB (javascript) 1.72 KiB (consume-shared) 1.56 KiB (share-init) [built]
+  modules by path ../node_modules/ 2.66 MiB 431 modules
+  modules by path ./ 306 KiB 48 modules
+  consume-shared-module modules 1.72 KiB
+    modules by path consume shared module (default) @patternfly/react-core/dist/dynamic/ 1.23 KiB 30 modules
+    modules by path consume shared module (default) @patternfly/react-icons/dist/dynamic/icons/ 294 bytes 7 modules
+    + 5 modules
+  provide-module modules 1.56 KiB
+    modules by path provide shared module (default) @patternfly/react-core/dist/dynamic/ 1.23 KiB 30 modules
+    modules by path provide shared module (default) @patternfly/react-icons/dist/dynamic/icons/ 294 bytes 7 modules
+    provide shared module (default) @patternfly/react-table/dist/dynamic/components/...(truncated) 42 bytes [built] [code generated]
+  container entry 42 bytes [built] [code generated]
+
+WARNING in asset size limit: The following asset(s) exceed the recommended size limit (244 KiB).
+This can impact web performance.
+Assets: 
+  9123-chunk-7c59f766bf5aed38d7e4.min.js (266 KiB)
+  9012-chunk-c30d86991a43474bcd20.min.js (1.12 MiB)
+  573-chunk-6751882185f4ace03f14.min.js (462 KiB)
+
+webpack 5.105.3 compiled with 1 warning in 57187 ms
+make: warning:  Clock skew detected.  Your build may be incomplete.
+--> f03459196064
+[linux/arm64] [1/3] STEP 1/9: FROM registry.redhat.io/ubi9/nodejs-22:latest AS web-builder
+Trying to pull registry.redhat.io/ubi9/nodejs-22:latest...
+Getting image source signatures
+Checking if image destination supports signatures
+Copying blob sha256:9646992efe070a3bd6c556d5bfd825b8ffbc51f371288f7eb152d2d852939056
+Copying blob sha256:9f54e374b06db8429b62d91af166f6a7caa34095b474b38a6853f75e9501072e
+Copying blob sha256:f00a3ea30fea862d594c88740f011c234eb0b745138910c83abb92b28517593d
+Copying config sha256:404bfb706f719cb0fdb063441e6c5404e5ce5228389a38c0ab4dda7570ece9f6
+Writing manifest to image destination
+Storing signatures
+[linux/arm64] [1/3] STEP 2/9: WORKDIR /opt/app-root
+--> Using cache 8d7f4d666d8b2966000dfdbddaf0f201f102b80d182b42918646bca008497d32
+--> 8d7f4d666d8b
+[linux/arm64] [1/3] STEP 3/9: USER 0
+--> Using cache ab40718f6d3d3469511e8bdb5e14133d0b8570fbf01d414c2b0398600f6e9b81
+--> ab40718f6d3d
+[linux/arm64] [1/3] STEP 4/9: ENV HUSKY=0
+--> c4956a0743f1
+[linux/arm64] [1/3] STEP 5/9: COPY web/package*.json web/
+--> 32b42328126c
+[linux/arm64] [1/3] STEP 6/9: COPY Makefile Makefile
+--> 59003bed93da
+[linux/arm64] [1/3] STEP 7/9: RUN make install-frontend-ci-clean
+make: Warning: File 'Makefile' has modification time 2041 s in the future
+cd web && npm ci --omit=optional --ignore-scripts
+npm warn deprecated popper.js@1.16.1: You can find the new Popper v2 at @popperjs/core, this package is dedicated to the legacy v1
+npm warn deprecated glob@10.5.0: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+npm warn deprecated glob@10.5.0: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+npm warn deprecated glob@10.5.0: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+
+added 1531 packages, and audited 1532 packages in 31s
+
+273 packages are looking for funding
+  run `npm fund` for details
+
+10 moderate severity vulnerabilities
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+cd web && npm cache clean --force
+npm warn using --force Recommended protections disabled.
+make: warning:  Clock skew detected.  Your build may be incomplete.
+--> 022639fa0335
+[linux/arm64] [1/3] STEP 8/9: COPY web/ web/
+--> cf87d2a9212f
+[linux/arm64] [1/3] STEP 9/9: RUN make build-frontend
+make: Warning: File 'Makefile' has modification time 1984 s in the future
+cd web && npm run build
+
+> logging-view-plugin@6.1.0 build
+> npm run clean && NODE_ENV=production npm run ts-node node_modules/.bin/webpack
+
+
+> logging-view-plugin@6.1.0 clean
+> rm -rf dist
+
+
+> logging-view-plugin@6.1.0 ts-node
+> ts-node -O '{"module":"commonjs"}' node_modules/.bin/webpack
+
+assets by path *.js 4.83 MiB
+  assets by chunk 2.69 MiB (id hint: vendors)
+    assets by status 1.83 MiB [big]
+      asset 9012-chunk-c30d86991a43474bcd20.min.js 1.12 MiB [emitted] [immutable] [big] (id hint: vendors) 1 related asset
+      asset 573-chunk-6751882185f4ace03f14.min.js 462 KiB [emitted] [immutable] [big] (id hint: vendors) 1 related asset
+      asset 9123-chunk-7c59f766bf5aed38d7e4.min.js 266 KiB [emitted] [immutable] [big] (id hint: vendors) 1 related asset
+    + 9 assets
+  + 81 assets
+asset locales/en/plugin__logging-view-plugin.json 10.4 KiB [emitted] [from: ../locales/en/plugin__logging-view-plugin.json] [copied]
+asset plugin-manifest.json 1.92 KiB [emitted]
+orphan modules 2.72 MiB [orphan] 1566 modules
+runtime modules 37.2 KiB 14 modules
+built modules 2.95 MiB (javascript) 1.72 KiB (consume-shared) 1.56 KiB (share-init) [built]
+  modules by path ../node_modules/ 2.66 MiB 431 modules
+  modules by path ./ 306 KiB 48 modules
+  consume-shared-module modules 1.72 KiB
+    modules by path consume shared module (default) @patternfly/react-core/dist/dynamic/ 1.23 KiB 30 modules
+    modules by path consume shared module (default) @patternfly/react-icons/dist/dynamic/icons/ 294 bytes 7 modules
+    + 5 modules
+  provide-module modules 1.56 KiB
+    modules by path provide shared module (default) @patternfly/react-core/dist/dynamic/ 1.23 KiB 30 modules
+    modules by path provide shared module (default) @patternfly/react-icons/dist/dynamic/icons/ 294 bytes 7 modules
+    provide shared module (default) @patternfly/react-table/dist/dynamic/components/...(truncated) 42 bytes [built] [code generated]
+  container entry 42 bytes [built] [code generated]
+
+WARNING in asset size limit: The following asset(s) exceed the recommended size limit (244 KiB).
+This can impact web performance.
+Assets: 
+  9123-chunk-7c59f766bf5aed38d7e4.min.js (266 KiB)
+  9012-chunk-c30d86991a43474bcd20.min.js (1.12 MiB)
+  573-chunk-6751882185f4ace03f14.min.js (462 KiB)
+
+webpack 5.105.3 compiled with 1 warning in 2245433 ms
+make: warning:  Clock skew detected.  Your build may be incomplete.
+--> 9910dcf43719
+[linux/amd64] [2/3] STEP 1/12: FROM registry.access.redhat.com/ubi9/go-toolset:1.26 AS go-builder
+[linux/amd64] [2/3] STEP 2/12: WORKDIR /opt/app-root
+--> Using cache af1cfc364e02bbbe152a266e3b4e766d012ba8761df2219b036428533bcaa1d1
+--> af1cfc364e02
+[linux/amd64] [2/3] STEP 3/12: COPY Makefile Makefile
+--> 06d8e7d7d5a6
+[linux/amd64] [2/3] STEP 4/12: COPY go.mod go.mod
+--> efddc752278e
+[linux/amd64] [2/3] STEP 5/12: COPY go.sum go.sum
+--> cabd3224f74c
+[linux/amd64] [2/3] STEP 6/12: RUN make install-backend
+go mod download
+--> 48fa6495e3ef
+[linux/amd64] [2/3] STEP 7/12: COPY config/ config/
+--> bbfb36c1d38c
+[linux/amd64] [2/3] STEP 8/12: COPY cmd/ cmd/
+--> 4929ad9dc475
+[linux/amd64] [2/3] STEP 9/12: COPY pkg/ pkg/
+--> 1a308958ad6b
+[linux/amd64] [2/3] STEP 10/12: ENV GOEXPERIMENT=strictfipsruntime
+--> ea1c06617bf1
+[linux/amd64] [2/3] STEP 11/12: ENV CGO_ENABLED=1
+--> 1ac70b8ab3de
+[linux/amd64] [2/3] STEP 12/12: RUN make build-backend BUILD_OPTS="-tags strictfipsruntime"
+go build -tags strictfipsruntime -mod=readonly -o plugin-backend cmd/plugin-backend.go
+--> 072d22efdd42
+[linux/arm64] [2/3] STEP 1/12: FROM registry.access.redhat.com/ubi9/go-toolset:1.26 AS go-builder
+Trying to pull registry.access.redhat.com/ubi9/go-toolset:1.26...
+Getting image source signatures
+Checking if image destination supports signatures
+Copying blob sha256:45930d601c4202f8f62b21cd0a99019c00cd0af6e243187962defb645a49ab77
+Copying blob sha256:f00a3ea30fea862d594c88740f011c234eb0b745138910c83abb92b28517593d
+Copying blob sha256:9f54e374b06db8429b62d91af166f6a7caa34095b474b38a6853f75e9501072e
+Copying blob sha256:45e8f34021ec53e3f4034c0aa42f88f43d2c6a70db6bcbe4da9c885fec121ca7
+Copying config sha256:1b04da50b8a1a4d73cbc62e9438485bbb1219c003b0fef077d227b77d3fa7fb5
+Writing manifest to image destination
+Storing signatures
+[linux/arm64] [2/3] STEP 2/12: WORKDIR /opt/app-root
+--> Using cache a05232a4028fedcbdc5858a48a003ce3f0eaa6f7f55bf759968c0186ab9fecd0
+--> a05232a4028f
+[linux/arm64] [2/3] STEP 3/12: COPY Makefile Makefile
+--> 7d89a9e9b61d
+[linux/arm64] [2/3] STEP 4/12: COPY go.mod go.mod
+--> 3a3758e52837
+[linux/arm64] [2/3] STEP 5/12: COPY go.sum go.sum
+--> bd7c7f58741c
+[linux/arm64] [2/3] STEP 6/12: RUN make install-backend
+go mod download
+--> d8db0960f040
+[linux/arm64] [2/3] STEP 7/12: COPY config/ config/
+--> 81c11c520d40
+[linux/arm64] [2/3] STEP 8/12: COPY cmd/ cmd/
+--> a73bada5a8b2
+[linux/arm64] [2/3] STEP 9/12: COPY pkg/ pkg/
+--> c23c376c7206
+[linux/arm64] [2/3] STEP 10/12: ENV GOEXPERIMENT=strictfipsruntime
+--> 5f49ef72cebc
+[linux/arm64] [2/3] STEP 11/12: ENV CGO_ENABLED=1
+--> e17ee25f0a0c
+[linux/arm64] [2/3] STEP 12/12: RUN make build-backend BUILD_OPTS="-tags strictfipsruntime"
+go build -tags strictfipsruntime -mod=readonly -o plugin-backend cmd/plugin-backend.go
+--> 35886d52b96e
+[linux/amd64] [3/3] STEP 1/5: FROM registry.access.redhat.com/ubi9/ubi-minimal
+[linux/amd64] [3/3] STEP 2/5: COPY --from=web-builder /opt/app-root/web/dist /opt/app-root/web/dist
+--> 562c7ea33453
+[linux/amd64] [3/3] STEP 3/5: COPY --from=go-builder /opt/app-root/plugin-backend /opt/app-root
+--> ba7135a4566b
+[linux/amd64] [3/3] STEP 4/5: COPY --from=go-builder /opt/app-root/config /opt/app-root/config
+--> aa17dc863daf
+[linux/amd64] [3/3] STEP 5/5: ENTRYPOINT ["/opt/app-root/plugin-backend", "-config-path", "/opt/app-root/config", "-static-path", "/opt/app-root/web/dist"]
+[linux/amd64] [3/3] COMMIT
+--> c3814c49ffff
+[linux/arm64] [3/3] STEP 1/5: FROM registry.access.redhat.com/ubi9/ubi-minimal
+c3814c49ffff9f45e3ff602ccc3bb19b25c5f69a131b606a2cde7080c61a89e7
+Trying to pull registry.access.redhat.com/ubi9/ubi-minimal:latest...
+Getting image source signatures
+Checking if image destination supports signatures
+Copying blob sha256:96c16ad0505847764761c5c4d0a82cd8a619f3e93c57f6a4b081cb9d4d0dd3e7
+Copying config sha256:dc66a34eca2d77aebb3d6349e06bbb118c0571f172e297eea776d8aa352899e7
+Writing manifest to image destination
+Storing signatures
+[linux/arm64] [3/3] STEP 2/5: COPY --from=web-builder /opt/app-root/web/dist /opt/app-root/web/dist
+--> 8b9778f34c80
+[linux/arm64] [3/3] STEP 3/5: COPY --from=go-builder /opt/app-root/plugin-backend /opt/app-root
+--> 5b38ca75b909
+[linux/arm64] [3/3] STEP 4/5: COPY --from=go-builder /opt/app-root/config /opt/app-root/config
+--> d7c9fe7a0c40
+[linux/arm64] [3/3] STEP 5/5: ENTRYPOINT ["/opt/app-root/plugin-backend", "-config-path", "/opt/app-root/config", "-static-path", "/opt/app-root/web/dist"]
+[linux/arm64] [3/3] COMMIT
+--> ba2d389e66fb
+ba2d389e66fb4f305914658570b73ddd564fcd8b9111ca7e44e141071933a827
+podman manifest push quay.io/rh-ee-emurasak/logging-view-plugin:v6.1.6
+Getting image list signatures
+Copying 2 images generated from 2 images in list
+Copying image sha256:1231ef7907a1c03cc0685f01aba831dc36af4091da6c2f7b53aaff2f2ca42391 (1/2)
+Getting image source signatures
+Copying blob sha256:4a44b910b3098a00f97c48f53b7d7e5e1952fdcfb2848df1b51f505e696eee36
+Copying blob sha256:eb31fffb4653a560fe98f0cdf1563599483471410f682eef43f925913573d867
+Copying blob sha256:59155cbb8408d5ceafe90f2ff42e9ece5e3135d09b3229ffc5c1aafc779f80c8
+Copying blob sha256:070b9c077529f74fb57f1aca590ae842d3ce125154dbb0ed703b44401ac343c9
+Copying config sha256:c3814c49ffff9f45e3ff602ccc3bb19b25c5f69a131b606a2cde7080c61a89e7
+Writing manifest to image destination
+Copying image sha256:e3f90b74c8819f36b9e76253be805b34eb959e4549d255fe060026f3cb2cbd77 (2/2)
+Getting image source signatures
+Copying blob sha256:228d3d093b243661f2bbd4be6cc0e4a91af886b882ca37d67a2522d8dc67af93
+Copying blob sha256:30b4a1f8a086cfab43634ac6ed33cee9a9b49182396c8b48f0240124fa0c49e9
+Copying blob sha256:556409b12d2d9b2740a4fe024d46a818a1b383aeca467bd10b60060862cd5b7d
+Copying blob sha256:b3ab2d005629ddb2d325924191d5141ff114bd2c325be75533fdd2b5c1d7e471
+Copying config sha256:ba2d389e66fb4f305914658570b73ddd564fcd8b9111ca7e44e141071933a827
+Writing manifest to image destination
+Writing manifest list to image destination
+Storing list signatures
+==========================================
+Building monitoring-plugin @ release-coo-ocp-4.15 with VERSION=v0.4.5 ORG=rh-ee-emurasak
+==========================================
+Switched to branch 'release-coo-ocp-4.15'
+Your branch is behind 'origin/release-coo-ocp-4.15' by 4 commits, and can be fast-forwarded.
+  (use "git pull" to update your local branch)
+From https://github.com/openshift/monitoring-plugin
+ * branch            release-coo-ocp-4.15 -> FETCH_HEAD
+Updating d544f4b..524eb72
+Fast-forward
+ Dockerfile                                         |    6 +-
+ Dockerfile.dev                                     |    7 +-
+ Dockerfile.mcp                                     |    7 +-
+ go.mod                                             |   12 +-
+ go.sum                                             |   24 +-
+ web/locales/en/plugin__monitoring-plugin.json      |    9 +-
+ web/package-lock.json                              | 1670 ++++++--------------
+ web/package.json                                   |   11 +-
+ .../src/components/empty-state/AccessDenied.tsx    |    4 +-
+ .../src/components/empty-state/EmptyBox.tsx        |    2 +-
+ .../src/components/loading/LoadError.tsx           |    2 +-
+ .../src/components/status/StatusBox.tsx            |    2 +-
+ web/src/components/console/utils/button-bar.jsx    |    2 +-
+ .../dashboards/perses/dashboard-list.tsx           |    2 +-
+ 14 files changed, 555 insertions(+), 1205 deletions(-)
+--- Attempt 1/3 ---
+podman manifest rm quay.io/rh-ee-emurasak/monitoring-console-plugin:v0.4.5 || true
+Error: quay.io/rh-ee-emurasak/monitoring-console-plugin:v0.4.5: image not known
+podman manifest create quay.io/rh-ee-emurasak/monitoring-console-plugin:v0.4.5
+c6eaec5dbb5e7b618510dd68f66ac530534fb92fa15c4f4d6893e9fa7ecfa54c
+podman build --platform linux/arm64,linux/amd64 --manifest quay.io/rh-ee-emurasak/monitoring-console-plugin:v0.4.5 -f Dockerfile.mcp
+[linux/amd64] [1/3] STEP 1/11: FROM registry.redhat.io/ubi9/nodejs-22:latest AS web-builder
+Trying to pull registry.redhat.io/ubi9/nodejs-22:latest...
+Getting image source signatures
+Checking if image destination supports signatures
+Copying blob sha256:282d0d24d7fbf867c5fcf0074ef814120603d793df3c6b07803f4fe4f13e8364
+Copying blob sha256:a65b1d5fa71f2275b83830542c74d937ba4151138631910bd375d577f8ceeed8
+Copying blob sha256:7e1f79224b0668cff86172f85305621504ef2f1a15768b9ed272ea1f1a0e4e4d
+Copying config sha256:0ccc4acadf8fe652aee3bd1e9b848aa1ddb72cc4db9269dc719a72a71892e157
+Writing manifest to image destination
+Storing signatures
+[linux/amd64] [1/3] STEP 2/11: USER 0
+--> 6160bc745590
+[linux/amd64] [1/3] STEP 3/11: WORKDIR /opt/app-root
+--> 117feb1b357d
+[linux/amd64] [1/3] STEP 4/11: ENV HUSKY=0
+--> c81479492045
+[linux/amd64] [1/3] STEP 5/11: COPY Makefile Makefile
+--> ea373b320b37
+[linux/amd64] [1/3] STEP 6/11: COPY scripts/update-plugin-name.sh scripts/update-plugin-name.sh
+--> 92aac39fb124
+[linux/amd64] [1/3] STEP 7/11: COPY web/ web/
+--> cd2e36c646da
+[linux/amd64] [1/3] STEP 8/11: RUN make update-plugin-name
+./scripts/update-plugin-name.sh
+--> 8014aa23070c
+[linux/amd64] [1/3] STEP 9/11: ENV I18N_NAMESPACE="plugin__monitoring-console-plugin"
+--> 1ecaae39540e
+[linux/amd64] [1/3] STEP 10/11: RUN make install-frontend
+cd web && npm install
+npm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+npm warn deprecated i18next-parser@9.4.0: Project is deprecated, use i18next-cli instead
+npm warn deprecated @types/webpack-dev-server@4.7.2: This is a stub types definition. webpack-dev-server provides its own type definitions, so you do not need this installed.
+npm warn deprecated eslint@8.44.0: This version is no longer supported. Please see https://eslint.org/version-support for other options.
+npm warn deprecated @humanwhocodes/object-schema@2.0.3: Use @eslint/object-schema instead
+npm warn deprecated @humanwhocodes/config-array@0.11.14: Use @eslint/config-array instead
+npm warn deprecated glob@10.5.0: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+
+> monitoring-console-plugin@0.4.0 prepare
+> cd .. && husky install web/.husky
+
+husky - HUSKY env variable is set to 0, skipping install
+
+added 1382 packages, and audited 1383 packages in 1m
+
+284 packages are looking for funding
+  run `npm fund` for details
+
+18 vulnerabilities (1 low, 16 moderate, 1 high)
+
+To address issues that do not require attention, run:
+  npm audit fix
+
+To address all issues possible (including breaking changes), run:
+  npm audit fix --force
+
+Some issues need review, and may require choosing
+a different dependency.
+
+Run `npm audit` for details.
+--> d39ee8919903
+[linux/amd64] [1/3] STEP 11/11: RUN make build-frontend
+cd web && npm run build
+
+> monitoring-console-plugin@0.4.0 build
+> npm run clean && NODE_ENV=production npm run ts-node node_modules/.bin/webpack
+
+
+> monitoring-console-plugin@0.4.0 clean
+> rm -rf dist
+
+
+> monitoring-console-plugin@0.4.0 ts-node
+> ts-node -O '{"module":"commonjs"}' node_modules/.bin/webpack
+
+DEPRECATION WARNING [legacy-js-api]: The legacy JS API is deprecated and will be removed in Dart Sass 2.0.0.
+
+More info: https://sass-lang.com/d/legacy-js-api
+
+DEPRECATION WARNING [legacy-js-api]: The legacy JS API is deprecated and will be removed in Dart Sass 2.0.0.
+
+More info: https://sass-lang.com/d/legacy-js-api
+
+DEPRECATION WARNING [legacy-js-api]: The legacy JS API is deprecated and will be removed in Dart Sass 2.0.0.
+
+More info: https://sass-lang.com/d/legacy-js-api
+
+DEPRECATION WARNING [legacy-js-api]: The legacy JS API is deprecated and will be removed in Dart Sass 2.0.0.
+
+More info: https://sass-lang.com/d/legacy-js-api
+
+DEPRECATION WARNING [legacy-js-api]: The legacy JS API is deprecated and will be removed in Dart Sass 2.0.0.
+
+More info: https://sass-lang.com/d/legacy-js-api
+
+assets by path *.js 9.09 MiB
+  assets by chunk 8.34 MiB (id hint: vendors)
+    assets by status 7.31 MiB [big] 3 assets
+    + 36 assets
+  + 97 assets
+assets by path assets/ 1.33 MiB
+  assets by chunk 1.27 MiB (auxiliary id hint: vendors) 84 assets
+  asset assets/codicon..ttf 55.2 KiB [emitted] [from: components/metrics/codicon.ttf]
+  asset assets/restricted-sign..svg 2.38 KiB [emitted] [from: components/console/imgs/restricted-sign.svg] (auxiliary name: exposed-MonitoringRouter)
+assets by path locales/ 59.7 KiB
+  asset locales/en/plugin__monitoring-console-plugin.json 19.3 KiB [emitted] [from: ../locales/en/plugin__monitoring-console-plugin.json] [copied]
+  asset locales/ja/plugin__monitoring-console-plugin.json 14.9 KiB [emitted] [from: ../locales/ja/plugin__monitoring-console-plugin.json] [copied]
+  asset locales/ko/plugin__monitoring-console-plugin.json 13.6 KiB [emitted] [from: ../locales/ko/plugin__monitoring-console-plugin.json] [copied]
+  asset locales/zh/plugin__monitoring-console-plugin.json 11.9 KiB [emitted] [from: ../locales/zh/plugin__monitoring-console-plugin.json] [copied]
+asset plugin-manifest.json 5.41 KiB [emitted]
+orphan modules 20.4 MiB [orphan] 20670 modules
+runtime modules 53 KiB 15 modules
+built modules 18 MiB (javascript) 1.33 MiB (asset) 3.04 KiB (consume-shared) 2.75 KiB (share-init) [built]
+  javascript modules 17.9 MiB 1637 modules
+  asset modules 1.33 MiB (asset) 3.53 KiB (javascript)
+    modules by path ../node_modules/ 1.27 MiB (asset) 3.45 KiB (javascript) 84 modules
+    modules by path ./components/ 57.5 KiB (asset) 84 bytes (javascript) 2 modules
+  consume-shared-module modules 3.04 KiB 74 modules
+  provide-module modules 2.75 KiB
+    modules by path provide shared module (default) @patternfly/react-core/dist/dynamic/ 1.93 KiB 47 modules
+    modules by path provide shared module (default) @patternfly/react-icons/dist/dynamic/icons/ 756 bytes 18 modules
+    modules by path provide shared module (default) @patternfly/react-table/dist/dynamic/components/ 84 bytes 2 modules
+  ../node_modules/tlds/index.json 10.9 KiB [built] [code generated]
+
+WARNING in asset size limit: The following asset(s) exceed the recommended size limit (244 KiB).
+This can impact web performance.
+Assets: 
+  6966-chunk-51585fa2f3b3ce1f644e.min.js (2.42 MiB)
+  2608-chunk-b8621f688195f5f8428e.min.js (4.56 MiB)
+  6898-chunk-7f02beb01f61a974566c.min.js (342 KiB)
+
+webpack 5.105.2 compiled with 1 warning in 124778 ms
+--> fe914d828711
+[linux/arm64] [1/3] STEP 1/11: FROM registry.redhat.io/ubi9/nodejs-22:latest AS web-builder
+Trying to pull registry.redhat.io/ubi9/nodejs-22:latest...
+Getting image source signatures
+Checking if image destination supports signatures
+Copying blob sha256:9646992efe070a3bd6c556d5bfd825b8ffbc51f371288f7eb152d2d852939056
+Copying blob sha256:f00a3ea30fea862d594c88740f011c234eb0b745138910c83abb92b28517593d
+Copying blob sha256:9f54e374b06db8429b62d91af166f6a7caa34095b474b38a6853f75e9501072e
+Copying config sha256:404bfb706f719cb0fdb063441e6c5404e5ce5228389a38c0ab4dda7570ece9f6
+Writing manifest to image destination
+Storing signatures
+[linux/arm64] [1/3] STEP 2/11: USER 0
+--> f15023fd50da
+[linux/arm64] [1/3] STEP 3/11: WORKDIR /opt/app-root
+--> 5c0c88494e0f
+[linux/arm64] [1/3] STEP 4/11: ENV HUSKY=0
+--> ccc72ffa47f9
+[linux/arm64] [1/3] STEP 5/11: COPY Makefile Makefile
+--> 2960727a627c
+[linux/arm64] [1/3] STEP 6/11: COPY scripts/update-plugin-name.sh scripts/update-plugin-name.sh
+--> 6a45d32abece
+[linux/arm64] [1/3] STEP 7/11: COPY web/ web/
+--> 808a81942c4e
+[linux/arm64] [1/3] STEP 8/11: RUN make update-plugin-name
+./scripts/update-plugin-name.sh
+--> 4ec4168abbcd
+[linux/arm64] [1/3] STEP 9/11: ENV I18N_NAMESPACE="plugin__monitoring-console-plugin"
+--> 2296da350bc9
+[linux/arm64] [1/3] STEP 10/11: RUN make install-frontend
+cd web && npm install
+npm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+npm warn deprecated i18next-parser@9.4.0: Project is deprecated, use i18next-cli instead
+npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+npm warn deprecated eslint@8.44.0: This version is no longer supported. Please see https://eslint.org/version-support for other options.
+npm warn deprecated @types/webpack-dev-server@4.7.2: This is a stub types definition. webpack-dev-server provides its own type definitions, so you do not need this installed.
+npm warn deprecated @humanwhocodes/config-array@0.11.14: Use @eslint/config-array instead
+npm warn deprecated @humanwhocodes/object-schema@2.0.3: Use @eslint/object-schema instead
+npm warn deprecated glob@10.5.0: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+
+> monitoring-console-plugin@0.4.0 prepare
+> cd .. && husky install web/.husky
+
+husky - HUSKY env variable is set to 0, skipping install
+
+added 1382 packages, and audited 1383 packages in 1m
+
+284 packages are looking for funding
+  run `npm fund` for details
+
+18 vulnerabilities (1 low, 16 moderate, 1 high)
+
+To address issues that do not require attention, run:
+  npm audit fix
+
+To address all issues possible (including breaking changes), run:
+  npm audit fix --force
+
+Some issues need review, and may require choosing
+a different dependency.
+
+Run `npm audit` for details.
+--> 8d4f3dd4213a
+[linux/arm64] [1/3] STEP 11/11: RUN make build-frontend
+cd web && npm run build
+
+> monitoring-console-plugin@0.4.0 build
+> npm run clean && NODE_ENV=production npm run ts-node node_modules/.bin/webpack
+
+
+> monitoring-console-plugin@0.4.0 clean
+> rm -rf dist
+
+
+> monitoring-console-plugin@0.4.0 ts-node
+> ts-node -O '{"module":"commonjs"}' node_modules/.bin/webpack
+
+DEPRECATION WARNING [legacy-js-api]: The legacy JS API is deprecated and will be removed in Dart Sass 2.0.0.
+
+More info: https://sass-lang.com/d/legacy-js-api
+
+DEPRECATION WARNING [legacy-js-api]: The legacy JS API is deprecated and will be removed in Dart Sass 2.0.0.
+
+More info: https://sass-lang.com/d/legacy-js-api
+
+DEPRECATION WARNING [legacy-js-api]: The legacy JS API is deprecated and will be removed in Dart Sass 2.0.0.
+
+More info: https://sass-lang.com/d/legacy-js-api
+
+DEPRECATION WARNING [legacy-js-api]: The legacy JS API is deprecated and will be removed in Dart Sass 2.0.0.
+
+More info: https://sass-lang.com/d/legacy-js-api
+
+DEPRECATION WARNING [legacy-js-api]: The legacy JS API is deprecated and will be removed in Dart Sass 2.0.0.
+
+More info: https://sass-lang.com/d/legacy-js-api
+
+assets by path *.js 9.09 MiB
+  assets by chunk 8.34 MiB (id hint: vendors)
+    assets by status 7.31 MiB [big] 3 assets
+    + 36 assets
+  + 97 assets
+assets by path assets/ 1.33 MiB
+  assets by chunk 1.27 MiB (auxiliary id hint: vendors) 84 assets
+  asset assets/codicon..ttf 55.2 KiB [emitted] [from: components/metrics/codicon.ttf]
+  asset assets/restricted-sign..svg 2.38 KiB [emitted] [from: components/console/imgs/restricted-sign.svg] (auxiliary name: exposed-MonitoringRouter)
+assets by path locales/ 59.7 KiB
+  asset locales/en/plugin__monitoring-console-plugin.json 19.3 KiB [emitted] [from: ../locales/en/plugin__monitoring-console-plugin.json] [copied]
+  asset locales/ja/plugin__monitoring-console-plugin.json 14.9 KiB [emitted] [from: ../locales/ja/plugin__monitoring-console-plugin.json] [copied]
+  asset locales/ko/plugin__monitoring-console-plugin.json 13.6 KiB [emitted] [from: ../locales/ko/plugin__monitoring-console-plugin.json] [copied]
+  asset locales/zh/plugin__monitoring-console-plugin.json 11.9 KiB [emitted] [from: ../locales/zh/plugin__monitoring-console-plugin.json] [copied]
+asset plugin-manifest.json 5.41 KiB [emitted]
+orphan modules 20.4 MiB [orphan] 20670 modules
+runtime modules 53 KiB 15 modules
+built modules 18 MiB (javascript) 1.33 MiB (asset) 3.04 KiB (consume-shared) 2.75 KiB (share-init) [built]
+  javascript modules 17.9 MiB 1637 modules
+  asset modules 1.33 MiB (asset) 3.53 KiB (javascript)
+    modules by path ../node_modules/ 1.27 MiB (asset) 3.45 KiB (javascript) 84 modules
+    modules by path ./components/ 57.5 KiB (asset) 84 bytes (javascript) 2 modules
+  consume-shared-module modules 3.04 KiB 74 modules
+  provide-module modules 2.75 KiB
+    modules by path provide shared module (default) @patternfly/react-core/dist/dynamic/ 1.93 KiB 47 modules
+    modules by path provide shared module (default) @patternfly/react-icons/dist/dynamic/icons/ 756 bytes 18 modules
+    modules by path provide shared module (default) @patternfly/react-table/dist/dynamic/components/ 84 bytes 2 modules
+  ../node_modules/tlds/index.json 10.9 KiB [built] [code generated]
+
+WARNING in asset size limit: The following asset(s) exceed the recommended size limit (244 KiB).
+This can impact web performance.
+Assets: 
+  6966-chunk-51585fa2f3b3ce1f644e.min.js (2.42 MiB)
+  2608-chunk-b8621f688195f5f8428e.min.js (4.56 MiB)
+  6898-chunk-7f02beb01f61a974566c.min.js (342 KiB)
+
+webpack 5.105.2 compiled with 1 warning in 91322 ms
+--> ad6c6b5b7a48
+[linux/amd64] [2/3] STEP 1/9: FROM registry.access.redhat.com/ubi9/go-toolset:1.26 AS go-builder
+Trying to pull registry.access.redhat.com/ubi9/go-toolset:1.26...
+Getting image source signatures
+Checking if image destination supports signatures
+Copying blob sha256:a65b1d5fa71f2275b83830542c74d937ba4151138631910bd375d577f8ceeed8
+Copying blob sha256:d42ebadf4fab39879420f670effc5339dbb3a965f10cfc9e893812a82359ca96
+Copying blob sha256:7e1f79224b0668cff86172f85305621504ef2f1a15768b9ed272ea1f1a0e4e4d
+Copying blob sha256:e9032009b40b3fd04712dfd72a34308c80cfcbc96e34411b01d746a758eb327f
+Copying config sha256:4503554399b4b9c5265bafc26dfb5eea1cce8ae46cc8d424457c10ecfa1814df
+Writing manifest to image destination
+Storing signatures
+[linux/amd64] [2/3] STEP 2/9: WORKDIR /opt/app-root
+--> Using cache af1cfc364e02bbbe152a266e3b4e766d012ba8761df2219b036428533bcaa1d1
+--> af1cfc364e02
+[linux/amd64] [2/3] STEP 3/9: COPY Makefile Makefile
+--> 8d721b36b713
+[linux/amd64] [2/3] STEP 4/9: COPY go.mod go.mod
+--> a54849dad889
+[linux/amd64] [2/3] STEP 5/9: COPY go.sum go.sum
+--> 837283432de6
+[linux/amd64] [2/3] STEP 6/9: RUN go mod download
+--> d1b18853158b
+[linux/amd64] [2/3] STEP 7/9: COPY cmd/ cmd/
+--> 1a51e622f75d
+[linux/amd64] [2/3] STEP 8/9: COPY pkg/ pkg/
+--> 850d0e69ea48
+[linux/amd64] [2/3] STEP 9/9: RUN go build -mod=mod -o plugin-backend cmd/plugin-backend.go
